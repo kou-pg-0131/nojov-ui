@@ -1,4 +1,6 @@
 import React from 'react';
+import { Job } from '../../../../domain/job';
+import { Language } from '../../../../domain/language';
 import {
   BarChart,
   Bar,
@@ -10,13 +12,23 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
-export const Chart: React.FC = () => {
-  const data = [
-    { name: 'foo', count: 150 },
-    { name: 'bar', count: 300 },
-    { name: 'hoge', count: 450 },
-    { name: 'piyo', count: 600 },
-  ];
+type Props = {
+  jobs: Job[];
+};
+
+export const Chart: React.FC<Props> = (props: Props) => {
+  const map = new Map<Language, number>([
+    ['ruby', 0],
+    ['python', 0],
+  ]);
+
+  props.jobs.forEach(job => {
+    map.set(job.language, (map.get(job.language) || 0) + job.count);
+  });
+
+  const data = Array.from(map).map(([language, count]) => (
+    { name: language, count: count }
+  ));
 
   return (
     <ResponsiveContainer height={450}>
@@ -25,9 +37,9 @@ export const Chart: React.FC = () => {
         data={data}
       >
         <CartesianGrid strokeDasharray='3 3'/>
-        <XAxis type='number' />
-        <YAxis type='category' dataKey='name' width={90} tick={{ fontSize: 12 }} />
-        <Tooltip />
+        <XAxis type='number'/>
+        <YAxis type='category' dataKey='name' width={90}/>
+        <Tooltip/>
         <Bar dataKey='count'/>
       </BarChart>
     </ResponsiveContainer>
