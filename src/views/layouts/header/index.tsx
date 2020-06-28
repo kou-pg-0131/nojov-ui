@@ -1,7 +1,14 @@
 import React from 'react';
+import { AppBar, Typography, Toolbar } from '@material-ui/core';
 
 export const Header: React.FC = () => {
   return (
-    <div>header component</div>
+    <AppBar position='static'>
+      <Toolbar>
+        <Typography>
+          Nojov
+        </Typography>
+      </Toolbar>
+    </AppBar>
   );
 };
