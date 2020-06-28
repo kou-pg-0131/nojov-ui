@@ -9,7 +9,7 @@ export const JobsPage: React.FC = () => {
 
   return (
     <Box>
-      <Chart jobs={jobsState.jobs}/>
+      <Chart jobs={jobsState.jobs} fetched={jobsState.fetched}/>
     </Box>
   );
 };
