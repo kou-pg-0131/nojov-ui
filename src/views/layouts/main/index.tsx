@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { RootState } from '../../modules';
 import { jobsActions } from '../../modules/jobsModule';
 import { JobsControllerFactory } from '../../../interfaces/controllers/jobsControllerFactory';
 import { Job } from '../../../domain/job';
+import { JobsPage } from '../../pages/jobs';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -25,7 +27,7 @@ export const Main: React.FC = () => {
   useEffect(() => {
     (async () => {
       const controller = new JobsControllerFactory().create();
-      const jobs = await controller.getAt(2020)
+      const jobs = await controller.getAt(2020);
       console.log(jobs);
       setJobs(jobs);
     })();
@@ -33,8 +35,10 @@ export const Main: React.FC = () => {
 
   return (
     <Container component='main' maxWidth='md' className={classes.root}>
-      <button onClick={() => { console.log(jobsState.jobs); }}>hoge</button>
-      main component.
+      <Switch>
+        <Route exact path='/' component={JobsPage}/>
+        <Route       path='*' render={() => <Redirect to='/' />}/>
+      </Switch>
     </Container>
   );
 };
