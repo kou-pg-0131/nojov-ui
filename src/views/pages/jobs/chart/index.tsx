@@ -40,10 +40,7 @@ const useStyles = makeStyles(() =>
 export const Chart: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
-  const map = new Map<Language, number>([
-    ['ruby', 0],
-    ['python', 0],
-  ]);
+  const map = new Map<Language, number>([]);
 
   props.jobs.forEach(job => {
     map.set(job.language, (map.get(job.language) || 0) + job.count);
