@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Job } from '../../../../domain/job';
 import { Website } from '../../../../domain/website';
-import { Language } from '../../../../domain/language';
+import { Language, languagesToString } from '../../../../domain/language';
 import {
   BarChart,
   Bar,
@@ -48,13 +48,13 @@ export const Chart: React.FC<Props> = (props: Props) => {
   });
 
   const data = (() => {
-    const rows = Array.from(map).map(([language, count]) => ({ name: language, count: count }));
-    return props.sort ? rows.sort((a, b) => b.count - a.count) : rows;
+    const rows = Array.from(map).map(([language, count]) => ({ name: languagesToString(language), '求人数': count }));
+    return props.sort ? rows.sort((a, b) => b['求人数'] - a['求人数']) : rows;
   })();
 
   return (
     <Box className={classes.root}>
-      <ResponsiveContainer height={450}>
+      <ResponsiveContainer height={550}>
         <BarChart
           layout='vertical'
           data={data}
@@ -63,7 +63,7 @@ export const Chart: React.FC<Props> = (props: Props) => {
           <XAxis type='number'/>
           <YAxis type='category' dataKey='name' width={90}/>
           <Tooltip/>
-          <Bar dataKey='count'/>
+          <Bar dataKey='求人数'/>
         </BarChart>
       </ResponsiveContainer>
     </Box>
