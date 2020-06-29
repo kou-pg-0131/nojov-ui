@@ -17,7 +17,8 @@ export type Language =
   'kotlin' |
   'rust' |
   'haskell' |
-  'typescript';
+  'typescript' |
+  'sql';
 
 const languageStringsMap = new Map<Language, string>([
   ['java', 'Java'],
@@ -39,6 +40,7 @@ const languageStringsMap = new Map<Language, string>([
   ['rust', 'Rust'],
   ['haskell', 'Haskell'],
   ['typescript', 'TypeScript'],
+  ['sql', 'SQL'],
 ]);
 
 export const languagesToString = (language: Language): string => {
