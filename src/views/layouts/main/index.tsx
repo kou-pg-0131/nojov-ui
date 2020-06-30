@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { Container } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../modules';
+import { useDispatch } from 'react-redux';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { jobsActions } from '../../modules/jobsModule';
 import { JobsControllerFactory } from '../../../interfaces/controllers/jobsControllerFactory';
 import { Job } from '../../../domain/job';
+import { JobsPage } from '../../pages/jobs';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,21 +21,29 @@ export const Main: React.FC = () => {
 
   const dispatch = useDispatch();
   const setJobs = (jobs: Job[]) => dispatch(jobsActions.setJobs(jobs));
-  const jobsState = useSelector((state: RootState) => state.jobs);
 
   useEffect(() => {
     (async () => {
       const controller = new JobsControllerFactory().create();
-      const jobs = await controller.getAt(2020)
-      console.log(jobs);
+      const date = new Date();
+
+      const jobs = await (async () => {
+        const jobs = await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
+        if (jobs.length > 0) return jobs;
+
+        return await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate() - 1);
+      })()
+
       setJobs(jobs);
     })();
   }, []);
 
   return (
     <Container component='main' maxWidth='md' className={classes.root}>
-      <button onClick={() => { console.log(jobsState.jobs); }}>hoge</button>
-      main component.
+      <Switch>
+        <Route exact path='/' component={JobsPage}/>
+        <Route       path='*' render={() => <Redirect to='/' />}/>
+      </Switch>
     </Container>
   );
 };
