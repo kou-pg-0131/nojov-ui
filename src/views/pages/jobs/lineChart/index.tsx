@@ -1,6 +1,6 @@
 import React from 'react';
 import { Job } from '../../../../domain/job';
-import { languageToColor } from '../../../../domain/language';
+import { languageToColor, languageToString } from '../../../../domain/language';
 import {
   LineChart as Chart,
   XAxis,
@@ -31,7 +31,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
     const obj: any = { date };
 
     jobs.forEach(job => {
-      obj[job.language] = job.count;
+      obj[languageToString(job.language)] = job.count;
     });
 
     data.push(obj);
@@ -47,7 +47,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
         <Legend />
 
         {languages.map((language, i) =>
-          <Line key={i} type="monotone" dataKey={language} stroke={languageToColor(language)} />
+          <Line key={i} type="monotone" dataKey={languageToString(language)} stroke={languageToColor(language)} />
         )}
       </Chart>
     </ResponsiveContainer>
