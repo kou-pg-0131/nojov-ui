@@ -8,6 +8,7 @@ import { LineChart } from './lineChart';
 import { Sort } from './sort';
 import { Websites } from './websites';
 import { Website } from '../../../domain/website';
+import { Language } from '../../../domain/language';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -50,6 +51,8 @@ export const JobsPage: React.FC = () => {
     self.findIndex((w) => website.name === w.name) === i
   );
 
+  const jobs = jobsState.jobs.filter(job => website === 'all' || job.website.name === website.name);
+
   // render
   return (
     <Box>
@@ -61,7 +64,7 @@ export const JobsPage: React.FC = () => {
         <Box className={classes.sortContainer}>
           <Sort onChange={handleChangeSort}/>
         </Box>
-        <Chart sort={sort} jobs={jobsState.jobs} website={website}/>
+        <Chart sort={sort} jobs={jobs}/>
       </Box>
 
       <LineChart jobs={jobsState.jobsOfThisYear}/>
