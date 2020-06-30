@@ -21,20 +21,24 @@ export const Main: React.FC = () => {
 
   const dispatch = useDispatch();
   const setJobs = (jobs: Job[]) => dispatch(jobsActions.setJobs(jobs));
+  const setJobsOfThisYear = (jobs: Job[]) => dispatch(jobsActions.setJobsOfThisYear(jobs));
 
   useEffect(() => {
     (async () => {
       const controller = new JobsControllerFactory().create();
       const date = new Date();
 
-      const jobs = await (async () => {
+      const jobs = (async () => {
         const jobs = await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
         if (jobs.length > 0) return jobs;
 
         return await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate() - 1);
       })()
 
-      setJobs(jobs);
+      const jobsOfThisYear = controller.getAt(date.getUTCFullYear());
+
+      setJobs(await jobs);
+      setJobsOfThisYear(await jobsOfThisYear);
     })();
   }, []);
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Job } from '../../../../domain/job';
+import { languageToColor } from '../../../../domain/language';
 import {
   LineChart as Chart,
   XAxis,
@@ -9,28 +11,32 @@ import {
   Legend,
   Line,
 } from 'recharts';
+import moment from 'moment';
 
-export const LineChart: React.FC = () => {
-  const data = [
-    {
-      "date": "2020-01-02",
-      "Ruby": 4000,
-      "Python": 2400,
-      "count": 2400
-    },
-    {
-      "date": "2020-01-03",
-      "Ruby": 3000,
-      "Python": 1398,
-      "count": 2210
-    },
-    {
-      "date": "2020-01-04",
-      "Ruby": 2000,
-      "Python": 9800,
-      "count": 2290
-    },
-  ]
+type Props = {
+  jobs: Job[];
+};
+
+export const LineChart: React.FC<Props> = (props: Props) => {
+  const languages = props.jobs.map(job => job.language).filter((language, i, self) => self.indexOf(language) === i);
+
+  const m = new Map<string, Job[]>();
+  props.jobs.forEach(job => {
+    const date = moment(job.date).format('YYYY-MM-DD');
+    m.set(date, m.has(date) ? [...m.get(date)!, job] : [job])
+  });
+
+  const data: any[] = [];
+  m.forEach((jobs, date) => {
+    const obj: any = { date };
+
+    jobs.forEach(job => {
+      obj[job.language] = job.count;
+    });
+
+    data.push(obj);
+  });
+
   return (
     <ResponsiveContainer height={550}>
       <Chart data={data}>
@@ -39,8 +45,10 @@ export const LineChart: React.FC = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="Ruby" stroke="#8884d8" />
-        <Line type="monotone" dataKey="Python" stroke="#82ca9d" />
+
+        {languages.map((language, i) =>
+          <Line key={i} type="monotone" dataKey={language} stroke={languageToColor(language)} />
+        )}
       </Chart>
     </ResponsiveContainer>
   );

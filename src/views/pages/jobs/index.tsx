@@ -64,7 +64,7 @@ export const JobsPage: React.FC = () => {
         <Chart sort={sort} jobs={jobsState.jobs} website={website}/>
       </Box>
 
-      <LineChart/>
+      <LineChart jobs={jobsState.jobsOfThisYear}/>
     </Box>
   );
 };
