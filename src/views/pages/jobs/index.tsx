@@ -52,6 +52,7 @@ export const JobsPage: React.FC = () => {
   );
 
   const jobs = jobsState.jobs.filter(job => website === 'all' || job.website.name === website.name);
+  const jobsOfThisYear = jobsState.jobsOfThisYear.filter(job => website === 'all' || job.website.name === website.name);
 
   // render
   return (
@@ -67,7 +68,10 @@ export const JobsPage: React.FC = () => {
         <Chart sort={sort} jobs={jobs}/>
       </Box>
 
-      <LineChart jobs={jobsState.jobsOfThisYear}/>
+      <Box style={{ opacity: jobsState.fetchedJobsOfThisYear ? 1 : 0.5, pointerEvents: jobsState.fetchedJobsOfThisYear ? 'auto' : 'none' }} className={classes.chartContainer}>
+        {jobsState.fetchedJobsOfThisYear ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
+        <LineChart jobs={jobsOfThisYear}/>
+      </Box>
     </Box>
   );
 };
