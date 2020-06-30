@@ -25,7 +25,15 @@ export const Main: React.FC = () => {
   useEffect(() => {
     (async () => {
       const controller = new JobsControllerFactory().create();
-      const jobs = await controller.getAt(2020);
+      const date = new Date();
+
+      const jobs = await (async () => {
+        const jobs = await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
+        if (jobs.length > 0) return jobs;
+
+        return await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate() - 1);
+      })()
+
       setJobs(jobs);
     })();
   }, []);
