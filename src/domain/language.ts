@@ -17,8 +17,7 @@ export type Language =
   'kotlin' |
   'rust' |
   'haskell' |
-  'typescript' |
-  'sql';
+  'typescript';
 
 const languageStringsMap = new Map<Language, string>([
   ['java', 'Java'],
@@ -40,7 +39,6 @@ const languageStringsMap = new Map<Language, string>([
   ['rust', 'Rust'],
   ['haskell', 'Haskell'],
   ['typescript', 'TypeScript'],
-  ['sql', 'SQL'],
 ]);
 
 const languageColorsMap = new Map<Language, string>([
@@ -63,7 +61,6 @@ const languageColorsMap = new Map<Language, string>([
   ['rust',        '#000000'],
   ['haskell',     '#999999'],
   ['typescript',  '#007ACC'],
-  ['sql',         '#3765AF'],
 ]);
 
 export const languageToString = (language: Language): string => {
