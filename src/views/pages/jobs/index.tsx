@@ -4,6 +4,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../modules';
 import { Chart } from './chart';
+import { LineChart } from './lineChart';
 import { Sort } from './sort';
 import { Websites } from './websites';
 import { Website } from '../../../domain/website';
@@ -62,6 +63,8 @@ export const JobsPage: React.FC = () => {
         </Box>
         <Chart sort={sort} jobs={jobsState.jobs} website={website}/>
       </Box>
+
+      <LineChart/>
     </Box>
   );
 };
