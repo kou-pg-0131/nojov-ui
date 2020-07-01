@@ -7,7 +7,6 @@ import { Chart } from './chart';
 import { LineChart } from './lineChart';
 import { Websites } from './websites';
 import { Website } from '../../../domain/website';
-import qs from 'query-string';
 
 const useStyles = makeStyles(() =>
   createStyles({

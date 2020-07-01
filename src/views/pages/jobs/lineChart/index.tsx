@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Box, Typography, Checkbox, FormControl, FormControlLabel } from '@material-ui/core';
+import { Box, Typography, Checkbox, FormControl, FormControlLabel } from '@material-ui/core';
 import { IndeterminateCheckBox as IndeterminateCheckBoxIcon, CheckBox as CheckBoxIcon } from '@material-ui/icons';
 import { Job } from '../../../../domain/job';
 import { languageToColor, languageToString } from '../../../../domain/language';
