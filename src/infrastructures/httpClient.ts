@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 export interface IHttpClient {
-  get(uri: string, headers?: any): Promise<any>;
+  get(uri: string): Promise<any>;
 }
 
 export class HttpClient implements IHttpClient {
-  public async get(uri: string, headers?: any): Promise<any> {
-    const res = await axios.get(uri, { data: {}, headers: headers });
+  public async get(uri: string): Promise<any> {
+    const res = await axios.get(uri);
     return res.data;
   }
 }
