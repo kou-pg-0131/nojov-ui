@@ -34,7 +34,6 @@ const useStyles = makeStyles(() =>
 );
 
 type Props = {
-  website: 'all' | Website;
   jobs: Job[];
   sort: boolean;
 };
@@ -43,7 +42,7 @@ export const Chart: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const map = new Map<Language, number>([]);
-  props.jobs.filter(job => props.website === 'all' || job.website.name === props.website.name).forEach(job => {
+  props.jobs.forEach(job => {
     map.set(job.language, (map.get(job.language) || 0) + job.count);
   });
 
