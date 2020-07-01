@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CircularProgress, Box } from '@material-ui/core';
+import { CircularProgress, Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../modules';
@@ -41,11 +41,13 @@ export const JobsPage: React.FC = () => {
   // states
   const [website, setWebsite] = useState<'all' | Website>('all');
   const [sort, setSort] = useState<boolean>(false);
+  const [tabIndex, setTabIndex] = useState<number>(0);
   const jobsState = useSelector((state: RootState) => state.jobs);
 
   // events
   const handleChangeSort = (checked: boolean): void => setSort(checked);
   const handleChangeWebsite = (website: 'all' | Website): void => setWebsite(website);
+  const handleChangeTab = (_: any, val: number) => setTabIndex(val);
 
   const websites: Website[] = jobsState.jobs.map(job => job.website).filter((website, i, self) =>
     self.findIndex((w) => website.name === w.name) === i
@@ -57,18 +59,34 @@ export const JobsPage: React.FC = () => {
   // render
   return (
     <Box>
-      <Box style={{ opacity: jobsState.fetched ? 1 : 0.5, pointerEvents: jobsState.fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
+      <Box className={classes.websitesContainer}>
+        <Websites onChange={handleChangeWebsite} websites={websites}/>
+      </Box>
+
+      <Box>
+        <Paper>
+          <Tabs
+            centered
+            value={tabIndex}
+            onChange={handleChangeTab}
+          >
+            <Tab label='比較'/>
+            <Tab label='推移'/>
+          </Tabs>
+        </Paper>
+      </Box>
+
+      {/* Bar */}
+      <Box hidden={tabIndex !== 0} style={{ opacity: jobsState.fetched ? 1 : 0.5, pointerEvents: jobsState.fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
         {jobsState.fetched ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
-        <Box className={classes.websitesContainer}>
-          <Websites onChange={handleChangeWebsite} websites={websites}/>
-        </Box>
         <Box className={classes.sortContainer}>
           <Sort onChange={handleChangeSort}/>
         </Box>
         <Chart sort={sort} jobs={jobs}/>
       </Box>
 
-      <Box style={{ opacity: jobsState.fetchedJobsOfThisYear ? 1 : 0.5, pointerEvents: jobsState.fetchedJobsOfThisYear ? 'auto' : 'none' }} className={classes.chartContainer}>
+      {/* Line */}
+      <Box hidden={tabIndex !== 1} style={{ opacity: jobsState.fetchedJobsOfThisYear ? 1 : 0.5, pointerEvents: jobsState.fetchedJobsOfThisYear ? 'auto' : 'none' }} className={classes.chartContainer}>
         {jobsState.fetchedJobsOfThisYear ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
         <LineChart jobs={jobsOfThisYear}/>
       </Box>
