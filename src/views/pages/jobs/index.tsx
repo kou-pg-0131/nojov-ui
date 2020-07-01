@@ -5,10 +5,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../modules';
 import { Chart } from './chart';
 import { LineChart } from './lineChart';
-import { Sort } from './sort';
 import { Websites } from './websites';
 import { Website } from '../../../domain/website';
-import { Language } from '../../../domain/language';
 import qs from 'query-string';
 
 const useStyles = makeStyles(() =>
@@ -25,9 +23,6 @@ const useStyles = makeStyles(() =>
       width: '100%',
       top: 0,
       left: 0,
-    },
-    sortContainer: {
-      textAlign: 'right',
     },
     websitesContainer: {
       marginBottom: 15,
@@ -47,12 +42,10 @@ export const JobsPage: React.FC<Props> = (props: Props) => {
 
   // states
   const [website, setWebsite] = useState<'all' | Website>('all');
-  const [sort, setSort] = useState<boolean>(false);
-  const [tabIndex, setTabIndex] = useState<number>(1);
+  const [tabIndex, setTabIndex] = useState<number>(0);
   const jobsState = useSelector((state: RootState) => state.jobs);
 
   // events
-  const handleChangeSort = (checked: boolean): void => setSort(checked);
   const handleChangeWebsite = (website: 'all' | Website): void => setWebsite(website);
   const handleChangeTab = (_: any, val: number) => setTabIndex(val);
 
@@ -86,10 +79,7 @@ export const JobsPage: React.FC<Props> = (props: Props) => {
       {/* Bar */}
       <Box hidden={tabIndex !== 0} style={{ opacity: jobsState.fetched ? 1 : 0.5, pointerEvents: jobsState.fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
         {jobsState.fetched ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
-        <Box className={classes.sortContainer}>
-          <Sort onChange={handleChangeSort}/>
-        </Box>
-        <Chart sort={sort} jobs={jobs}/>
+        <Chart jobs={jobs}/>
       </Box>
 
       {/* Line */}

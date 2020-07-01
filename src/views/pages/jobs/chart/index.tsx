@@ -1,9 +1,11 @@
-import React from 'react';
-import { Box } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Box, Typography } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Job } from '../../../../domain/job';
 import { Website } from '../../../../domain/website';
+import { Sort } from './sort';
 import { Language, languageToString, languageToColor } from '../../../../domain/language';
+import moment from 'moment';
 import {
   BarChart,
   Bar,
@@ -20,6 +22,11 @@ const useStyles = makeStyles(() =>
     root: {
       position: 'relative',
     },
+    header: {
+      textAlign: 'right',
+    },
+    sort: {
+    },
     circle: {
       display: 'flex',
       justifyContent: 'center',
@@ -35,11 +42,13 @@ const useStyles = makeStyles(() =>
 
 type Props = {
   jobs: Job[];
-  sort: boolean;
 };
 
 export const Chart: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
+
+  const [sort, setSort] = useState<boolean>(false);
+  const handleChangeSort = (checked: boolean): void => setSort(checked);
 
   const map = new Map<Language, number>([]);
   props.jobs.forEach(job => {
@@ -48,11 +57,21 @@ export const Chart: React.FC<Props> = (props: Props) => {
 
   const data = (() => {
     const rows = Array.from(map).map(([language, count]) => ({ name: languageToString(language), '求人数': count, color: languageToColor(language) }));
-    return props.sort ? rows.sort((a, b) => b['求人数'] - a['求人数']) : rows;
+    return sort ? rows.sort((a, b) => b['求人数'] - a['求人数']) : rows;
   })();
+
+  const updatedAt = props.jobs.slice().sort((a, b) => a.date < b.date ? 1 : -1)[0]?.date;
 
   return (
     <Box className={classes.root}>
+      <Box className={classes.header}>
+        <Sort onChange={handleChangeSort}/>
+        <Box>
+          <small className={classes.sort}>
+            最終更新日時: <time dateTime={updatedAt}>{moment(updatedAt).format('YYYY/MM/DD HH:mm')}</time>
+          </small>
+        </Box>
+      </Box>
       <ResponsiveContainer height={550}>
         <BarChart
           layout='vertical'
