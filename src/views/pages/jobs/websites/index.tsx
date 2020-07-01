@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Website } from '../../../../domain/website';
 
 type Props = {
@@ -8,13 +8,17 @@ type Props = {
   onChange: (website: 'all' | Website) => void;
 };
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       minWidth: 160,
     },
     list: {
       textAlign: 'center',
+      fontSize: 24,
+      [theme.breakpoints.down('sm')]: {
+        fontSize: 18,
+      },
     },
   })
 );

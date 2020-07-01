@@ -21,7 +21,7 @@ export class NojovAPIClient implements IAPIClient {
     }
 
     const url = this.uriBuilder.join(...paths);
-    const res = await this.httpClient.get(url);
+    const res = await this.httpClient.get(url, { 'Accept-Encoding': 'gzip' });
 
     return res;
   }
