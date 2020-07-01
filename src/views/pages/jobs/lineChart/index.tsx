@@ -84,7 +84,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
             <FormControlLabel
               labelPlacement='end'
               label={<Typography>{languageToString(language)}</Typography>}
-              control={<Checkbox value={language} onChange={handleCheck} checked={!!checkedLanguages[language]} style={{ paddingRight: 3, color: languageToColor(language) }}/>}
+              control={<Checkbox value={language} onChange={handleCheck} checked={!!checkedLanguages[language]} style={{ marginLeft: 4, padding: 4.5, color: languageToColor(language) }}/>}
             />
           </FormControl>
         )}
