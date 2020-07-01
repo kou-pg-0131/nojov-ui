@@ -94,7 +94,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis />
-          <Tooltip/>
+          <Tooltip wrapperStyle={{ zIndex: 999 }}/>
 
           {languages.map((language, i) =>
             <Line key={i} strokeWidth={2} type="monotone" dataKey={languageToString(language)} stroke={languageToColor(language)} />
