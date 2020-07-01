@@ -28,6 +28,9 @@ const useStyles = makeStyles(() =>
       marginBottom: 15,
       textAlign: 'right',
     },
+    tab: {
+      width: '50%',
+    },
   })
 );
 
@@ -70,8 +73,8 @@ export const JobsPage: React.FC<Props> = (props: Props) => {
             value={tabIndex}
             onChange={handleChangeTab}
           >
-            <Tab label='比較'/>
-            <Tab label='推移'/>
+            <Tab label='比較' className={classes.tab}/>
+            <Tab label='推移' className={classes.tab}/>
           </Tabs>
         </Paper>
       </Box>
