@@ -23,7 +23,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
   const languages = props.jobs.map(job => job.language).filter((language, i, self) => self.indexOf(language) === i);
 
   useEffect(() => {
-    setCheckedLanguages({ ...Object.fromEntries(languages.map(language => [language, true])), ...checkedLanguages })
+    setCheckedLanguages(Object.fromEntries(languages.map(language => [language, true])));
   }, [props.jobs]);
 
   const handleCheck = (e: { target: { value: string; checked: boolean; } }) => {
@@ -84,7 +84,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
             <FormControlLabel
               labelPlacement='end'
               label={<Typography>{languageToString(language)}</Typography>}
-              control={<Checkbox value={language} onChange={handleCheck} checked={!!checkedLanguages[language]} style={{ color: languageToColor(language) }}/>}
+              control={<Checkbox value={language} onChange={handleCheck} checked={!!checkedLanguages[language]} style={{ paddingRight: 3, color: languageToColor(language) }}/>}
             />
           </FormControl>
         )}
@@ -94,7 +94,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis />
-          <Tooltip />
+          <Tooltip/>
 
           {languages.map((language, i) =>
             <Line key={i} strokeWidth={2} type="monotone" dataKey={languageToString(language)} stroke={languageToColor(language)} />
