@@ -9,6 +9,7 @@ import { Sort } from './sort';
 import { Websites } from './websites';
 import { Website } from '../../../domain/website';
 import { Language } from '../../../domain/language';
+import qs from 'query-string';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -35,13 +36,19 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const JobsPage: React.FC = () => {
+type Props = {
+  location: {
+    search: string;
+  };
+};
+
+export const JobsPage: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   // states
   const [website, setWebsite] = useState<'all' | Website>('all');
   const [sort, setSort] = useState<boolean>(false);
-  const [tabIndex, setTabIndex] = useState<number>(0);
+  const [tabIndex, setTabIndex] = useState<number>(1);
   const jobsState = useSelector((state: RootState) => state.jobs);
 
   // events
