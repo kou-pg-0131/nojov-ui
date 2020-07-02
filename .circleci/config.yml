@@ -81,6 +81,7 @@ jobs:
         type: string
     steps:
       - checkout
+      - setup_aws_credentials
       - run:
           name: install aws-cli
           command: |
