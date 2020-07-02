@@ -6,7 +6,7 @@ orbs:
 executors:
   node:
     docker:
-      - image: node:12.18.0
+      - image: node:12.18.2-alpine
 
   terraform:
     docker:
@@ -65,6 +65,10 @@ jobs:
     executor: node
     steps:
       - checkout
+      - run:
+          name: install required commands
+          command: |
+            apk --update add curl bash
       - yarn_install
       # - run:
       #     name: test
@@ -74,12 +78,34 @@ jobs:
           command: yarn run build
       - slack/status
 
+  deploy:
+    executor: node
+    parameters:
+      stage:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: install required commands
+          command: |
+            apk --update add python curl bash
+            curl https://bootstrap.pypa.io/get-pip.py | python
+            pip install awscli==1.18.46
+      - yarn_install
+      - run:
+          name: build
+          command: yarn run build
+      - run:
+          name: deploy
+          command: aws s3 sync ./build/ s3://nojov-ui-<< parameters.stage >>-deployment/ --delete
+      - slack/status
+
   tf_plan:
     executor: terraform
     steps:
       - checkout
       - run:
-          name: install required command
+          name: install required commands
           command: apk --update add bash curl
       - setup_aws_credentials
       - terraform:
@@ -125,6 +151,13 @@ workflows:
       #
 
       - tf_apply:
+          name: tf_apply_dev
           stage: dev
           requires:
             - approval_deploy_dev
+
+      - deploy:
+          name: deploy_dev
+          stage: dev
+          requires:
+            - tf_apply_dev
