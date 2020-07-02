@@ -41,7 +41,7 @@ export const Main: React.FC = () => {
       setJobs(await jobs);
       setJobsOfThisYear(await jobsOfThisYear);
     })();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container component='main' maxWidth='md' className={classes.root}>
