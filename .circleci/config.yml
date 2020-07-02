@@ -86,8 +86,44 @@ jobs:
           command: plan
       - slack/status
 
+  tf_apply:
+    executor: terraform
+    parameters:
+      stage:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: install required command
+          command: apk --update add bash curl
+      - setup_aws_credentials
+      - terraform:
+          stage: << parameters.stage >>
+          command: apply -auto-approve
+      - slack/status
+
 workflows:
   build:
     jobs:
       - test
       - tf_plan
+
+      - slack/approval-notification:
+          requires:
+            - test
+            - tf_plan
+
+      - approval_deploy_dev:
+          type: approval
+          requires:
+            - test
+            - tf_plan
+
+      #
+      # dev
+      #
+
+      - tf_apply:
+          stage: dev
+          requires:
+            - approval_deploy_dev
