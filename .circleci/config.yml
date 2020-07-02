@@ -4,6 +4,10 @@ orbs:
   slack: circleci/slack@3.4.2
 
 executors:
+  node:
+    docker:
+      - image: node:12.18.0
+
   terraform:
     docker:
       - image: hashicorp/terraform:0.12.24
@@ -24,13 +28,6 @@ commands:
             echo '[default]'           > ~/.aws/config
             echo "region = us-east-1" >> ~/.aws/config
 
-  install_yarn:
-    steps:
-      - run:
-          name: install yarn
-          command: |
-            curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
-            echo 'export PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH' >> $BASH_ENV
   yarn_install:
     steps:
       - restore_cache:
@@ -64,6 +61,18 @@ commands:
           path: terraform/envs/<< parameters.stage >>/terraform.log
 
 jobs:
+  test:
+    executor: node
+    steps:
+      - checkout
+      - yarn_install
+      # - run:
+      #     name: test
+      #     command: yarn run test
+      - run:
+          name: build
+          command: yarn run build
+
   tf_plan:
     executor: terraform
     steps:
@@ -80,4 +89,5 @@ jobs:
 workflows:
   build:
     jobs:
+      - test
       - tf_plan
