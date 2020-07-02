@@ -72,6 +72,7 @@ jobs:
       - run:
           name: build
           command: yarn run build
+      - slack/status
 
   tf_plan:
     executor: terraform
