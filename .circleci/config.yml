@@ -157,3 +157,44 @@ workflows:
           stage: dev
           requires:
             - tf_apply_dev
+
+      - slack/approval-notification:
+          requires:
+            - deploy_dev
+          # filters:
+          #   branches:
+          #     only:
+          #       - develop
+
+      - approval_deploy:
+          type: approval
+          requires:
+            - deploy_dev
+          # filters:
+          #   branches:
+          #     only:
+          #       - develop
+
+      #
+      # stg
+      #
+
+      - tf_apply:
+          name: tf_apply_stg
+          stage: stg
+          requires:
+            - approval_deploy
+          # filters:
+          #   branches:
+          #     only:
+          #       - develop
+
+      - deploy:
+          name: deploy_stg
+          stage: stg
+          requires:
+            - tf_apply_stg
+          # filters:
+          #   branches:
+          #     only:
+          #       - develop
