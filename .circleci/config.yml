@@ -107,6 +107,9 @@ jobs:
       - terraform:
           stage: dev
           command: plan
+      - terraform:
+          stage: stg
+          command: plan
       - slack/status
 
   tf_apply:
