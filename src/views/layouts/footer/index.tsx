@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -16,6 +17,13 @@ const useStyles = makeStyles(() =>
       textAlign: 'center',
       width: '100%',
     },
+    copyRight: {
+      fontSize: 14,
+    },
+    privacyPolicyLink: {
+      color: '#fff',
+      fontSize: 12,
+    },
   })
 );
 
@@ -24,9 +32,14 @@ export const Footer: React.FC = () => {
 
   return (
     <Box component='footer' className={classes.root}>
-      <Typography component='small'>
-        &copy; 2020 koki sato
-      </Typography>
+      <Box>
+        <Typography component='small' className={classes.copyRight}>
+          &copy; 2020 koki sato
+        </Typography>
+      </Box>
+      <Box>
+        <Link to='/privacy-policy' className={classes.privacyPolicyLink}>プライバシーポリシー</Link>
+      </Box>
     </Box>
   );
 };
