@@ -92,6 +92,25 @@ jobs:
           name: build
           command: yarn run build
       - run:
+          name: create dotenv
+          command: |
+            case << parameters.stage >> in
+              dev)
+                API_ORIGIN=https://dev.api.nojov.kou-pg.com
+              ;;
+              stg)
+                API_ORIGIN=https://stg.api.nojov.kou-pg.com
+              ;;
+              prod)
+                API_ORIGIN=https://api.nojov.kou-pg.com
+              ;;
+              *)
+                echo 'invalid stage!: << parameters.stage >>'
+                exit 1
+            esac
+
+            echo "REACT_APP_API_ORIGIN=${API_ORIGIN}" > .env
+      - run:
           name: deploy
           command: aws s3 sync ./build/ s3://nojov-ui-<< parameters.stage >>-deployment/ --delete
       - slack/status
