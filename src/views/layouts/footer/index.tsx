@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
-      backgroundColor: '#0D1321',
+      backgroundColor: '#333333',
       boxShadow: '0px -2px 4px -1px rgba(0,0,0,0.2), 0px -4px 5px 0px rgba(0,0,0,0.14), 0px -1px 10px 0px rgba(0,0,0,0.12)',
       bottom: 0,
       color: '#fff',
-      height: 60,
+      height: 80,
       left: 0,
-      padding: 8,
+      paddingTop: 18,
       position: 'absolute',
       textAlign: 'center',
       width: '100%',
