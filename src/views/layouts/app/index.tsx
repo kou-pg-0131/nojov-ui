@@ -14,7 +14,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     root: {
       minHeight: '100vh',
-      paddingBottom: 60,
+      paddingBottom: 80,
       position: 'relative',
     },
   })

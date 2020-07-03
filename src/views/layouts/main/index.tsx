@@ -7,6 +7,7 @@ import { jobsActions } from '../../modules/jobsModule';
 import { JobsControllerFactory } from '../../../interfaces/controllers/jobsControllerFactory';
 import { Job } from '../../../domain/job';
 import { JobsPage } from '../../pages/jobs';
+import { PrivacyPolicyPage } from '../../pages/privacyPolicy';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -46,8 +47,9 @@ export const Main: React.FC = () => {
   return (
     <Container component='main' maxWidth='md' className={classes.root}>
       <Switch>
-        <Route exact path='/' component={JobsPage}/>
-        <Route       path='*' render={() => <Redirect to='/' />}/>
+        <Route exact path='/'              component={JobsPage}/>
+        <Route exact path='/privacy-policy' component={PrivacyPolicyPage}/>
+        <Route       path='*'              render={() => <Redirect to='/' />}/>
       </Switch>
     </Container>
   );
