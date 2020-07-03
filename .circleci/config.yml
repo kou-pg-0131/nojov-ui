@@ -89,9 +89,6 @@ jobs:
             pip install awscli==1.18.46
       - yarn_install
       - run:
-          name: build
-          command: yarn run build
-      - run:
           name: create dotenv
           command: |
             case << parameters.stage >> in
@@ -110,6 +107,9 @@ jobs:
             esac
 
             echo "REACT_APP_API_ORIGIN=${API_ORIGIN}" > .env
+      - run:
+          name: build
+          command: yarn run build
       - run:
           name: deploy
           command: aws s3 sync ./build/ s3://nojov-ui-<< parameters.stage >>-deployment/ --delete
