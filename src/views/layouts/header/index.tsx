@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
     <AppBar position='static' className={classes.root}>
       <Toolbar>
         <Link to='/' className={classes.logoLink}>
-          <Typography className={classes.logoText}>
+          <Typography variant='h1' className={classes.logoText}>
             Nojov
           </Typography>
         </Link>
