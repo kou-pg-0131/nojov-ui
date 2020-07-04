@@ -3,11 +3,11 @@ import { CircularProgress, Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../modules';
-import { Website } from '../../../domain';
+import { Language, Website } from '../../../domain';
 import { Chart } from './chart';
 import { LineChart } from './lineChart';
 import { Websites } from './websites';
-import { Table } from './table';
+import { LanguagesTable } from './table';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -53,6 +53,21 @@ export const JobsPage: React.FC = () => {
   const jobs = jobsState.jobs.filter(job => website === 'all' || job.website.name === website.name);
   const jobsOfThisYear = jobsState.jobsOfThisYear.filter(job => website === 'all' || job.website.name === website.name);
 
+  const languages = (() => {
+    const rows: { name: Language; count: number }[] = [];
+
+    const m = new Map<Language, number>([]);
+    jobs.forEach(job => {
+      m.set(job.language, (m.get(job.language) || 0) + job.count);
+    });
+
+    m.forEach((count, name) => {
+      rows.push({ name, count });
+    });
+
+    return rows;
+  })();
+
   // render
   return (
     <Box>
@@ -81,7 +96,7 @@ export const JobsPage: React.FC = () => {
         </Box>
 
         <Box>
-          <Table jobs={jobs} showLink={website !== 'all'}/>
+          <LanguagesTable languages={languages}/>
         </Box>
       </Box>
 
