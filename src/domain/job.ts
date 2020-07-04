@@ -1,5 +1,4 @@
-import { Website } from './website';
-import { Language } from './language';
+import { Website, Language } from '.';
 
 export type Job = {
   date: string;

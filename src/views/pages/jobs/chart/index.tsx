@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Job } from '../../../../domain/job';
+import { Job } from '../../../../domain';
+import { Language, languageToString, languageToColor } from '../../../../domain';
 import { Sort } from './sort';
-import { Language, languageToString, languageToColor } from '../../../../domain/language';
 import moment from 'moment';
 import {
   BarChart,

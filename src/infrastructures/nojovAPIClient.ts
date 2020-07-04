@@ -1,7 +1,6 @@
-import { Job } from '../domain/job';
-import { IAPIClient } from '../interfaces/gateways/apiClient';
-import { IHttpClient } from './httpClient';
-import { IURIBuilder } from './uriBuilder';
+import { Job } from '../domain';
+import { IAPIClient } from '../interfaces/gateways';
+import { IHttpClient, IURIBuilder } from '.';
 
 export class NojovAPIClient implements IAPIClient {
   constructor(

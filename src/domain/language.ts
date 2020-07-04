@@ -69,4 +69,4 @@ export const languageToString = (language: Language): string => {
 
 export const languageToColor = (language: Language): string => {
   return languageColorsMap.get(language) || '#3366CB';
-}
+};

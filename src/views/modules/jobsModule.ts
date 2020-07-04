@@ -1,4 +1,4 @@
-import { Job } from '../../domain/job';
+import { Job } from '../../domain';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type State = {

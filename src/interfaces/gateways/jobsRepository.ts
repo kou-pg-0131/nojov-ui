@@ -1,6 +1,6 @@
-import { Job } from '../../domain/job';
-import { IJobsRepository } from '../../usecases/jobsRepository';
-import { IAPIClient } from './apiClient';
+import { Job } from '../../domain';
+import { IJobsRepository } from '../../usecases';
+import { IAPIClient } from '.';
 
 export class JobsRepository implements IJobsRepository {
   constructor(

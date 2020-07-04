@@ -1,12 +1,7 @@
 import React from 'react';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Website } from '../../../../domain/website';
-
-type Props = {
-  websites: Website[];
-  onChange: (website: 'all' | Website) => void;
-};
+import { Website } from '../../../../domain';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,6 +18,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+type Props = {
+  websites: Website[];
+  onChange: (website: 'all' | Website) => void;
+};
+
 export const Websites: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
@@ -33,8 +33,7 @@ export const Websites: React.FC<Props> = (props: Props) => {
       return;
     }
 
-    const selected = props.websites.find((website) => website.name === name)!;
-    props.onChange(selected);
+    props.onChange(props.websites.find((website) => website.name === name) || 'all');
   };
 
   return (

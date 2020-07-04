@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Checkbox, FormControl, FormControlLabel } from '@material-ui/core';
 import { IndeterminateCheckBox as IndeterminateCheckBoxIcon, CheckBox as CheckBoxIcon } from '@material-ui/icons';
-import { Job } from '../../../../domain/job';
-import { languageToColor, languageToString } from '../../../../domain/language';
+import { Job, languageToColor, languageToString } from '../../../../domain';
 import {
   LineChart as Chart,
   XAxis,
@@ -19,7 +18,7 @@ type Props = {
 };
 
 export const LineChart: React.FC<Props> = (props: Props) => {
-  const [checkedLanguages, setCheckedLanguages] = useState<any>({});
+  const [checkedLanguages, setCheckedLanguages] = useState<any>({}); // eslint-disable-line @typescript-eslint/no-explicit-any
   const languages = props.jobs.map(job => job.language).filter((language, i, self) => self.indexOf(language) === i);
 
   useEffect(() => {
@@ -31,6 +30,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
   };
 
   const getAllCheckState = (): 'all' | 'indeterminate' | 'none' => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     switch (Object.entries(checkedLanguages).filter(([_, b]) => b).length) {
       case languages.length:
         return 'all';
@@ -48,14 +48,14 @@ export const LineChart: React.FC<Props> = (props: Props) => {
   const m = new Map<string, Job[]>();
   props.jobs.forEach(job => {
     const date = moment(job.date).format('YYYY-MM-DD');
-    m.set(date, m.has(date) ? [...m.get(date)!, job] : [job])
+    m.set(date, [...(m.get(date) || []), job]);
   });
 
   const data = (() => {
-    const rows: any[] = [];
+    const rows: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     m.forEach((jobs, date) => {
-      const obj: any = { date };
+      const obj: any = { date }; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       jobs.filter(job => !!checkedLanguages[job.language]).forEach(job => {
         obj[languageToString(job.language)] = job.count;
@@ -80,7 +80,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
       </Box>
       <Box>
         {languages.map(language =>
-          <FormControl>
+          <FormControl key={language}>
             <FormControlLabel
               labelPlacement='end'
               label={<Typography>{languageToString(language)}</Typography>}
@@ -103,4 +103,4 @@ export const LineChart: React.FC<Props> = (props: Props) => {
       </ResponsiveContainer>
     </Box>
   );
-}
+};

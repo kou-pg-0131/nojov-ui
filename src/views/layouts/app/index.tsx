@@ -4,10 +4,8 @@ import { ThemeProvider, createStyles, makeStyles } from '@material-ui/core/style
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { createStore } from '../../modules/store';
-import { Header } from '../header';
-import { Main } from '../main';
-import { Footer } from '../footer';
+import { createStore } from '../../modules';
+import { Header, Main, Footer } from '..';
 import { customTheme } from './customTheme';
 
 const useStyles = makeStyles(() =>
