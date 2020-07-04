@@ -43,7 +43,7 @@ export const PrivacyPolicyPage: React.FC = () => {
     <Box>
       <Typography variant='h2' className={classes.pageTitle}>プライバシーポリシー</Typography>
       {items.map(item =>
-        <Box className={classes.item}>
+        <Box key={item.title} className={classes.item}>
           <Typography variant='h3' className={classes.title}>{item.title}</Typography>
           <Typography dangerouslySetInnerHTML={{ __html: item.text }} className={classes.text}></Typography>
         </Box>

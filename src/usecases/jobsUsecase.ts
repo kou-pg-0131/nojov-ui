@@ -1,5 +1,5 @@
-import { Job } from '../domain/job';
-import { IJobsRepository } from './jobsRepository';
+import { Job } from '../domain';
+import { IJobsRepository } from '.';
 
 export interface IJobsUsecase {
   getAt(year: number, month?: number, date?: number): Promise<Job[]>;

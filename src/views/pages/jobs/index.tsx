@@ -3,10 +3,10 @@ import { CircularProgress, Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../modules';
+import { Website } from '../../../domain';
 import { Chart } from './chart';
 import { LineChart } from './lineChart';
 import { Websites } from './websites';
-import { Website } from '../../../domain/website';
 
 const useStyles = makeStyles(() =>
   createStyles({

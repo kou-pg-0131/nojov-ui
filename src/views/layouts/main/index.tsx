@@ -3,11 +3,10 @@ import { Container } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { jobsActions } from '../../modules/jobsModule';
-import { JobsControllerFactory } from '../../../interfaces/controllers/jobsControllerFactory';
-import { Job } from '../../../domain/job';
-import { JobsPage } from '../../pages/jobs';
-import { PrivacyPolicyPage } from '../../pages/privacyPolicy';
+import { jobsActions } from '../../modules';
+import { JobsControllerFactory } from '../../../interfaces/controllers';
+import { Job } from '../../../domain';
+import { JobsPage, PrivacyPolicyPage } from '../../pages';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -42,7 +41,7 @@ export const Main: React.FC = () => {
       setJobs(await jobs);
       setJobsOfThisYear(await jobsOfThisYear);
     })();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Container component='main' maxWidth='md' className={classes.root}>

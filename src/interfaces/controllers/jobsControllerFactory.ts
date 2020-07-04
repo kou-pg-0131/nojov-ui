@@ -1,10 +1,8 @@
 import config from '../../config';
-import { JobsUsecase } from '../../usecases/jobsUsecase';
-import { JobsRepository } from '../gateways/jobsRepository';
-import { IJobsController, JobsController } from './jobsController';
-import { NojovAPIClient } from '../../infrastructures/nojovAPIClient';
-import { HttpClient } from '../../infrastructures/httpClient';
-import { URIBuilder } from '../../infrastructures/uriBuilder';
+import { JobsUsecase } from '../../usecases';
+import { JobsRepository } from '../gateways';
+import { IJobsController, JobsController } from '.';
+import { NojovAPIClient, HttpClient, URIBuilder } from '../../infrastructures';
 
 export class JobsControllerFactory {
   public create(): IJobsController {
