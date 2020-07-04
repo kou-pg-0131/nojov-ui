@@ -23,7 +23,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     setCheckedLanguages(Object.fromEntries(languages.map(language => [language, true])));
-  }, [props.jobs]);
+  }, [props.jobs]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCheck = (e: { target: { value: string; checked: boolean; } }) => {
     setCheckedLanguages({ ...checkedLanguages, [e.target.value]: e.target.checked });
