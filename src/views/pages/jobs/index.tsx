@@ -7,6 +7,7 @@ import { Website } from '../../../domain';
 import { Chart } from './chart';
 import { LineChart } from './lineChart';
 import { Websites } from './websites';
+import { Table } from './table';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -75,7 +76,13 @@ export const JobsPage: React.FC = () => {
       {/* Bar */}
       <Box hidden={tabIndex !== 0} style={{ opacity: jobsState.fetched ? 1 : 0.5, pointerEvents: jobsState.fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
         {jobsState.fetched ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
-        <Chart jobs={jobs}/>
+        <Box>
+          <Chart jobs={jobs}/>
+        </Box>
+
+        <Box>
+          <Table jobs={jobs} showLink={website !== 'all'}/>
+        </Box>
       </Box>
 
       {/* Line */}
