@@ -34,7 +34,7 @@ export const Main: React.FC = () => {
 
         date.setDate(date.getUTCDate() - 1);
         return await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
-      })()
+      })();
 
       const jobsOfThisYear = controller.getAt(date.getUTCFullYear());
 

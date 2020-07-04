@@ -6,7 +6,7 @@ import { NojovAPIClient, HttpClient, URIBuilder } from '../../infrastructures';
 
 export class JobsControllerFactory {
   public create(): IJobsController {
-    const httpClient = new HttpClient()
+    const httpClient = new HttpClient();
     const uriBuilder = new URIBuilder();
     const apiClient = new NojovAPIClient(config.apiOrigin, httpClient, uriBuilder);
     const repository = new JobsRepository(apiClient);

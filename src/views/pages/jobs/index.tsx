@@ -33,13 +33,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-type Props = {
-  location: {
-    search: string;
-  };
-};
-
-export const JobsPage: React.FC<Props> = (props: Props) => {
+export const JobsPage: React.FC = () => {
   const classes = useStyles();
 
   // states
@@ -49,7 +43,7 @@ export const JobsPage: React.FC<Props> = (props: Props) => {
 
   // events
   const handleChangeWebsite = (website: 'all' | Website): void => setWebsite(website);
-  const handleChangeTab = (_: any, val: number) => setTabIndex(val);
+  const handleChangeTab = (_: any, val: number) => setTabIndex(val); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   const websites: Website[] = jobsState.jobs.map(job => job.website).filter((website, i, self) =>
     self.findIndex((w) => website.name === w.name) === i
