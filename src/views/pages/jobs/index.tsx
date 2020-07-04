@@ -7,7 +7,7 @@ import { Language, Website } from '../../../domain';
 import { Chart } from './chart';
 import { LineChart } from './lineChart';
 import { Websites } from './websites';
-import { LanguagesTable } from './table';
+import { LanguagesTable } from './languagesTable';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -54,15 +54,15 @@ export const JobsPage: React.FC = () => {
   const jobsOfThisYear = jobsState.jobsOfThisYear.filter(job => website === 'all' || job.website.name === website.name);
 
   const languages = (() => {
-    const rows: { name: Language; count: number }[] = [];
+    const rows: { name: Language; count: number; searchUrl: string }[] = [];
 
-    const m = new Map<Language, number>([]);
+    const m = new Map<Language, { count: number; searchUrl: string }>([]);
     jobs.forEach(job => {
-      m.set(job.language, (m.get(job.language) || 0) + job.count);
+      m.set(job.language, { count: (m.get(job.language)?.count || 0) + job.count, searchUrl: job.search_url });
     });
 
-    m.forEach((count, name) => {
-      rows.push({ name, count });
+    m.forEach((url_count, name) => {
+      rows.push({ name, count: url_count.count, searchUrl: url_count.searchUrl });
     });
 
     return rows;
@@ -96,7 +96,7 @@ export const JobsPage: React.FC = () => {
         </Box>
 
         <Box>
-          <LanguagesTable languages={languages}/>
+          <LanguagesTable languages={languages} website={website}/>
         </Box>
       </Box>
 
