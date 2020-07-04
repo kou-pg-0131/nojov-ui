@@ -5,4 +5,5 @@ export type Job = {
   language: Language;
   website: Website;
   count: number;
+  search_url: string;
 };
