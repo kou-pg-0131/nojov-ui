@@ -58,7 +58,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
       const obj: any = { date }; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       jobs.filter(job => !!checkedLanguages[job.language]).forEach(job => {
-        obj[languageToString(job.language)] = job.count;
+        obj[languageToString(job.language)] = (obj[languageToString(job.language)] || 0) + job.count;
       });
 
       rows.push(obj);
