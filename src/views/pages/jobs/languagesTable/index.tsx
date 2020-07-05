@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box, Link, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@material-ui/core';
+import { Box, Link, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@material-ui/core';
 import { Launch as LaunchIcon } from '@material-ui/icons';
 import { Language, languageToString, Website } from '../../../../domain';
 
