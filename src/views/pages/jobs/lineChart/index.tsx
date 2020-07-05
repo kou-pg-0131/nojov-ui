@@ -30,7 +30,6 @@ export const LineChart: React.FC<Props> = (props: Props) => {
   };
 
   const getAllCheckState = (): 'all' | 'indeterminate' | 'none' => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     switch (Object.entries(checkedLanguages).filter(([_, b]) => b).length) {
       case languages.length:
         return 'all';
@@ -58,7 +57,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
       const obj: any = { date }; // eslint-disable-line @typescript-eslint/no-explicit-any
 
       jobs.filter(job => !!checkedLanguages[job.language]).forEach(job => {
-        obj[languageToString(job.language)] = job.count;
+        obj[languageToString(job.language)] = (obj[languageToString(job.language)] || 0) + job.count;
       });
 
       rows.push(obj);

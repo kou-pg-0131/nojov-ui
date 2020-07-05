@@ -21,7 +21,7 @@ export type Language =
 
 const languageStringsMap = new Map<Language, string>([
   ['java', 'Java'],
-  ['c', 'C'],
+  ['c', 'C言語'],
   ['c++', 'C++'],
   ['c#', 'C#'],
   ['php', 'PHP'],

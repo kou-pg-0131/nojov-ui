@@ -3,10 +3,11 @@ import { CircularProgress, Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../modules';
-import { Website } from '../../../domain';
+import { Language, Website } from '../../../domain';
 import { Chart } from './chart';
 import { LineChart } from './lineChart';
 import { Websites } from './websites';
+import { LanguagesTable } from './languagesTable';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -52,6 +53,21 @@ export const JobsPage: React.FC = () => {
   const jobs = jobsState.jobs.filter(job => website === 'all' || job.website.name === website.name);
   const jobsOfThisYear = jobsState.jobsOfThisYear.filter(job => website === 'all' || job.website.name === website.name);
 
+  const languages = (() => {
+    const rows: { name: Language; count: number; searchUrl: string }[] = [];
+
+    const m = new Map<Language, { count: number; searchUrl: string }>([]);
+    jobs.forEach(job => {
+      m.set(job.language, { count: (m.get(job.language)?.count || 0) + job.count, searchUrl: job.search_url });
+    });
+
+    m.forEach((url_count, name) => {
+      rows.push({ name, count: url_count.count, searchUrl: url_count.searchUrl });
+    });
+
+    return rows;
+  })();
+
   // render
   return (
     <Box>
@@ -75,7 +91,13 @@ export const JobsPage: React.FC = () => {
       {/* Bar */}
       <Box hidden={tabIndex !== 0} style={{ opacity: jobsState.fetched ? 1 : 0.5, pointerEvents: jobsState.fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
         {jobsState.fetched ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
-        <Chart jobs={jobs}/>
+        <Box>
+          <Chart jobs={jobs}/>
+        </Box>
+
+        <Box>
+          <LanguagesTable languages={languages} website={website}/>
+        </Box>
       </Box>
 
       {/* Line */}
