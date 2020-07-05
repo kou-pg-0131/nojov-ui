@@ -23,7 +23,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "recharts": "^1.8.5",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "url-join": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,6 +52,7 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/recharts": "^1.8.13",
+    "@types/url-join": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
     "eslint-plugin-react": "^7.20.3"

@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
+
+// material-ui
 import { CircularProgress, Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+
+// redux
 import { useSelector } from 'react-redux';
 import { RootState } from '../../modules';
-import { Language, Website } from '../../../domain';
+
+// components
 import { Chart } from './chart';
 import { LineChart } from './lineChart';
-import { Websites } from './websites';
+import { WebsitesSelect } from './websitesSelect';
 import { LanguagesTable } from './languagesTable';
 
+// other
+import { Language, Website } from '../../../domain';
+
+// styles
 const useStyles = makeStyles(() =>
   createStyles({
     chartContainer: {
@@ -34,6 +43,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
+// component
 export const JobsPage: React.FC = () => {
   const classes = useStyles();
 
@@ -50,29 +60,23 @@ export const JobsPage: React.FC = () => {
     self.findIndex((w) => website.name === w.name) === i
   );
 
-  const jobs = jobsState.jobs.filter(job => website === 'all' || job.website.name === website.name);
+  const jobs           = jobsState.jobs.filter(job => website === 'all' || job.website.name === website.name);
   const jobsOfThisYear = jobsState.jobsOfThisYear.filter(job => website === 'all' || job.website.name === website.name);
 
   const languages = (() => {
-    const rows: { name: Language; count: number; searchUrl: string }[] = [];
-
     const m = new Map<Language, { count: number; searchUrl: string }>([]);
     jobs.forEach(job => {
       m.set(job.language, { count: (m.get(job.language)?.count || 0) + job.count, searchUrl: job.search_url });
     });
 
-    m.forEach((url_count, name) => {
-      rows.push({ name, count: url_count.count, searchUrl: url_count.searchUrl });
-    });
-
-    return rows;
+    return Array.from(m.entries()).map(([name, job]) => ({ name, count: job.count, searchUrl: job.searchUrl }));
   })();
 
   // render
   return (
     <Box>
       <Box className={classes.websitesContainer}>
-        <Websites onChange={handleChangeWebsite} websites={websites}/>
+        <WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>
       </Box>
 
       <Box>

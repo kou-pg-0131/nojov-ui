@@ -1,7 +1,10 @@
 import React from 'react';
+
+// material-ui
 import { Box, Typography } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
+// styles
 const useStyles = makeStyles(() =>
   createStyles({
     pageTitle: {
@@ -21,6 +24,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
+// component
 export const PrivacyPolicyPage: React.FC = () => {
   const classes = useStyles();
 
@@ -41,7 +45,10 @@ export const PrivacyPolicyPage: React.FC = () => {
 
   return (
     <Box>
+      {/* page title */}
       <Typography variant='h2' className={classes.pageTitle}>プライバシーポリシー</Typography>
+
+      {/* policies */}
       {items.map(item =>
         <Box key={item.title} className={classes.item}>
           <Typography variant='h3' className={classes.title}>{item.title}</Typography>

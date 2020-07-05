@@ -1,10 +1,18 @@
 import React from 'react';
+
+// material-ui
 import { CssBaseline, Box } from '@material-ui/core';
 import { ThemeProvider, createStyles, makeStyles } from '@material-ui/core/styles';
+
+// redux
 import { Provider } from 'react-redux';
+import { createStore } from '../../modules';
+
+// react-router
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { createStore } from '../../modules';
+
+// components
 import { Header, Main, Footer } from '..';
 import { customTheme } from './customTheme';
 
