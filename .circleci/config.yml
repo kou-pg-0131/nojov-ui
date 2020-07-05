@@ -66,6 +66,9 @@ jobs:
     steps:
       - checkout
       - yarn_install
+      - run:
+          name: eslint
+          command: yarn run eslint './src/**/*.ts' './src/**/*.tsx'
       # - run:
       #     name: test
       #     command: yarn run test
