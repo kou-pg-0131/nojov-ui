@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Checkbox, FormControl, FormControlLabel } from '@material-ui/core';
-import { IndeterminateCheckBox as IndeterminateCheckBoxIcon, CheckBox as CheckBoxIcon } from '@material-ui/icons';
-import { Job, languageToColor, languageToString } from '../../../../domain';
+
+// material-ui
+import { Box } from '@material-ui/core';
+
+// recharts
 import {
   LineChart as Chart,
   XAxis,
@@ -11,92 +13,72 @@ import {
   ResponsiveContainer,
   Line,
 } from 'recharts';
+
+// components
+import { Checkboxes } from './checkboxes';
+
+// other
+import { Job, Language, languageToColor, languageToString } from '../../../../domain';
 import moment from 'moment';
 
 type Props = {
   jobs: Job[];
 };
 
+// component
 export const LineChart: React.FC<Props> = (props: Props) => {
-  const [checkedLanguages, setCheckedLanguages] = useState<any>({}); // eslint-disable-line @typescript-eslint/no-explicit-any
-  const languages = props.jobs.map(job => job.language).filter((language, i, self) => self.indexOf(language) === i);
+  // states
+  const [checkedLanguages, setCheckedLanguages] = useState<Map<Language, boolean>>(new Map([]));
+  const [languages, setLanguages] = useState<Language[]>([]);
 
+  // did mount
   useEffect(() => {
-    setCheckedLanguages(Object.fromEntries(languages.map(language => [language, true])));
+    const languages = props.jobs.map(job => job.language).filter((language, i, self) => self.indexOf(language) === i);
+
+    setLanguages(languages);
+    setCheckedLanguages(new Map(languages.map(language => [language, true])));
   }, [props.jobs]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleCheck = (e: { target: { value: string; checked: boolean; } }) => {
-    setCheckedLanguages({ ...checkedLanguages, [e.target.value]: e.target.checked });
+  // events
+  const handleCheck = (languages: Map<Language, boolean>): void => {
+    setCheckedLanguages(languages);
   };
-
-  const getAllCheckState = (): 'all' | 'indeterminate' | 'none' => {
-    switch (Object.entries(checkedLanguages).filter(([_, b]) => b).length) {
-      case languages.length:
-        return 'all';
-      case 0:
-        return 'none';
-      default:
-        return 'indeterminate';
-    }
-  };
-
-  const handleClickAllCheck = () => {
-    setCheckedLanguages(Object.fromEntries(languages.map(language => [language, getAllCheckState() === 'none'])));
-  };
-
-  const m = new Map<string, Job[]>();
-  props.jobs.forEach(job => {
-    const date = moment(job.date).format('YYYY-MM-DD');
-    m.set(date, [...(m.get(date) || []), job]);
-  });
 
   const data = (() => {
-    const rows: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+    const m = new Map<string, Job[]>();
 
-    m.forEach((jobs, date) => {
-      const obj: any = { date }; // eslint-disable-line @typescript-eslint/no-explicit-any
-
-      jobs.filter(job => !!checkedLanguages[job.language]).forEach(job => {
-        obj[languageToString(job.language)] = (obj[languageToString(job.language)] || 0) + job.count;
-      });
-
-      rows.push(obj);
+    props.jobs.forEach(job => {
+      const date = moment(job.date).format('YYYY-MM-DD');
+      m.set(date, [...(m.get(date) || []), job]);
     });
 
-    return rows;
+    return Array.from(m.entries()).map(([date, jobs]) => (
+      {
+        date,
+        ...jobs.filter(job => !!checkedLanguages.get(job.language)).reduce((job, current) => (
+          { ...job, [languageToString(current.language)]: (job[languageToString(current.language)] || 0) + current.count }
+        ), {} as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+      }
+    ));
   })();
 
   return (
     <Box>
       <Box>
-        <FormControl>
-          <FormControlLabel
-            labelPlacement='end'
-            label={<Typography>全てチェック</Typography>}
-            control={<Checkbox onClick={handleClickAllCheck} checked={getAllCheckState() !== 'none'} checkedIcon={getAllCheckState() === 'all' ? <CheckBoxIcon/> : <IndeterminateCheckBoxIcon/>}/>}
-          />
-        </FormControl>
+        {/* checkboxes */}
+        <Checkboxes onCheck={handleCheck} languages={checkedLanguages}/>
       </Box>
-      <Box>
-        {languages.map(language =>
-          <FormControl key={language}>
-            <FormControlLabel
-              labelPlacement='end'
-              label={<Typography>{languageToString(language)}</Typography>}
-              control={<Checkbox value={language} onChange={handleCheck} checked={!!checkedLanguages[language]} style={{ marginLeft: 4, padding: 4.5, color: languageToColor(language) }}/>}
-            />
-          </FormControl>
-        )}
-      </Box>
+
+      {/* chart */}
       <ResponsiveContainer height={550}>
         <Chart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip wrapperStyle={{ zIndex: 999 }}/>
+          <CartesianGrid strokeDasharray="3 3"/>
+          <XAxis dataKey="date"/>
+          <YAxis/>
+          <Tooltip itemSorter={(item) => -item.value as number} wrapperStyle={{ zIndex: 999 }}/>
 
           {languages.map((language, i) =>
-            <Line key={i} strokeWidth={2} type="monotone" dataKey={languageToString(language)} stroke={languageToColor(language)} />
+            <Line key={i} strokeWidth={2} type="monotone" dataKey={languageToString(language)} stroke={languageToColor(language)}/>
           )}
         </Chart>
       </ResponsiveContainer>
