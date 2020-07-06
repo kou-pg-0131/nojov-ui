@@ -99,9 +99,11 @@ export const JobsPage: React.FC = () => {
           <Chart jobs={jobs}/>
         </Box>
 
-        <Box>
-          <LanguagesTable languages={languages} website={website}/>
-        </Box>
+        {!jobsState.fetched ? null : (
+          <Box>
+            <LanguagesTable languages={languages} website={website}/>
+          </Box>
+        )}
       </Box>
 
       {/* Line */}
