@@ -36,7 +36,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
     const languages = props.jobs.map(job => job.language).filter((language, i, self) => self.indexOf(language) === i);
 
     setLanguages(languages);
-    setCheckedLanguages(new Map(languages.map(language => [language, true])));
+    setCheckedLanguages(new Map(languages.map(language => [language, checkedLanguages.has(language) ? !!checkedLanguages.get(language) : true])));
   }, [props.jobs]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // events
