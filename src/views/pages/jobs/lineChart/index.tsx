@@ -48,7 +48,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
     const m = new Map<string, Job[]>();
 
     props.jobs.forEach(job => {
-      const date = moment(job.date).format('YYYY-MM-DD');
+      const date = moment(job.date).utc().format('YYYY-MM-DD');
       m.set(date, [...(m.get(date) || []), job]);
     });
 
