@@ -236,7 +236,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - master
 
       - deploy:
           name: deploy_prod
@@ -246,4 +246,4 @@ workflows:
           filters:
             branches:
               only:
-                - develop
+                - master
