@@ -223,3 +223,27 @@ workflows:
             branches:
               only:
                 - develop
+
+      #
+      # prod
+      #
+
+      - tf_apply:
+          name: tf_apply_prod
+          stage: prod
+          requires:
+            - approval_deploy
+          filters:
+            branches:
+              only:
+                - master
+
+      - deploy:
+          name: deploy_prod
+          stage: prod
+          requires:
+            - tf_apply_prod
+          filters:
+            branches:
+              only:
+                - master
