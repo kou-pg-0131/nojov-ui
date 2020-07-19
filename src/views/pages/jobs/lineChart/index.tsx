@@ -60,7 +60,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
         ), {} as any) // eslint-disable-line @typescript-eslint/no-explicit-any
       }
     ));
-  })();
+  })().sort((a, b) => a.date > b.date ? 1 : -1);
 
   return (
     <Box>
