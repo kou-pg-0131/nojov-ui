@@ -78,7 +78,7 @@ export const LineChart: React.FC<Props> = (props: Props) => {
           <Tooltip itemSorter={(item) => -item.value as number} wrapperStyle={{ zIndex: 999 }}/>
 
           {languages.map((language, i) =>
-            <Line key={i} strokeWidth={2} type="monotone" dataKey={languageToString(language)} stroke={languageToColor(language)}/>
+            <Line key={i} dot={false} strokeWidth={2} type="monotone" dataKey={languageToString(language)} stroke={languageToColor(language)}/>
           )}
         </Chart>
       </ResponsiveContainer>
