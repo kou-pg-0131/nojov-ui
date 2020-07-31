@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // material-ui
-import { CircularProgress, Box, Tabs, Tab, Paper } from '@material-ui/core';
+import { CircularProgress, Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 // redux
@@ -10,7 +10,6 @@ import { RootState } from '../../modules';
 
 // components
 import { Chart } from './chart';
-import { LineChart } from './lineChart';
 import { WebsitesSelect } from './websitesSelect';
 import { LanguagesTable } from './languagesTable';
 
@@ -49,19 +48,16 @@ export const JobsPage: React.FC = () => {
 
   // states
   const [website, setWebsite] = useState<'all' | Website>('all');
-  const [tabIndex, setTabIndex] = useState<number>(0);
   const jobsState = useSelector((state: RootState) => state.jobs);
 
   // events
   const handleChangeWebsite = (website: 'all' | Website): void => setWebsite(website);
-  const handleChangeTab = (_: any, val: number) => setTabIndex(val); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   const websites: Website[] = jobsState.jobs.map(job => job.website).filter((website, i, self) =>
     self.findIndex((w) => website.name === w.name) === i
   );
 
   const jobs           = jobsState.jobs.filter(job => website === 'all' || job.website.name === website.name);
-  const jobsOfThisYear = jobsState.jobsOfThisYear.filter(job => website === 'all' || job.website.name === website.name);
 
   const languages = (() => {
     const m = new Map<Language, { count: number; searchUrl: string }>([]);
@@ -79,21 +75,8 @@ export const JobsPage: React.FC = () => {
         <WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>
       </Box>
 
-      <Box>
-        <Paper>
-          <Tabs
-            centered
-            value={tabIndex}
-            onChange={handleChangeTab}
-          >
-            <Tab label='比較' className={classes.tab}/>
-            <Tab label='推移' className={classes.tab}/>
-          </Tabs>
-        </Paper>
-      </Box>
-
       {/* Bar */}
-      <Box hidden={tabIndex !== 0} style={{ opacity: jobsState.fetched ? 1 : 0.5, pointerEvents: jobsState.fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
+      <Box style={{ opacity: jobsState.fetched ? 1 : 0.5, pointerEvents: jobsState.fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
         {jobsState.fetched ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
         <Box>
           <Chart jobs={jobs}/>
@@ -104,12 +87,6 @@ export const JobsPage: React.FC = () => {
             <LanguagesTable languages={languages} website={website}/>
           </Box>
         )}
-      </Box>
-
-      {/* Line */}
-      <Box hidden={tabIndex !== 1} style={{ opacity: jobsState.fetchedJobsOfThisYear ? 1 : 0.5, pointerEvents: jobsState.fetchedJobsOfThisYear ? 'auto' : 'none' }} className={classes.chartContainer}>
-        {jobsState.fetchedJobsOfThisYear ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
-        <LineChart jobs={jobsOfThisYear}/>
       </Box>
     </Box>
   );
