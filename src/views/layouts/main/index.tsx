@@ -21,7 +21,6 @@ export const Main: React.FC = () => {
 
   const dispatch = useDispatch();
   const setJobs = (jobs: Job[]) => dispatch(jobsActions.setJobs(jobs));
-  const setJobsOfThisYear = (jobs: Job[]) => dispatch(jobsActions.setJobsOfThisYear(jobs));
 
   useEffect(() => {
     (async () => {
@@ -36,10 +35,7 @@ export const Main: React.FC = () => {
         return await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
       })();
 
-      const jobsOfThisYear = controller.getAt(date.getUTCFullYear());
-
       setJobs(await jobs);
-      setJobsOfThisYear(await jobsOfThisYear);
     })();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
