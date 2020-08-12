@@ -9,6 +9,12 @@ export class NojovAPIClient implements IAPIClient {
     private uriBuilder: IURIBuilder,
   ) {}
 
+  public async getLatest(): Promise<{ latest: Job[] }> {
+    const paths = [this.apiOrigin, 'v1', 'jobs', 'latest'];
+    const url   = this.uriBuilder.join(...paths);
+    return await this.httpClient.get(url);
+  }
+
   public async getAt(year: number, month?: number, date?: number): Promise<Job[]> {
     const paths = [this.apiOrigin, 'v1', 'jobs', year.toString()];
 

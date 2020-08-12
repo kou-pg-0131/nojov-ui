@@ -10,4 +10,8 @@ export class JobsRepository implements IJobsRepository {
   public async getAt(year: number, month?: number, date?: number): Promise<Job[]> {
     return await this.apiClient.getAt(year, month, date);
   }
+
+  public async getLatest(): Promise<{ latest: Job[] }> {
+    return await this.apiClient.getLatest();
+  }
 }
