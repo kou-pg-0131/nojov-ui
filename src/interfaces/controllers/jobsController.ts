@@ -1,8 +1,8 @@
-import { Job } from '../../domain';
+import { LatestJobs } from '../../domain';
 import { IJobsUsecase } from '../../usecases';
 
 export interface IJobsController {
-  getLatest(): Promise<{ latest: Job[] }>;
+  getLatest(): Promise<LatestJobs>;
 }
 
 export class JobsController implements IJobsController {
@@ -10,7 +10,7 @@ export class JobsController implements IJobsController {
     private usecase: IJobsUsecase,
   ) {}
 
-  public async getLatest(): Promise<{ latest: Job[] }> {
+  public async getLatest(): Promise<LatestJobs> {
     return await this.usecase.getLatest();
   }
 }

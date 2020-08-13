@@ -1,8 +1,8 @@
-import { Job } from '../domain';
+import { LatestJobs } from '../domain';
 import { IJobsRepository } from '.';
 
 export interface IJobsUsecase {
-  getLatest(): Promise<{ latest: Job[] }>;
+  getLatest(): Promise<LatestJobs>;
 }
 
 export class JobsUsecase implements IJobsUsecase {
@@ -10,7 +10,7 @@ export class JobsUsecase implements IJobsUsecase {
     private repository: IJobsRepository,
   ) {}
 
-  public async getLatest(): Promise<{ latest: Job[] }> {
+  public async getLatest(): Promise<LatestJobs> {
     return await this.repository.getLatest();
   }
 }

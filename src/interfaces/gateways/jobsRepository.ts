@@ -1,4 +1,4 @@
-import { Job } from '../../domain';
+import { LatestJobs } from '../../domain';
 import { IJobsRepository } from '../../usecases';
 import { IAPIClient } from '.';
 
@@ -7,7 +7,7 @@ export class JobsRepository implements IJobsRepository {
     private apiClient: IAPIClient,
   ) {}
 
-  public async getLatest(): Promise<{ latest: Job[] }> {
+  public async getLatest(): Promise<LatestJobs> {
     return await this.apiClient.getLatest();
   }
 }
