@@ -27,7 +27,7 @@ export const Main: React.FC = () => {
       const controller = new JobsControllerFactory().create();
       const res        = await controller.getLatest();
 
-      setJobs(res.latest);
+      setJobs(res.today);
     })();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
