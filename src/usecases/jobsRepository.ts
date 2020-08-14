@@ -1,5 +1,5 @@
-import { Job } from '../domain';
+import { LatestJobs } from '../domain';
 
 export interface IJobsRepository {
-  getAt(year: number, month?: number, date?: number): Promise<Job[]>;
+  getLatest(): Promise<LatestJobs>;
 }

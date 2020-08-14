@@ -25,17 +25,9 @@ export const Main: React.FC = () => {
   useEffect(() => {
     (async () => {
       const controller = new JobsControllerFactory().create();
-      const date = new Date();
+      const res        = await controller.getLatest();
 
-      const jobs = (async () => {
-        const jobs = await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
-        if (jobs.length > 0) return jobs;
-
-        date.setDate(date.getUTCDate() - 1);
-        return await controller.getAt(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
-      })();
-
-      setJobs(await jobs);
+      setJobs(res.today);
     })();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

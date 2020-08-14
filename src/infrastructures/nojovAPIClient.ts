@@ -1,4 +1,4 @@
-import { Job } from '../domain';
+import { LatestJobs } from '../domain';
 import { IAPIClient } from '../interfaces/gateways';
 import { IHttpClient, IURIBuilder } from '.';
 
@@ -9,19 +9,9 @@ export class NojovAPIClient implements IAPIClient {
     private uriBuilder: IURIBuilder,
   ) {}
 
-  public async getAt(year: number, month?: number, date?: number): Promise<Job[]> {
-    const paths = [this.apiOrigin, 'v1', 'jobs', year.toString()];
-
-    if (month !== undefined) {
-      paths.push(month.toString());
-      if (date !== undefined) {
-        paths.push(date.toString());
-      }
-    }
-
-    const url = this.uriBuilder.join(...paths);
-    const res = await this.httpClient.get(url);
-
-    return res;
+  public async getLatest(): Promise<LatestJobs> {
+    const paths = [this.apiOrigin, 'v1', 'jobs', 'latest'];
+    const url   = this.uriBuilder.join(...paths);
+    return await this.httpClient.get(url);
   }
 }
