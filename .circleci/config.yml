@@ -98,9 +98,6 @@ jobs:
               dev)
                 API_ORIGIN=https://dev.api.nojov.kou-pg.com
               ;;
-              stg)
-                API_ORIGIN=https://stg.api.nojov.kou-pg.com
-              ;;
               prod)
                 API_ORIGIN=https://api.nojov.kou-pg.com
               ;;
@@ -128,9 +125,6 @@ jobs:
       - setup_aws_credentials
       - terraform:
           stage: dev
-          command: plan
-      - terraform:
-          stage: stg
           command: plan
       - slack/status
 
@@ -197,30 +191,6 @@ workflows:
           filters:
             branches:
               only: [main, develop]
-
-      #
-      # stg
-      #
-
-      - tf_apply:
-          name: tf_apply_stg
-          stage: stg
-          requires:
-            - approval_deploy
-          filters:
-            branches:
-              only:
-                - develop
-
-      - deploy:
-          name: deploy_stg
-          stage: stg
-          requires:
-            - tf_apply_stg
-          filters:
-            branches:
-              only:
-                - develop
 
       #
       # prod
