@@ -1,12 +1,12 @@
 import { LatestJobs } from '../domain';
 import { IAPIClient } from '../interfaces/gateways';
-import { IHttpClient, IURIBuilder } from '.';
+import { IHttpClient, HttpClient, IURIBuilder, URIBuilder } from '.';
 
 export class NojovAPIClient implements IAPIClient {
   constructor(
     private apiOrigin: string,
-    private httpClient: IHttpClient,
-    private uriBuilder: IURIBuilder,
+    private httpClient: IHttpClient = new HttpClient(),
+    private uriBuilder: IURIBuilder = new URIBuilder(),
   ) {}
 
   public async getLatest(): Promise<LatestJobs> {

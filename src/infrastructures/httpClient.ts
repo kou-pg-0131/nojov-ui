@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 export interface IHttpClient {
-  get(uri: string): Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  get<T>(uri: string): Promise<T>;
 }
 
 export class HttpClient implements IHttpClient {
-  public async get(uri: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
-    const res = await axios.get(uri);
+  public async get<T>(uri: string): Promise<T> {
+    const res = await axios.get<T>(uri);
     return res.data;
   }
 }
