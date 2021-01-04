@@ -182,7 +182,7 @@ workflows:
             - deploy_dev
           filters:
             branches:
-              only: [main, develop]
+              ignore: [main]
 
       - approval_deploy:
           type: approval
@@ -190,7 +190,7 @@ workflows:
             - deploy_dev
           filters:
             branches:
-              only: [main, develop]
+              ignore: [main]
 
       #
       # prod
