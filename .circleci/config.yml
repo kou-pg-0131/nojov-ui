@@ -188,9 +188,7 @@ workflows:
             - deploy_dev
           filters:
             branches:
-              only:
-                - master
-                - develop
+              only: [main, develop]
 
       - approval_deploy:
           type: approval
@@ -198,9 +196,7 @@ workflows:
             - deploy_dev
           filters:
             branches:
-              only:
-                - master
-                - develop
+              only: [main, develop]
 
       #
       # stg
@@ -237,8 +233,7 @@ workflows:
             - approval_deploy
           filters:
             branches:
-              only:
-                - master
+              only: [main]
 
       - deploy:
           name: deploy_prod
@@ -247,5 +242,4 @@ workflows:
             - tf_apply_prod
           filters:
             branches:
-              only:
-                - master
+              only: [main]
