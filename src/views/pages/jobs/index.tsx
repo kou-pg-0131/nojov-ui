@@ -3,7 +3,7 @@ import { CircularProgress, Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Chart } from './chart';
 import { WebsitesSelect } from './websitesSelect';
-import { LanguagesTable } from '../../components';
+import { LanguagesTable, LanguagesTableRecord } from '../../components';
 import { Job, Language, Website } from '../../../domain';
 import { NojovAPIClientFactory } from '../../../infrastructures';
 
@@ -49,7 +49,7 @@ export const JobsPage: React.FC = () => {
     return website === 'all' ? jobs : jobs.filter(job => job.website.name === website.name);
   })();
 
-  const languages: { name: Language; count: number; searchUrl?: string }[] = (() => {
+  const languageRecords: { name: Language; count: number; searchUrl?: string }[] = (() => {
     if (website !== 'all') {
       return filteredJobs.map(job =>
         ({ name: job.language, count: job.count, searchUrl: job.search_url })
@@ -57,11 +57,9 @@ export const JobsPage: React.FC = () => {
     }
 
     const m = new Map<Language, number>([]);
-
     filteredJobs.forEach(job => {
       m.set(job.language, (m.get(job.language) || 0) + job.count);
     });
-
     return Array.from(m.entries()).map(([name, count]) => ({ name, count }));
   })();
 
@@ -86,7 +84,18 @@ export const JobsPage: React.FC = () => {
 
         {fetched && (
           <Box>
-            <LanguagesTable languages={languages} website={website}/>
+            <LanguagesTable>
+              {languageRecords.sort((a, b) => b.count - a.count).map((record, i) => (
+                <LanguagesTableRecord
+                  key={i}
+                  index={i}
+                  name={record.name}
+                  count={record.count}
+                  searchUrl={record.searchUrl}
+                  website={website}
+                />
+              ))}
+            </LanguagesTable>
           </Box>
         )}
       </Box>
