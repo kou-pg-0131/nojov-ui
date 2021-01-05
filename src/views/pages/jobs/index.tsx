@@ -45,9 +45,11 @@ export const JobsPage: React.FC = () => {
     self.findIndex((w) => website.name === w.name) === i
   );
 
+  const filteredJobs = jobs.filter(job => website === 'all' || job.website.name === website.name);
+
   const languages = (() => {
     const m = new Map<Language, { count: number; searchUrl: string }>([]);
-    jobs.filter(job => website === 'all' || job.website.name === website.name).forEach(job => {
+    filteredJobs.forEach(job => {
       m.set(job.language, { count: (m.get(job.language)?.count || 0) + job.count, searchUrl: job.search_url });
     });
 
@@ -68,12 +70,12 @@ export const JobsPage: React.FC = () => {
       </Box>
 
       <Box style={{ opacity: fetched ? 1 : 0.5, pointerEvents: fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
-        {fetched ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
+        {!fetched && <Box className={classes.circleContainer}><CircularProgress/></Box>}
         <Box>
-          <Chart jobs={jobs}/>
+          <Chart jobs={filteredJobs}/>
         </Box>
 
-        {!fetched ? null : (
+        {fetched && (
           <Box>
             <LanguagesTable languages={languages} website={website}/>
           </Box>
