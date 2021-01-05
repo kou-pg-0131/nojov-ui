@@ -1,23 +1,17 @@
 resource aws_s3_bucket deployment {
   bucket        = "${local.prefix}-deployment"
   acl           = "private"
-  force_destroy = true
+  force_destroy = var.stage != "prod"
 
-  versioning {
-    enabled = true
-  }
+  versioning { enabled = true }
 
   lifecycle_rule {
     prefix  = "/"
     enabled = true
-    noncurrent_version_expiration {
-      days = 60
-    }
+    noncurrent_version_expiration { days = 7 }
   }
 
-  tags = {
-    Name = "${local.prefix}-deployment"
-  }
+  tags = { Name = "${local.prefix}-deployment" }
 }
 
 resource aws_s3_bucket_policy deployment {

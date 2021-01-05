@@ -14,3 +14,11 @@ resource aws_route53_record main {
     evaluate_target_health = false
   }
 }
+
+resource aws_route53_record certificate_validation {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = aws_acm_certificate.main.domain_validation_options.*.resource_record_name[0]
+  type    = aws_acm_certificate.main.domain_validation_options.*.resource_record_type[0]
+  records = [aws_acm_certificate.main.domain_validation_options.*.resource_record_value[0]]
+  ttl     = 300
+}

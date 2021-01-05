@@ -23,11 +23,7 @@ resource aws_cloudfront_distribution deployment {
 
     forwarded_values {
       query_string = false
-
-      cookies {
-        forward = "none"
-      }
-
+      cookies { forward = "none" }
       headers = []
     }
   }
@@ -36,27 +32,25 @@ resource aws_cloudfront_distribution deployment {
   http_version = "http2"
 
   viewer_certificate {
-    acm_certificate_arn      = data.aws_acm_certificate.main.arn
+    acm_certificate_arn      = aws_acm_certificate.main.arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2018"
   }
 
   restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
+    geo_restriction { restriction_type = "none" }
   }
 
   custom_error_response {
-    error_caching_min_ttl = 300
     error_code            = 403
+    error_caching_min_ttl = 300
     response_code         = 200
     response_page_path    = "/index.html"
   }
 
   custom_error_response {
-    error_caching_min_ttl = 300
     error_code            = 404
+    error_caching_min_ttl = 300
     response_code         = 200
     response_page_path    = "/index.html"
   }
