@@ -78,26 +78,25 @@ export const JobsPage: React.FC = () => {
 
       <Box style={{ opacity: fetched ? 1 : 0.5, pointerEvents: fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
         {!fetched && <Box className={classes.circleContainer}><CircularProgress/></Box>}
+
         <Box>
           <Chart jobs={filteredJobs}/>
         </Box>
 
-        {fetched && (
-          <Box>
-            <LanguagesTable>
-              {languageRecords.sort((a, b) => b.count - a.count).map((record, i) => (
-                <LanguagesTableRecord
-                  key={i}
-                  index={i}
-                  name={record.name}
-                  count={record.count}
-                  searchUrl={record.searchUrl}
-                  website={website}
-                />
-              ))}
-            </LanguagesTable>
-          </Box>
-        )}
+        <Box>
+          <LanguagesTable>
+            {languageRecords.sort((a, b) => b.count - a.count).map((record, i) => (
+              <LanguagesTableRecord
+                key={i}
+                index={i}
+                name={record.name}
+                count={record.count}
+                searchUrl={record.searchUrl}
+                website={website}
+              />
+            ))}
+          </LanguagesTable>
+        </Box>
       </Box>
     </Box>
   );
