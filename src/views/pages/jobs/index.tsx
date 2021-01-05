@@ -3,7 +3,7 @@ import { CircularProgress, Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Chart } from './chart';
 import { WebsitesSelect } from './websitesSelect';
-import { LanguagesTable } from './languagesTable';
+import { LanguagesTable } from '../../components';
 import { Job, Language, Website } from '../../../domain';
 import { NojovAPIClientFactory } from '../../../infrastructures';
 
