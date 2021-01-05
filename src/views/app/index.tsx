@@ -1,12 +1,20 @@
 import React from 'react';
 import { CssBaseline, Box } from '@material-ui/core';
-import { ThemeProvider, createStyles, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
 import { createStore } from '../modules';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { Header, Main, Footer } from '../layouts';
-import { customTheme } from './customTheme';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#15A2B8',
+      dark: '#022F40',
+    },
+  },
+});
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -26,7 +34,7 @@ export const App: React.FC = () => {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={customTheme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline/>
         <Box className={classes.root}>
           <Router history={history}>
