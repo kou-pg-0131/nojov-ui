@@ -1,22 +1,12 @@
-import React, { useState } from 'react';
-
-// material-ui
+import React, { useEffect, useState } from 'react';
 import { CircularProgress, Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-
-// redux
-import { useSelector } from 'react-redux';
-import { RootState } from '../../modules';
-
-// components
 import { Chart } from './chart';
 import { WebsitesSelect } from './websitesSelect';
 import { LanguagesTable } from './languagesTable';
+import { Job, Language, Website } from '../../../domain';
+import { NojovAPIClientFactory } from '../../../infrastructures';
 
-// other
-import { Language, Website } from '../../../domain';
-
-// styles
 const useStyles = makeStyles(() =>
   createStyles({
     chartContainer: {
@@ -42,47 +32,48 @@ const useStyles = makeStyles(() =>
   })
 );
 
-// component
 export const JobsPage: React.FC = () => {
   const classes = useStyles();
 
-  // states
   const [website, setWebsite] = useState<'all' | Website>('all');
-  const jobsState = useSelector((state: RootState) => state.jobs);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [fetched, setFetched] = useState<boolean>(false);
 
-  // events
   const handleChangeWebsite = (website: 'all' | Website): void => setWebsite(website);
 
-  const websites: Website[] = jobsState.jobs.map(job => job.website).filter((website, i, self) =>
+  const websites: Website[] = jobs.map(job => job.website).filter((website, i, self) =>
     self.findIndex((w) => website.name === w.name) === i
   );
 
-  const jobs = jobsState.jobs.filter(job => website === 'all' || job.website.name === website.name);
-
   const languages = (() => {
     const m = new Map<Language, { count: number; searchUrl: string }>([]);
-    jobs.forEach(job => {
+    jobs.filter(job => website === 'all' || job.website.name === website.name).forEach(job => {
       m.set(job.language, { count: (m.get(job.language)?.count || 0) + job.count, searchUrl: job.search_url });
     });
 
     return Array.from(m.entries()).map(([name, job]) => ({ name, count: job.count, searchUrl: job.searchUrl }));
   })();
 
-  // render
+  useEffect(() => {
+    new NojovAPIClientFactory().create().getLatest().then(res => {
+      setJobs(res.today);
+      setFetched(true);
+    });
+  }, []);
+
   return (
     <Box>
       <Box className={classes.websitesContainer}>
         <WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>
       </Box>
 
-      {/* Bar */}
-      <Box style={{ opacity: jobsState.fetched ? 1 : 0.5, pointerEvents: jobsState.fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
-        {jobsState.fetched ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
+      <Box style={{ opacity: fetched ? 1 : 0.5, pointerEvents: fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
+        {fetched ? null : <Box className={classes.circleContainer}><CircularProgress/></Box>}
         <Box>
           <Chart jobs={jobs}/>
         </Box>
 
-        {!jobsState.fetched ? null : (
+        {!fetched ? null : (
           <Box>
             <LanguagesTable languages={languages} website={website}/>
           </Box>

@@ -1,8 +1,6 @@
 import React from 'react';
 import { CssBaseline, Box } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme, createStyles, makeStyles } from '@material-ui/core/styles';
-import { Provider } from 'react-redux';
-import { createStore } from '../modules';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { Header, Main, Footer } from '../layouts';
@@ -26,24 +24,21 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const store = createStore();
 const history = createBrowserHistory();
 
 export const App: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline/>
-        <Box className={classes.root}>
-          <Router history={history}>
-            <Header/>
-            <Main/>
-            <Footer/>
-          </Router>
-        </Box>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
+      <Box className={classes.root}>
+        <Router history={history}>
+          <Header/>
+          <Main/>
+          <Footer/>
+        </Router>
+      </Box>
+    </ThemeProvider>
   );
 };
