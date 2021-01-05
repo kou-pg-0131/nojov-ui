@@ -98,9 +98,6 @@ jobs:
               dev)
                 API_ORIGIN=https://dev.api.nojov.kou-pg.com
               ;;
-              stg)
-                API_ORIGIN=https://stg.api.nojov.kou-pg.com
-              ;;
               prod)
                 API_ORIGIN=https://api.nojov.kou-pg.com
               ;;
@@ -129,9 +126,6 @@ jobs:
       - terraform:
           stage: dev
           command: plan
-      - terraform:
-          stage: stg
-          command: plan
       - slack/status
 
   tf_apply:
@@ -157,15 +151,10 @@ workflows:
       - tf_plan
 
       - slack/approval-notification:
-          requires:
-            - test
-            - tf_plan
-
-      - approval_deploy_dev:
+          requires: [test, tf_plan]
+      - approval_deploy:
           type: approval
-          requires:
-            - test
-            - tf_plan
+          requires: [test, tf_plan]
 
       #
       # dev
@@ -174,53 +163,11 @@ workflows:
       - tf_apply:
           name: tf_apply_dev
           stage: dev
-          requires:
-            - approval_deploy_dev
-
+          requires: [approval_deploy]
       - deploy:
           name: deploy_dev
           stage: dev
-          requires:
-            - tf_apply_dev
-
-      - slack/approval-notification:
-          requires:
-            - deploy_dev
-          filters:
-            branches:
-              only: [main, develop]
-
-      - approval_deploy:
-          type: approval
-          requires:
-            - deploy_dev
-          filters:
-            branches:
-              only: [main, develop]
-
-      #
-      # stg
-      #
-
-      - tf_apply:
-          name: tf_apply_stg
-          stage: stg
-          requires:
-            - approval_deploy
-          filters:
-            branches:
-              only:
-                - develop
-
-      - deploy:
-          name: deploy_stg
-          stage: stg
-          requires:
-            - tf_apply_stg
-          filters:
-            branches:
-              only:
-                - develop
+          requires: [tf_apply_dev]
 
       #
       # prod
@@ -229,17 +176,14 @@ workflows:
       - tf_apply:
           name: tf_apply_prod
           stage: prod
-          requires:
-            - approval_deploy
+          requires: [approval_deploy]
           filters:
             branches:
               only: [main]
-
       - deploy:
           name: deploy_prod
           stage: prod
-          requires:
-            - tf_apply_prod
+          requires: [tf_apply_prod]
           filters:
             branches:
               only: [main]
