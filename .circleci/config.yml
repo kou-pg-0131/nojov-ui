@@ -151,15 +151,10 @@ workflows:
       - tf_plan
 
       - slack/approval-notification:
-          requires:
-            - test
-            - tf_plan
-
-      - approval_deploy_dev:
+          requires: [test, tf_plan]
+      - approval_deploy:
           type: approval
-          requires:
-            - test
-            - tf_plan
+          requires: [test, tf_plan]
 
       #
       # dev
@@ -168,29 +163,11 @@ workflows:
       - tf_apply:
           name: tf_apply_dev
           stage: dev
-          requires:
-            - approval_deploy_dev
-
+          requires: [approval_deploy]
       - deploy:
           name: deploy_dev
           stage: dev
-          requires:
-            - tf_apply_dev
-
-      - slack/approval-notification:
-          requires:
-            - deploy_dev
-          filters:
-            branches:
-              ignore: [main]
-
-      - approval_deploy:
-          type: approval
-          requires:
-            - deploy_dev
-          filters:
-            branches:
-              ignore: [main]
+          requires: [tf_apply_dev]
 
       #
       # prod
@@ -199,17 +176,14 @@ workflows:
       - tf_apply:
           name: tf_apply_prod
           stage: prod
-          requires:
-            - approval_deploy
+          requires: [approval_deploy]
           filters:
             branches:
               only: [main]
-
       - deploy:
           name: deploy_prod
           stage: prod
-          requires:
-            - tf_apply_prod
+          requires: [tf_apply_prod]
           filters:
             branches:
               only: [main]
