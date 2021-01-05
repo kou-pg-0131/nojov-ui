@@ -1,8 +1,11 @@
 import { LatestJobs } from '../domain';
-import { IAPIClient } from '../interfaces/gateways';
 import { IHttpClient, HttpClient, IURIBuilder, URIBuilder } from '.';
 
-export class NojovAPIClient implements IAPIClient {
+export interface INojovAPIClient {
+  getLatest(): Promise<LatestJobs>;
+}
+
+export class NojovAPIClient implements INojovAPIClient {
   constructor(
     private apiOrigin: string,
     private httpClient: IHttpClient = new HttpClient(),

@@ -4,7 +4,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { jobsActions } from '../../modules';
-import { JobsControllerFactory } from '../../../interfaces/controllers';
+import { NojovAPIClientFactory } from '../../../infrastructures';
 import { Job } from '../../../domain';
 import { JobsPage, PrivacyPolicyPage } from '../../pages';
 
@@ -24,8 +24,7 @@ export const Main: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const controller = new JobsControllerFactory().create();
-      const res        = await controller.getLatest();
+      const res = await new NojovAPIClientFactory().create().getLatest();
 
       setJobs(res.today);
     })();
