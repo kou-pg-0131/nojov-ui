@@ -34,7 +34,7 @@ const StyledTableCell = withStyles(()=>
 )(TableCell);
 
 type Props = {
-  languages: { name: Language; count: number; searchUrl: string }[];
+  languages: { name: Language; count: number; searchUrl?: string }[];
   website: Website | 'all';
 };
 
@@ -57,7 +57,7 @@ export const LanguagesTable: React.FC<Props> = (props: Props) => {
               <StyledTableCell align='center'>{i + 1}</StyledTableCell>
               <StyledTableCell align='center'>
                 {languageToString(language.name)}
-                {props.website === 'all' ? null : (
+                {props.website !== 'all' && !!language.searchUrl && (
                   <Box>
                     <Box display='inline-block'>
                       <Link style={{ fontSize: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }} href={language.searchUrl} target='_blank' rel='noopener'>

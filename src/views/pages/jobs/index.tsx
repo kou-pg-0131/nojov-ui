@@ -45,15 +45,24 @@ export const JobsPage: React.FC = () => {
     self.findIndex((w) => website.name === w.name) === i
   );
 
-  const filteredJobs = jobs.filter(job => website === 'all' || job.website.name === website.name);
+  const filteredJobs: Job[] = (() => {
+    return website === 'all' ? jobs : jobs.filter(job => job.website.name === website.name);
+  })();
 
-  const languages = (() => {
-    const m = new Map<Language, { count: number; searchUrl: string }>([]);
+  const languages: { name: Language; count: number; searchUrl?: string }[] = (() => {
+    if (website !== 'all') {
+      return filteredJobs.map(job =>
+        ({ name: job.language, count: job.count, searchUrl: job.search_url })
+      );
+    }
+
+    const m = new Map<Language, number>([]);
+
     filteredJobs.forEach(job => {
-      m.set(job.language, { count: (m.get(job.language)?.count || 0) + job.count, searchUrl: job.search_url });
+      m.set(job.language, (m.get(job.language) || 0) + job.count);
     });
 
-    return Array.from(m.entries()).map(([name, job]) => ({ name, count: job.count, searchUrl: job.searchUrl }));
+    return Array.from(m.entries()).map(([name, count]) => ({ name, count }));
   })();
 
   useEffect(() => {
