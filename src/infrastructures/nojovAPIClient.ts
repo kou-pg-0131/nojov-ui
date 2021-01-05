@@ -13,8 +13,8 @@ export class NojovAPIClient implements INojovAPIClient {
   ) {}
 
   public async getLatest(): Promise<LatestJobs> {
-    const paths = [this.apiOrigin, 'v1', 'jobs', 'latest'];
-    const url = this.uriBuilder.join(...paths);
-    return await this.httpClient.get(url);
+    return await this.httpClient.get(
+      this.uriBuilder.join(this.apiOrigin, 'v1/jobs/latest'),
+    );
   }
 }
