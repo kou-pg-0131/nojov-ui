@@ -1,13 +1,8 @@
 import React from 'react';
-
-// material-ui
-import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { FormControl, InputLabel, Select as MuiSelect, MenuItem } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { Website } from '../../../domain';
 
-// other
-import { Website } from '../../../../domain';
-
-// styles
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -28,11 +23,9 @@ type Props = {
   onChange: (website: 'all' | Website) => void;
 };
 
-// component
 export const WebsitesSelect: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
-  // events
   const handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     props.onChange(props.websites.find((website) => website.name === e.target.value as string) || 'all');
   };
@@ -41,15 +34,13 @@ export const WebsitesSelect: React.FC<Props> = (props: Props) => {
     <FormControl className={classes.root}>
       <InputLabel>求人サイト</InputLabel>
 
-      {/* select box */}
-      <Select defaultValue='all' onChange={handleChange} className={classes.list}>
+      <MuiSelect defaultValue='all' onChange={handleChange} className={classes.list}>
 
-        {/* items */}
         <MenuItem value='all'>全て</MenuItem>
         {props.websites.map((website, i) =>
           <MenuItem key={i} value={website.name}>{website.name}</MenuItem>
         )}
-      </Select>
+      </MuiSelect>
     </FormControl>
   );
 };

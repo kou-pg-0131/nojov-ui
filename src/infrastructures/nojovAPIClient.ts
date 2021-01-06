@@ -1,8 +1,11 @@
 import { LatestJobs } from '../domain';
-import { IAPIClient } from '../interfaces/gateways';
 import { IHttpClient, HttpClient, IURIBuilder, URIBuilder } from '.';
 
-export class NojovAPIClient implements IAPIClient {
+export interface INojovAPIClient {
+  getLatest(): Promise<LatestJobs>;
+}
+
+export class NojovAPIClient implements INojovAPIClient {
   constructor(
     private apiOrigin: string,
     private httpClient: IHttpClient = new HttpClient(),
@@ -10,8 +13,14 @@ export class NojovAPIClient implements IAPIClient {
   ) {}
 
   public async getLatest(): Promise<LatestJobs> {
-    const paths = [this.apiOrigin, 'v1', 'jobs', 'latest'];
-    const url   = this.uriBuilder.join(...paths);
-    return await this.httpClient.get(url);
+    return new Promise(resolve => {
+      this.httpClient.get<LatestJobs>(
+        this.uriBuilder.join(this.apiOrigin, 'v1/jobs/latest'),
+      ).then(res => {
+        setTimeout(() => {
+          resolve(res);
+        }, 1000);
+      });
+    });
   }
 }

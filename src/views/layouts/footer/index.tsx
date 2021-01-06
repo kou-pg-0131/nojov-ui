@@ -1,13 +1,8 @@
 import React from 'react';
-
-// material-ui
 import { Box, Typography } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-
-// react-router
 import { Link } from 'react-router-dom';
 
-// styles
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
@@ -32,18 +27,15 @@ const useStyles = makeStyles(() =>
   })
 );
 
-// component
 export const Footer: React.FC = () => {
   const classes = useStyles();
 
   return (
     <Box component='footer' className={classes.root}>
-      {/* copyright */}
       <Box>
         <Typography component='small' className={classes.copyright}>&copy; 2020 koki sato</Typography>
       </Box>
 
-      {/* privacy policy */}
       <Box>
         <Link to='/privacy-policy' className={classes.privacyPolicyLink}>プライバシーポリシー</Link>
       </Box>

@@ -1,6 +1,6 @@
 import { Job } from '.';
 
 export type LatestJobs = {
-  updated_at: Date;
+  updated_at: string;
   today: Job[];
 };

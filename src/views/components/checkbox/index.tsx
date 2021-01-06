@@ -1,19 +1,20 @@
 import React from 'react';
-import { Checkbox, Typography, FormControl, FormControlLabel } from '@material-ui/core';
+import { Checkbox as MuiCheckbox, Typography, FormControl, FormControlLabel } from '@material-ui/core';
 
 type Props = {
+  label: string;
   onChange: (checked: boolean) => void;
 };
 
-export const Sort: React.FC<Props> = (props: Props) => {
+export const Checkbox: React.FC<Props> = (props: Props) => {
   const handleChange = (e: { target: { checked: boolean } }) => props.onChange(e.target.checked);
 
   return (
     <FormControl>
       <FormControlLabel
         labelPlacement='start'
-        label={<Typography>求人数の多い順に並び替え</Typography>}
-        control={<Checkbox onChange={handleChange}/>}
+        label={<Typography>{props.label}</Typography>}
+        control={<MuiCheckbox onChange={handleChange}/>}
       />
     </FormControl>
   );
