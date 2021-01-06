@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import ReactGA from 'react-ga';
+import React from 'react';
 import { Container } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { JobsPage, PrivacyPolicyPage } from '../../pages';
 
 const useStyles = makeStyles(() =>
@@ -15,14 +14,6 @@ const useStyles = makeStyles(() =>
 
 export const Main: React.FC = () => {
   const classes = useStyles();
-
-  const location = useLocation();
-
-  useEffect(() => {
-    const { pathname } = location;
-    ReactGA.set({ page: pathname });
-    ReactGA.pageview(pathname);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container component='main' maxWidth='md' className={classes.root}>
