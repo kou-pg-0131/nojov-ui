@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import { CssBaseline, Box } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { Router } from 'react-router-dom';
@@ -24,7 +25,14 @@ const useStyles = makeStyles(() =>
   })
 );
 
+ReactGA.initialize(process.env.REACT_APP_GA_ID, {
+  debug: process.env.REACT_APP_STAGE !== 'prod',
+});
 const history = createBrowserHistory();
+history.listen(({ pathname }) => {
+  ReactGA.set({ page: pathname });
+  ReactGA.pageview(pathname);
+});
 
 export const App: React.FC = () => {
   const classes = useStyles();
