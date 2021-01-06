@@ -18,7 +18,7 @@ export const Main: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    window.gtag('config', process.env.REACT_APP_GA_ID, { page_path: location.pathname });
+    window.gtag('config', process.env.REACT_APP_GA_ID, { page_path: location.pathname, debug_mode: process.env.REACT_APP_STAGE !== 'prod' });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
