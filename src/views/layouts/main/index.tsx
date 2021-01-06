@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import ReactGA from 'react-ga';
 import { Container } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
@@ -19,9 +18,7 @@ export const Main: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const { pathname } = location;
-    ReactGA.set({ page: pathname });
-    ReactGA.pageview(pathname);
+    window.gtag('config', process.env.REACT_APP_GA_ID, { page_path: location.pathname, debug_mode: process.env.REACT_APP_STAGE !== 'prod' });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
