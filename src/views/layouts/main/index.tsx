@@ -22,7 +22,7 @@ export const Main: React.FC = () => {
     const { pathname } = location;
     ReactGA.set({ page: pathname });
     ReactGA.pageview(pathname);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Container component='main' maxWidth='md' className={classes.root}>
