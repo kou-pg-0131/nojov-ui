@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Job } from '../../../../domain';
-import { Language, languageToString, languageToColor } from '../../../../domain';
-import { Sort } from './sort';
+import { Checkbox } from '../../../components';
+import { Language, languageToString, languageToColor, Job } from '../../../../domain';
 import moment from 'moment';
 import {
   BarChart,
@@ -23,8 +22,6 @@ const useStyles = makeStyles(() =>
     },
     header: {
       textAlign: 'right',
-    },
-    sort: {
     },
     circle: {
       display: 'flex',
@@ -64,9 +61,9 @@ export const Chart: React.FC<Props> = (props: Props) => {
   return (
     <Box className={classes.root}>
       <Box className={classes.header}>
-        <Sort onChange={handleChangeSort}/>
+        <Checkbox label='求人数の多い順に並び替え' onChange={handleChangeSort}/>
         <Box>
-          <small className={classes.sort}>
+          <small>
             最終更新日時: <time dateTime={updatedAt}>{moment(updatedAt).format('YYYY/MM/DD HH:mm')}</time>
           </small>
         </Box>
