@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Checkbox } from '../../components';
 import { Language, languageToString, languageToColor, Job } from '../../../domain';
-import moment from 'moment';
+import { format } from 'date-fns';
 import {
   BarChart,
   Bar,
@@ -64,7 +64,7 @@ export const JobsBarChart: React.FC<Props> = (props: Props) => {
         {!!props.updatedAt && (
           <Box>
             <small>
-              最終更新日時: <time dateTime={props.updatedAt}>{moment(props.updatedAt).format('YYYY/MM/DD HH:mm')}</time>
+              最終更新日時: <time dateTime={props.updatedAt}>{format(new Date(props.updatedAt), 'yyyy/MM/dd HH:mm')}</time>
             </small>
           </Box>
         )}
