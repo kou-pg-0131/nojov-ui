@@ -25,6 +25,9 @@ const useStyles = makeStyles(() =>
 );
 
 const history = createBrowserHistory();
+history.listen(location => {
+  window.gtag('config', process.env.REACT_APP_GA_ID, { page_path: location.pathname, debug_mode: process.env.REACT_APP_STAGE !== 'prod' });
+});
 
 export const App: React.FC = () => {
   const classes = useStyles();
