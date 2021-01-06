@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CircularProgress, Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Chart } from './chart';
-import { LanguagesTable, LanguagesTableRecord, WebsitesSelect } from '../../components';
+import { LanguagesTable, LanguagesTableRecord, WebsitesSelect, JobsBarChart } from '../../components';
 import { Job, Language, Website } from '../../../domain';
 import { NojovAPIClientFactory } from '../../../infrastructures';
 
@@ -81,7 +80,7 @@ export const JobsPage: React.FC = () => {
         {!fetched && <Box className={classes.circleContainer}><CircularProgress/></Box>}
 
         <Box>
-          <Chart jobs={filteredJobs} updatedAt={updatedAt}/>
+          <JobsBarChart jobs={filteredJobs} updatedAt={updatedAt}/>
         </Box>
 
         <Box>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Checkbox } from '../../../components';
-import { Language, languageToString, languageToColor, Job } from '../../../../domain';
+import { Checkbox } from '../../components';
+import { Language, languageToString, languageToColor, Job } from '../../../domain';
 import moment from 'moment';
 import {
   BarChart,
@@ -41,7 +41,7 @@ type Props = {
   updatedAt?: string;
 };
 
-export const Chart: React.FC<Props> = (props: Props) => {
+export const JobsBarChart: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const [sort, setSort] = useState<boolean>(false);
