@@ -106,7 +106,8 @@ jobs:
                 exit 1
             esac
 
-            echo "REACT_APP_API_ORIGIN=${API_ORIGIN}"      > .env
+            echo "REACT_APP_STAGE=<< parameters.stage >>"  > .env
+            echo "REACT_APP_API_ORIGIN=${API_ORIGIN}"     >> .env
             echo "REACT_APP_GA_ID=${GOOGLE_ANALYTICS_ID}" >> .env
       - run:
           name: build
