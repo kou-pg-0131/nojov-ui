@@ -34,6 +34,7 @@ const useStyles = makeStyles(() =>
 export const JobsPage: React.FC = () => {
   const classes = useStyles();
 
+  const [updatedAt, setUpdatedAt] = useState<string>();
   const [website, setWebsite] = useState<'all' | Website>('all');
   const [jobs, setJobs] = useState<Job[]>([]);
   const [fetched, setFetched] = useState<boolean>(false);
@@ -64,6 +65,7 @@ export const JobsPage: React.FC = () => {
 
   useEffect(() => {
     new NojovAPIClientFactory().create().getLatest().then(res => {
+      setUpdatedAt(res.updated_at);
       setJobs(res.today);
       setFetched(true);
     });
@@ -79,7 +81,7 @@ export const JobsPage: React.FC = () => {
         {!fetched && <Box className={classes.circleContainer}><CircularProgress/></Box>}
 
         <Box>
-          <Chart jobs={filteredJobs}/>
+          <Chart jobs={filteredJobs} updatedAt={updatedAt}/>
         </Box>
 
         <Box>

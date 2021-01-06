@@ -38,6 +38,7 @@ const useStyles = makeStyles(() =>
 
 type Props = {
   jobs: Job[];
+  updatedAt?: string;
 };
 
 export const Chart: React.FC<Props> = (props: Props) => {
@@ -46,27 +47,27 @@ export const Chart: React.FC<Props> = (props: Props) => {
   const [sort, setSort] = useState<boolean>(false);
   const handleChangeSort = (checked: boolean): void => setSort(checked);
 
-  const map = new Map<Language, number>([]);
-  props.jobs.forEach(job => {
-    map.set(job.language, (map.get(job.language) || 0) + job.count);
-  });
-
   const data = (() => {
+    const map = new Map<Language, number>([]);
+    props.jobs.forEach(job => {
+      map.set(job.language, (map.get(job.language) || 0) + job.count);
+    });
+
     const rows = Array.from(map).map(([language, count]) => ({ name: languageToString(language), '求人数': count, color: languageToColor(language) }));
     return sort ? rows.sort((a, b) => b['求人数'] - a['求人数']) : rows;
   })();
-
-  const updatedAt = props.jobs.slice().sort((a, b) => a.date < b.date ? 1 : -1)[0]?.date;
 
   return (
     <Box className={classes.root}>
       <Box className={classes.header}>
         <Checkbox label='求人数の多い順に並び替え' onChange={handleChangeSort}/>
-        <Box>
-          <small>
-            最終更新日時: <time dateTime={updatedAt}>{moment(updatedAt).format('YYYY/MM/DD HH:mm')}</time>
-          </small>
-        </Box>
+        {!!props.updatedAt && (
+          <Box>
+            <small>
+              最終更新日時: <time dateTime={props.updatedAt}>{moment(props.updatedAt).format('YYYY/MM/DD HH:mm')}</time>
+            </small>
+          </Box>
+        )}
       </Box>
       <ResponsiveContainer height={550}>
         <BarChart
