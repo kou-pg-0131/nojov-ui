@@ -1,4 +1,4 @@
-resource aws_cloudfront_distribution deployment {
+resource "aws_cloudfront_distribution" "deployment" {
   enabled             = true
   default_root_object = "index.html"
 
@@ -25,6 +25,14 @@ resource aws_cloudfront_distribution deployment {
       query_string = false
       cookies { forward = "none" }
       headers = []
+    }
+
+    dynamic "lambda_function_association" {
+      for_each = aws_lambda_function.basic_auth
+      content {
+        event_type = "viewer-request"
+        lambda_arn = lambda_function_association.value.qualified_arn
+      }
     }
   }
 
@@ -56,4 +64,4 @@ resource aws_cloudfront_distribution deployment {
   }
 }
 
-resource aws_cloudfront_origin_access_identity deployment {}
+resource "aws_cloudfront_origin_access_identity" "deployment" {}
