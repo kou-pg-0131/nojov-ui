@@ -29,6 +29,7 @@ yarn-error.log*
 *.tfstate.*
 terraform.log
 terraform.tfvars
+/terraform/**/index.js.zip
 
 # circle-env
 .circle-env/.env
