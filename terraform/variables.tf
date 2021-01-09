@@ -1,4 +1,6 @@
-variable stage {}
+variable "stage" {}
+variable "basic_auth_username" {}
+variable "basic_auth_password" {}
 
 locals {
   zone_name  = "kou-pg.com"
