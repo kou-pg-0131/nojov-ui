@@ -13,6 +13,8 @@ Nojov allows you to see the number of job offers for each programming language t
 
 [Nojov \- プログラミング言語別求人数ビューア](https://nojov.kou-pg.com/)
 
+![screenshot](./demo/screenshot.png)
+
 # Architecture
 
 ![architecture](./demo/architecture.png)
