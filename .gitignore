@@ -31,6 +31,6 @@ terraform.log
 terraform.tfvars
 /terraform/**/index.js.zip
 
-# circle-env
-.circle-env/.env
-.circle-env/circle-token
+# circleci-env
+.circleci-env/.env
+.circleci-env/circle-token
