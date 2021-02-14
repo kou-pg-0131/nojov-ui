@@ -47,8 +47,9 @@ commands:
     steps:
       - run:
           name: terraform << parameters.command >>
-          working_dir: terraform
-          command: terraform << parameters.command >>
+          command: |
+            cd ~/project/terraform
+            terraform << parameters.command >>
       - store_artifacts:
           path: terraform/terraform.log
 
