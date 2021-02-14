@@ -40,36 +40,17 @@ commands:
           paths:
             - ~/project/node_modules
 
-  create_tfvars:
-    parameters:
-      stage:
-        type: string
-    steps:
-      - run:
-          name: create terraform.tfvars
-          command: |
-            echo "basic_auth_username = \"${BASIC_AUTH_USERNAME}\""  > ~/project/terraform/envs/<< parameters.stage >>/terraform.tfvars
-            echo "basic_auth_password = \"${BASIC_AUTH_PASSWORD}\"" >> ~/project/terraform/envs/<< parameters.stage >>/terraform.tfvars
-
   terraform:
     parameters:
-      stage:
-        type: string
       command:
         type: string
     steps:
       - run:
-          name: terraform init - << parameters.stage >>
-          command: |
-            cd ~/project/terraform/envs/<< parameters.stage >>
-            terraform init
-      - run:
-          name: terraform << parameters.command >> - << parameters.stage >>
-          command: |
-            cd ~/project/terraform/envs/<< parameters.stage >>
-            terraform << parameters.command >>
+          name: terraform << parameters.command >>
+          working_dir: terraform
+          command: terraform << parameters.command >>
       - store_artifacts:
-          path: terraform/envs/<< parameters.stage >>/terraform.log
+          path: terraform/terraform.log
 
 jobs:
   test:
@@ -96,33 +77,23 @@ jobs:
           name: install required commands
           command: apk --update add bash curl
       - setup_aws_credentials
-      - create_tfvars:
-          stage: dev
       - terraform:
-          stage: dev
-          command: plan
-      - create_tfvars:
-          stage: prod
+          command: init
       - terraform:
-          stage: prod
           command: plan
       - slack/status
 
   tf_apply:
     executor: terraform
-    parameters:
-      stage:
-        type: string
     steps:
       - checkout
       - run:
           name: install required command
           command: apk --update add bash curl
       - setup_aws_credentials
-      - create_tfvars:
-          stage: << parameters.stage >>
       - terraform:
-          stage: << parameters.stage >>
+          command: init
+      - terraform:
           command: apply -auto-approve
       - slack/status
 
@@ -132,29 +103,7 @@ workflows:
       - test
       - tf_plan
 
-      - slack/approval-notification:
-          requires: [test, tf_plan]
-      - approval_deploy:
-          type: approval
-          requires: [test, tf_plan]
-
-      #
-      # dev
-      #
-
       - tf_apply:
-          name: tf_apply_dev
-          stage: dev
-          requires: [approval_deploy]
-
-      #
-      # prod
-      #
-
-      - tf_apply:
-          name: tf_apply_prod
-          stage: prod
-          requires: [approval_deploy]
           filters:
             branches:
               only: [main]
