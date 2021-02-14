@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { JobsProvider } from '../contexts';
 import '../styles/global.scss';
 
 const theme = createMuiTheme({
@@ -19,10 +20,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline/>
-      <Component {...pageProps}/>
-    </ThemeProvider>
+    <JobsProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline/>
+        <Component {...pageProps}/>
+      </ThemeProvider>
+    </JobsProvider>
   );
 };
 
