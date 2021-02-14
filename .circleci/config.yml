@@ -88,46 +88,6 @@ jobs:
           command: yarn run build
       - slack/status
 
-  deploy:
-    executor: node
-    parameters:
-      stage:
-        type: string
-    steps:
-      - checkout
-      - setup_aws_credentials
-      - run:
-          name: install aws-cli
-          command: |
-            curl https://bootstrap.pypa.io/get-pip.py | python3
-            pip install awscli==1.18.46
-      - yarn_install
-      - run:
-          name: create dotenv
-          command: |
-            case << parameters.stage >> in
-              dev)
-                API_ORIGIN=https://dev.api.nojov.kou-pg.com
-              ;;
-              prod)
-                API_ORIGIN=https://api.nojov.kou-pg.com
-              ;;
-              *)
-                echo 'invalid stage!: << parameters.stage >>'
-                exit 1
-            esac
-
-            echo "REACT_APP_STAGE=<< parameters.stage >>"  > .env
-            echo "REACT_APP_API_ORIGIN=${API_ORIGIN}"     >> .env
-            echo "REACT_APP_GA_ID=${GOOGLE_ANALYTICS_ID}" >> .env
-      - run:
-          name: build
-          command: yarn run build
-      - run:
-          name: deploy
-          command: aws s3 sync ./build/ s3://nojov-ui-<< parameters.stage >>-deployment/ --delete
-      - slack/status
-
   tf_plan:
     executor: terraform
     steps:
@@ -186,10 +146,6 @@ workflows:
           name: tf_apply_dev
           stage: dev
           requires: [approval_deploy]
-      - deploy:
-          name: deploy_dev
-          stage: dev
-          requires: [tf_apply_dev]
 
       #
       # prod
@@ -199,13 +155,6 @@ workflows:
           name: tf_apply_prod
           stage: prod
           requires: [approval_deploy]
-          filters:
-            branches:
-              only: [main]
-      - deploy:
-          name: deploy_prod
-          stage: prod
-          requires: [tf_apply_prod]
           filters:
             branches:
               only: [main]
