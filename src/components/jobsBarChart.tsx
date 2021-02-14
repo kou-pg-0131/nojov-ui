@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Checkbox } from '..';
-import { Language, languageToString, languageToColor, Job } from '../../domain';
+import { Checkbox } from '.';
+import { Language, languageToString, languageToColor, Job } from '../domain';
 import { format } from 'date-fns';
 import {
   BarChart,

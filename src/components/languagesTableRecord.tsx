@@ -3,7 +3,7 @@ import { Box, Link, TableRow, TableCell } from '@material-ui/core';
 import { makeStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
 import { Launch as LaunchIcon } from '@material-ui/icons';
-import { Language, languageToString, Website } from '../../domain';
+import { Language, languageToString, Website } from '../domain';
 
 const useStyles = makeStyles(() =>
   createStyles({
