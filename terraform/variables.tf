@@ -1,4 +1,4 @@
-variable "stage" {}
+variable "stage" { default = "prod" }
 variable "basic_auth_username" {}
 variable "basic_auth_password" {}
 
