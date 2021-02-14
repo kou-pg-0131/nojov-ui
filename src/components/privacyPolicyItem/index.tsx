@@ -23,7 +23,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const Item: React.FC<Props> = (props: Props) => {
+export const PrivacyPolicyItem: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
   return (

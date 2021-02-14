@@ -7,6 +7,20 @@ export default class Document extends NextDocument {
     return (
       <Html>
         <Head>
+          {/* Global site tag (gtag.js) - Google Analytics --> */}
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-2796SX98SG"></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', ${process.env.NEXT_PUBLIC_GA_ID});`
+            }}
+          >
+          </script>
+
           <meta name='description' content='プログラミング言語ごとの求人数を一覧で見ることができるサービスです。'/>
 
           <meta property='og:site_name'        content='Nojov - プログラミング言語別求人数ビューア'/>
@@ -24,8 +38,6 @@ export default class Document extends NextDocument {
           <meta name='twitter:site' content='@kou_pg_0131'/>
 
           <meta property='fb:app_id' content='889570964422469'/>
-
-          <title>Nojov - プログラミング言語別求人数ビューア</title>
         </Head>
         <body>
           <Main/>

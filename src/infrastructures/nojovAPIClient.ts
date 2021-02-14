@@ -7,7 +7,7 @@ export interface INojovAPIClient {
 
 export class NojovAPIClient implements INojovAPIClient {
   constructor(
-    private apiOrigin: string,
+    private apiOrigin: string = process.env.NEXT_PUBLIC_API_ORIGIN,
     private httpClient: IHttpClient = new HttpClient(),
     private uriBuilder: IURIBuilder = new URIBuilder(),
   ) {}
