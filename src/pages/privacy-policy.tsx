@@ -16,7 +16,7 @@ const PrivacyPolicyPage: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <Layout>
+    <Layout title='プライバシーポリシー'>
       <Box>
         <Typography variant='h2' className={classes.pageTitle}>プライバシーポリシー</Typography>
 
