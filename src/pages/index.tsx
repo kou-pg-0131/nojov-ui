@@ -3,7 +3,7 @@ import { CircularProgress, Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useJobs } from '../contexts';
 import { Layout } from '../layout';
-import { LanguagesTable, LanguagesTableRecord, WebsitesSelect, JobsBarChart } from '../views/components';
+import { LanguagesTable, LanguagesTableRecord, WebsitesSelect, JobsBarChart } from '../components';
 import { Job, Language, Website } from '../domain';
 
 const useStyles = makeStyles(() =>
