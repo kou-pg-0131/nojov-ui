@@ -26,7 +26,8 @@
     "url-join": "^4.0.1"
   },
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "build": "next build"
   },
   "eslintConfig": {
     "extends": "react-app"
