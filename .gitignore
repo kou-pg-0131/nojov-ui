@@ -34,3 +34,6 @@ terraform.tfvars
 # circleci-env
 .circleci-env/.env
 .circleci-env/circle-token
+
+# nextjs
+/.next

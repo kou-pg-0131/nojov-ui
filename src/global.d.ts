@@ -1,7 +1,7 @@
 declare namespace NodeJS {
   interface ProcessEnv {
-    readonly REACT_APP_STAGE: 'dev' | 'prod';
-    readonly REACT_APP_API_ORIGIN: string;
-    readonly REACT_APP_GA_ID: string;
+    readonly NEXT_PUBLIC_APP_STAGE: 'dev' | 'prod';
+    readonly NEXT_PUBLIC_API_ORIGIN: string;
+    readonly NEXT_PUBLIC_GA_ID: string;
   }
 }
