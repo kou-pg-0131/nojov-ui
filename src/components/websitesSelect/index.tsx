@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormControl, InputLabel, Select as MuiSelect, MenuItem } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Website } from '../../../domain';
+import { Website } from '../../domain';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
