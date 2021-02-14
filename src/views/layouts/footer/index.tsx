@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -37,7 +37,9 @@ export const Footer: React.FC = () => {
       </Box>
 
       <Box>
-        <Link to='/privacy-policy' className={classes.privacyPolicyLink}>プライバシーポリシー</Link>
+        <Link href='/privacy-policy'>
+          <a className={classes.privacyPolicyLink}>プライバシーポリシー</a>
+        </Link>
       </Box>
     </Box>
   );

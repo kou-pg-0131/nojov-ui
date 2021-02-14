@@ -5,6 +5,6 @@ export class GoogleAnalytics {
   ) {}
 
   public pageView(pathname: string): void {
-    window.gtag('config', this.measurementId, { page_path: pathname, debug_mode: this.debug });
+    // window.gtag('config', this.measurementId, { page_path: pathname, debug_mode: this.debug });
   }
 }

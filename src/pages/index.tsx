@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CircularProgress, Box } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { Layout } from '../layout';
 import { LanguagesTable, LanguagesTableRecord, WebsitesSelect, JobsBarChart } from '../views/components';
 import { Job, Language, Website } from '../domain';
 import { NojovAPIClientFactory } from '../infrastructures';
@@ -71,34 +72,36 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <Box>
-      <Box className={classes.websitesContainer}>
-        <WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>
-      </Box>
-
-      <Box style={{ opacity: fetched ? 1 : 0.5, pointerEvents: fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
-        {!fetched && <Box className={classes.circleContainer}><CircularProgress/></Box>}
-
-        <Box>
-          <JobsBarChart jobs={filteredJobs} updatedAt={updatedAt}/>
+    <Layout>
+      <Box>
+        <Box className={classes.websitesContainer}>
+          <WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>
         </Box>
 
-        <Box>
-          <LanguagesTable>
-            {languageRecords.sort((a, b) => b.count - a.count).map((record, i) => (
-              <LanguagesTableRecord
-                key={i}
-                index={i}
-                name={record.name}
-                count={record.count}
-                searchUrl={record.searchUrl}
-                website={website}
-              />
-            ))}
-          </LanguagesTable>
+        <Box style={{ opacity: fetched ? 1 : 0.5, pointerEvents: fetched ? 'auto' : 'none' }} className={classes.chartContainer}>
+          {!fetched && <Box className={classes.circleContainer}><CircularProgress/></Box>}
+
+          <Box>
+            <JobsBarChart jobs={filteredJobs} updatedAt={updatedAt}/>
+          </Box>
+
+          <Box>
+            <LanguagesTable>
+              {languageRecords.sort((a, b) => b.count - a.count).map((record, i) => (
+                <LanguagesTableRecord
+                  key={i}
+                  index={i}
+                  name={record.name}
+                  count={record.count}
+                  searchUrl={record.searchUrl}
+                  website={website}
+                />
+              ))}
+            </LanguagesTable>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Layout>
   );
 };
 
