@@ -2,7 +2,9 @@ import React from 'react';
 import Head from 'next/head';
 import { Box } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { Header, Main, Footer } from '../views/layouts';
+import { Header } from './header';
+import { Footer } from './footer';
+import { Main } from './main';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -30,6 +32,7 @@ export const Layout: React.FC<Props> = (props: Props) => {
       <Head>
         <title>{title}</title>
       </Head>
+
       <Box className={classes.root}>
         <Header/>
         <Main>
