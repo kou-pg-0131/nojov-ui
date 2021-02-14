@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
 
@@ -12,6 +12,10 @@ const theme = createMuiTheme({
 });
 
 const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
+  useEffect(() => {
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles) jssStyles.remove();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
