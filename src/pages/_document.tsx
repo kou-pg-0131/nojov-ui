@@ -24,8 +24,6 @@ export default class Document extends NextDocument {
           <meta name='twitter:site' content='@kou_pg_0131'/>
 
           <meta property='fb:app_id' content='889570964422469'/>
-
-          <title>Nojov - プログラミング言語別求人数ビューア</title>
         </Head>
         <body>
           <Main/>
