@@ -28,7 +28,7 @@ export const Layout: React.FC<Props> = (props: Props) => {
   const title = props.title ? `${props.title} | ${baseTitle}` : baseTitle;
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>{title}</title>
       </Head>
@@ -40,6 +40,6 @@ export const Layout: React.FC<Props> = (props: Props) => {
         </Main>
         <Footer/>
       </Box>
-    </React.Fragment>
+    </>
   );
 };

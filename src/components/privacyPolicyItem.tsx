@@ -1,16 +1,17 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginTop: 20,
+      marginBottom: theme.spacing(4),
     },
     title: {
       borderBottom: '1px solid #333',
       fontSize: 28,
-      marginBottom: 8,
+      marginBottom: theme.spacing(2),
+      paddingBottom: theme.spacing(1),
     },
     text: {
       wordBreak: 'break-all',
@@ -29,7 +30,7 @@ export const PrivacyPolicyItem: React.FC<Props> = (props: Props) => {
   return (
     <Box className={classes.root}>
       <Typography variant='h3' className={classes.title}>{props.title}</Typography>
-      <Typography className={classes.text}>{props.children}</Typography>
+      <Box className={classes.text}>{props.children}</Box>
     </Box>
   );
 };
