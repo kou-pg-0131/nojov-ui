@@ -63,32 +63,30 @@ const Home: React.FC = () => {
 
   return (
     <Layout>
-      <Box>
-        <Box className={classes.websitesContainer}>
-          <WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>
+      <Box className={classes.websitesContainer}>
+        <WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>
+      </Box>
+
+      <Box style={{ opacity: jobs ? 1 : 0.5, pointerEvents: jobs ? 'auto' : 'none' }} className={classes.chartContainer}>
+        {!jobs && <Box className={classes.circleContainer}><CircularProgress/></Box>}
+
+        <Box>
+          <JobsBarChart jobs={filteredJobs} updatedAt={updatedAt?.toISOString()}/>
         </Box>
 
-        <Box style={{ opacity: jobs ? 1 : 0.5, pointerEvents: jobs ? 'auto' : 'none' }} className={classes.chartContainer}>
-          {!jobs && <Box className={classes.circleContainer}><CircularProgress/></Box>}
-
-          <Box>
-            <JobsBarChart jobs={filteredJobs} updatedAt={updatedAt?.toISOString()}/>
-          </Box>
-
-          <Box>
-            <LanguagesTable>
-              {languageRecords.sort((a, b) => b.count - a.count).map((record, i) => (
-                <LanguagesTableRecord
-                  key={i}
-                  index={i}
-                  name={record.name}
-                  count={record.count}
-                  searchUrl={record.searchUrl}
-                  website={website}
-                />
-              ))}
-            </LanguagesTable>
-          </Box>
+        <Box>
+          <LanguagesTable>
+            {languageRecords.sort((a, b) => b.count - a.count).map((record, i) => (
+              <LanguagesTableRecord
+                key={i}
+                index={i}
+                name={record.name}
+                count={record.count}
+                searchUrl={record.searchUrl}
+                website={website}
+              />
+            ))}
+          </LanguagesTable>
         </Box>
       </Box>
     </Layout>
