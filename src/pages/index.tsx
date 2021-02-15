@@ -1,94 +1,69 @@
 import React, { useState } from 'react';
-import { CircularProgress, Box } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
+import { format } from 'date-fns';
 import { useJobs } from '../contexts';
 import { Layout } from '../layout';
-import { LanguagesTable, LanguagesTableRecord, WebsitesSelect, JobsBarChart } from '../components';
-import { Job, Language, Website } from '../domain';
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    chartContainer: {
-      position: 'relative',
-    },
-    circleContainer: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      position: 'absolute',
-      height: '100%',
-      width: '100%',
-      top: 0,
-      left: 0,
-    },
-    websitesContainer: {
-      marginBottom: 15,
-      textAlign: 'right',
-    },
-    tab: {
-      width: '50%',
-    },
-  })
-);
+import { Loading, Checkbox, JobsTable, WebsitesSelect, JobsBarChart } from '../components';
+import { Job, languageToColor, Website } from '../domain';
+import { JobsAggregater } from '../infrastructures';
 
 const Home: React.FC = () => {
-  const classes = useStyles();
-
   const [website, setWebsite] = useState<'all' | Website>('all');
+  const [sort, setSort] = useState<boolean>(false);
   const { jobs, updatedAt } = useJobs();
 
   const handleChangeWebsite = (website: 'all' | Website): void => setWebsite(website);
 
-  const websites: Website[] = (jobs || []).map(job => job.website).filter((website, i, self) =>
-    self.findIndex((w) => website.name === w.name) === i
-  );
+  const websites: Website[] = jobs ? JobsAggregater.getWebsites(jobs) : [];
+
+  const handleChangeSort = (checked: boolean) => {
+    setSort(checked);
+  };
 
   const filteredJobs: Job[] = (() => {
-    return website === 'all' ? jobs || [] : (jobs || []).filter(job => job.website.name === website.name);
+    if (!jobs) return [];
+    if (website === 'all') return jobs;
+    return JobsAggregater.filterByWebsite(jobs, website);
   })();
 
-  const languageRecords: { name: Language; count: number; searchUrl?: string }[] = (() => {
-    if (website !== 'all') {
-      return filteredJobs.map(job =>
-        ({ name: job.language, count: job.count, searchUrl: job.search_url })
-      );
-    }
+  const barChartItems = JobsAggregater.sum(filteredJobs).map(job => (
+    { language: job.language, count: job.count, color: languageToColor(job.language) }
+  ));
 
-    const m = new Map<Language, number>([]);
-    filteredJobs.forEach(job => {
-      m.set(job.language, (m.get(job.language) || 0) + job.count);
-    });
-    return Array.from(m.entries()).map(([name, count]) => ({ name, count }));
+  const tableItems = (() => {
+    if (website === 'all') return JobsAggregater.sum(filteredJobs);
+
+    return filteredJobs.map(job => ({
+      language: job.language,
+      count: job.count,
+      website: { name: job.website.name, href: job.search_url },
+    }));
   })();
 
   return (
     <Layout>
-      <Box className={classes.websitesContainer}>
-        <WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>
-      </Box>
+      {!jobs ? (
+        <Loading/>
+      ) : (
+        <>
+          <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>
+            <Checkbox label='求人数の多い順に並び替え' onChange={handleChangeSort}/>
+            <small>
+              最終更新日時: {updatedAt && <time dateTime={updatedAt.toISOString()}>{format(updatedAt, 'yyyy/MM/dd HH:mm')}</time>}
+            </small>
+          </Box>
 
-      <Box style={{ opacity: jobs ? 1 : 0.5, pointerEvents: jobs ? 'auto' : 'none' }} className={classes.chartContainer}>
-        {!jobs && <Box className={classes.circleContainer}><CircularProgress/></Box>}
+          <JobsBarChart
+            items={barChartItems}
+            sort={sort}
+          />
 
-        <Box>
-          <JobsBarChart jobs={filteredJobs} updatedAt={updatedAt?.toISOString()}/>
-        </Box>
-
-        <Box>
-          <LanguagesTable>
-            {languageRecords.sort((a, b) => b.count - a.count).map((record, i) => (
-              <LanguagesTableRecord
-                key={i}
-                index={i}
-                name={record.name}
-                count={record.count}
-                searchUrl={record.searchUrl}
-                website={website}
-              />
-            ))}
-          </LanguagesTable>
-        </Box>
-      </Box>
+          <JobsTable
+            items={tableItems}
+          />
+        </>
+      )}
     </Layout>
   );
 };

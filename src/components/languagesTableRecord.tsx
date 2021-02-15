@@ -3,7 +3,7 @@ import { Box, Link, TableRow, TableCell } from '@material-ui/core';
 import { makeStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
 import { Launch as LaunchIcon } from '@material-ui/icons';
-import { Language, languageToString, Website } from '../domain';
+import { Language, languageToString } from '../domain';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -31,8 +31,10 @@ type Props = {
   index: number;
   name: Language;
   count: number;
-  searchUrl?: string;
-  website: Website | 'all';
+  website?: {
+    name: string;
+    href: string;
+  };
 };
 
 export const LanguagesTableRecord: React.FC<Props> = (props: Props) => {
@@ -43,10 +45,10 @@ export const LanguagesTableRecord: React.FC<Props> = (props: Props) => {
       <StyledTableCell align='center'>{props.index + 1}</StyledTableCell>
       <StyledTableCell align='center'>
         {languageToString(props.name)}
-        {props.website !== 'all' && !!props.searchUrl && (
+        {props.website && (
           <Box>
             <Box display='inline-block'>
-              <Link style={{ fontSize: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }} href={props.searchUrl} target='_blank' rel='noopener'>
+              <Link style={{ fontSize: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }} href={props.website.href} target='_blank' rel='noopener'>
                 {props.website.name}
                 <LaunchIcon style={{ fontSize: 12 }}/>
               </Link>
