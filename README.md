@@ -22,27 +22,31 @@ API: [github.com/kou-pg-0131/nojov-api](https://github.com/kou-pg-0131/nojov-api
 
 # Technologies
 
-## Language and Libraries
+## Language
 
 - TypeScript
+
+## Framework / Libraries
+
 - React.js
-- React Router
+- Next.js
 - Material UI
 - ESLint
 - Jest
 
-## AWS
+## Cloud
 
-- ACM
-- API Gateway
-- CloudFormation
-- CloudFront
-- CloudWatch
-- IAM
-- Lambda
-- Route53
-- S3
-- StepFunctions
+- Vercel
+- AWS
+  - ACM
+  - API Gateway
+  - CloudFormation
+  - CloudWatch
+  - IAM
+  - Lambda
+  - Route53
+  - S3
+  - StepFunctions
 
 ## CI/CD
 
