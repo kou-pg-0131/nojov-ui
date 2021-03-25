@@ -10,7 +10,7 @@ const useStyles = makeStyles(() =>
   createStyles({
     root: {
       minHeight: '100vh',
-      paddingBottom: 80,
+      paddingBottom: 120,
       position: 'relative',
     },
   })
