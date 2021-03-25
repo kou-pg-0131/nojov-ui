@@ -32,9 +32,6 @@
     "lint": "eslint 'src/**/*.ts' 'src/**/*.tsx'",
     "test:compile": "tsc --noEmit"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
