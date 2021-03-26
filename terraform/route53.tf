@@ -1,5 +1,5 @@
 data "aws_route53_zone" "main" {
-  name         = local.zone_name
+  name         = "kou-pg.com"
   private_zone = false
 }
 

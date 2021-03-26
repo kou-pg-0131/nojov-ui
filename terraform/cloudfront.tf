@@ -3,7 +3,7 @@ resource "aws_cloudfront_distribution" "redirect" {
 
   origin {
     origin_id   = aws_s3_bucket.redirect.id
-    domain_name = "${aws_s3_bucket.redirect.id}.s3-website-us-east-1.amazonaws.com"
+    domain_name = "${aws_s3_bucket.redirect.id}.s3-website-${data.aws_region.current.name}.amazonaws.com"
 
     custom_origin_config {
       http_port              = 80
