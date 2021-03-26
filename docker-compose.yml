@@ -15,7 +15,7 @@ services:
 
   tf:
     image: hashicorp/terraform:0.12.24
-    working_dir: /app/envs/dev
+    working_dir: /app
     environment:
       TF_LOG: trace
       TF_LOG_PATH: terraform.log
