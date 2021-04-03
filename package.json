@@ -2,6 +2,12 @@
   "name": "nojov-ui",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "eslint 'src/**/*.ts' 'src/**/*.tsx'",
+    "test:compile": "tsc --noEmit"
+  },
   "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
@@ -25,24 +31,6 @@
     "recharts": "^1.8.5",
     "typescript": "~3.7.2",
     "url-join": "^4.0.1"
-  },
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "lint": "eslint 'src/**/*.ts' 'src/**/*.tsx'",
-    "test:compile": "tsc --noEmit"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@types/gtag.js": "^0.0.4",
