@@ -1,20 +1,17 @@
-import { LatestJobs } from '../domain';
-import { IHttpClient, HttpClient, IURIBuilder, URIBuilder } from '.';
+import { Website } from '../domain';
+import { IHttpClient, HttpClient } from '.';
 
-export interface INojovAPIClient {
-  getLatest(): Promise<LatestJobs>;
-}
-
-export class NojovAPIClient implements INojovAPIClient {
+export class NojovAPIClient {
   constructor(
     private apiOrigin: string = process.env.NEXT_PUBLIC_API_ORIGIN,
     private httpClient: IHttpClient = new HttpClient(),
-    private uriBuilder: IURIBuilder = new URIBuilder(),
   ) {}
 
-  public async getLatest(): Promise<LatestJobs> {
-    return await this.httpClient.get(
-      this.uriBuilder.join(this.apiOrigin, 'v1/jobs/latest'),
-    );
+  public async getLatestWebsites(): Promise<{ updated_at: Date; websites: Website[] }> {
+    const resp = await this.httpClient.get<{ websites: Website[]; updated_at: string; }>('https://api.nojov.kou-pg.com/v1/websites/latest');
+    return {
+      updated_at: new Date(resp.updated_at),
+      websites: resp.websites,
+    };
   }
 }

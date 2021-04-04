@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { AppProps } from 'next/app';
 import { CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { JobsProvider } from '../contexts';
+import { WebsitesProvider } from '../contexts';
 import '../styles/global.scss';
 
 const theme = createMuiTheme({
@@ -28,12 +28,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   }, [router.pathname]);
 
   return (
-    <JobsProvider>
+    <WebsitesProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <Component {...pageProps}/>
       </ThemeProvider>
-    </JobsProvider>
+    </WebsitesProvider>
   );
 };
 

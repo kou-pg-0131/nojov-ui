@@ -3,7 +3,7 @@ import { Box, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, 
 import { Launch as LaunchIcon } from '@material-ui/icons';
 import { makeStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
-import { Language, languageToString } from '../domain';
+import { Website, Job, Language, languageToString } from '../domain';
 import { ExternalLink } from '.';
 
 const useStyles = makeStyles(() =>
@@ -42,11 +42,23 @@ const StyledTableCell = withStyles(()=>
 )(TableCell);
 
 type Props = {
-  items: { language: Language; count: number; website?: { name: string; href: string; } }[];
+  website?: Website;
+  jobs: Job[];
 };
 
 export const JobsTable: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
+
+  const records: { language: Language; count: number; searchUrl?: string; }[] = props.jobs.reduce((result, current) => {
+    const idx = result.findIndex(record => record.language === current.language);
+    if (idx === -1) {
+      result.push({ language: current.language, count: current.count, searchUrl: current.search_url });
+    } else {
+      result[idx].count += current.count;
+    }
+
+    return result;
+  }, []);
 
   return (
     <TableContainer component={Paper} className={classes.root}>
@@ -59,23 +71,23 @@ export const JobsTable: React.FC<Props> = (props: Props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.items.sort((a, b) => b.count - a.count).map((item, i) => (
+          {records.sort((a, b) => b.count - a.count).map((item, i) => (
             <TableRow key={item.language}>
               <StyledTableCell>
                 {i + 1}
               </StyledTableCell>
               <StyledTableCell>
                 {languageToString(item.language)}
-                {item.website && (
-                  <Box>
-                    <Box display='inline-block'>
-                      <ExternalLink className={classes.websiteLink} href={item.website.href}>
-                        {item.website.name}
-                        <LaunchIcon style={{ fontSize: 12 }}/>
-                      </ExternalLink>
-                    </Box>
-                  </Box>
-                )}
+                 {props.website && (
+                   <Box>
+                     <Box display='inline-block'>
+                       <ExternalLink className={classes.websiteLink} href={item.searchUrl}>
+                         {props.website.name}
+                         <LaunchIcon style={{ fontSize: 12 }}/>
+                       </ExternalLink>
+                     </Box>
+                   </Box>
+                 )}
               </StyledTableCell>
               <StyledTableCell>
                 {item.count.toLocaleString()}
