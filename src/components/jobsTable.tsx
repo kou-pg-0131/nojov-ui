@@ -42,16 +42,17 @@ const StyledTableCell = withStyles(()=>
 )(TableCell);
 
 type Props = {
+  website?: Website;
   jobs: Job[];
 };
 
 export const JobsTable: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
 
-  const records: { language: Language; count: number; }[] = props.jobs.reduce((result, current) => {
+  const records: { language: Language; count: number; searchUrl?: string; }[] = props.jobs.reduce((result, current) => {
     const idx = result.findIndex(record => record.language === current.language);
     if (idx === -1) {
-      result.push({ language: current.language, count: current.count });
+      result.push({ language: current.language, count: current.count, searchUrl: current.search_url });
     } else {
       result[idx].count += current.count;
     }
@@ -77,16 +78,16 @@ export const JobsTable: React.FC<Props> = (props: Props) => {
               </StyledTableCell>
               <StyledTableCell>
                 {languageToString(item.language)}
-                {/* {item.website && ( */}
-                {/*       <Box> */}
-                {/*         <Box display='inline-block'> */}
-                {/*           <ExternalLink className={classes.websiteLink} href={item.website.href}> */}
-                {/*             {item.website.name} */}
-                {/*             <LaunchIcon style={{ fontSize: 12 }}/> */}
-                {/*           </ExternalLink> */}
-                {/*         </Box> */}
-                {/*       </Box> */}
-                {/*     )} */}
+                 {props.website && (
+                   <Box>
+                     <Box display='inline-block'>
+                       <ExternalLink className={classes.websiteLink} href={item.searchUrl}>
+                         {props.website.name}
+                         <LaunchIcon style={{ fontSize: 12 }}/>
+                       </ExternalLink>
+                     </Box>
+                   </Box>
+                 )}
               </StyledTableCell>
               <StyledTableCell>
                 {item.count.toLocaleString()}

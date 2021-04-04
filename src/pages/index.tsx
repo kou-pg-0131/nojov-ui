@@ -48,6 +48,7 @@ const Home: React.FC = () => {
           />
 
           <JobsTable
+            website={selectedWebsite}
             jobs={jobs}
           />
         </>
