@@ -4,6 +4,7 @@ import { Job, languageToString, languageToColor } from '../domain';
 
 type Props = {
   jobs: Job[];
+  sort: boolean;
 };
 
 export const JobsBarChart: React.FC<Props> = (props: Props) => {
@@ -16,13 +17,17 @@ export const JobsBarChart: React.FC<Props> = (props: Props) => {
     }
 
     return result;
-  }, []);
+  }, []).sort((a, b) =>
+    a.name > b.name ? 1 : -1
+  ).sort((a, b) =>
+    !props.sort ? 0 : a['求人数'] < b['求人数'] ? 1 : -1
+  );
 
   return (
     <ResponsiveContainer height={550}>
       <BarChart
         layout='vertical'
-        data={data.sort((a, b) => a.name > b.name ? 1 : -1)}
+        data={data}
       >
         <CartesianGrid strokeDasharray='3 3'/>
         <XAxis type='number'/>

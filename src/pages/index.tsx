@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import { format } from 'date-fns';
 import { useWebsites } from '../contexts';
 import { Layout } from '../layout';
-import { Loading, JobsTable, JobsBarChart } from '../components';
+import { Loading, JobsTable, JobsBarChart, Checkbox } from '../components';
 import { Job } from '../domain';
 
 const Home: React.FC = () => {
   // const [website, setWebsite] = useState<'all' | Website>('all');
-  // const [sort, setSort] = useState<boolean>(false);
+  const [sort, setSort] = useState<boolean>(false);
   const { websites, updatedAt } = useWebsites();
 
   const jobs: Job[] = websites?.reduce((result, current) => {
@@ -18,11 +18,11 @@ const Home: React.FC = () => {
   // const handleChangeWebsite = (website: 'all' | Website): void => setWebsite(website);
   //
   // const websites: Website[] = jobs ? JobsAggregater.getWebsites(jobs) : [];
-  //
-  // const handleChangeSort = (checked: boolean) => {
-  //   setSort(checked);
-  // };
-  //
+
+  const handleChangeSort = (checked: boolean) => {
+    setSort(checked);
+  };
+
   // const filteredJobs: Job[] = (() => {
   //   if (!jobs) return [];
   //   if (website === 'all') return jobs;
@@ -50,16 +50,17 @@ const Home: React.FC = () => {
         <>
           <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
         {/*}<WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>*/}
-        {/*}<Checkbox label='求人数の多い順に並び替え' onChange={handleChangeSort}/>*/}
+          <Checkbox label='求人数の多い順に並び替え' onChange={handleChangeSort}/>
           <small>
             最終更新日時: {updatedAt && <time dateTime={updatedAt.toISOString()}>{format(updatedAt, 'yyyy/MM/dd HH:mm')}</time>}
           </small>
           </Box>
-{/*}*/}
-        <JobsBarChart
-          jobs={jobs}
-        />
-{/*}*/}
+
+          <JobsBarChart
+            jobs={jobs}
+            sort={sort}
+          />
+
           <JobsTable
             jobs={jobs}
           />
