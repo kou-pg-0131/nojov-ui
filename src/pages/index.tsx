@@ -1,4 +1,6 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
+import { format } from 'date-fns';
 import { useWebsites } from '../contexts';
 import { Layout } from '../layout';
 import { Loading, JobsTable, JobsBarChart } from '../components';
@@ -46,13 +48,13 @@ const Home: React.FC = () => {
       {!websites && <Loading/>}
       {websites && jobs && (
         <>
-          {/*}<Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>*/}
+          <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
         {/*}<WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>*/}
         {/*}<Checkbox label='求人数の多い順に並び替え' onChange={handleChangeSort}/>*/}
-        {/*}<small>*/}
-        {/*}最終更新日時: {updatedAt && <time dateTime={updatedAt.toISOString()}>{format(updatedAt, 'yyyy/MM/dd HH:mm')}</time>}*/}
-        {/*}</small>*/}
-        {/*}</Box>*/}
+          <small>
+            最終更新日時: {updatedAt && <time dateTime={updatedAt.toISOString()}>{format(updatedAt, 'yyyy/MM/dd HH:mm')}</time>}
+          </small>
+          </Box>
 {/*}*/}
         <JobsBarChart
           jobs={jobs}
