@@ -1,15 +1,17 @@
 import React from 'react';
 import { useWebsites } from '../contexts';
 import { Layout } from '../layout';
-import { Loading } from '../components';
+import { Loading, JobsTable } from '../components';
+import { Job } from '../domain';
 
 const Home: React.FC = () => {
   // const [website, setWebsite] = useState<'all' | Website>('all');
   // const [sort, setSort] = useState<boolean>(false);
   const { websites, updatedAt } = useWebsites();
 
-  console.log(updatedAt);
-  console.log(websites);
+  const jobs: Job[] = websites?.reduce((result, current) => {
+    return [...result, ...current.jobs];
+  }, []);
 
   // const handleChangeWebsite = (website: 'all' | Website): void => setWebsite(website);
   //
@@ -41,9 +43,8 @@ const Home: React.FC = () => {
 
   return (
     <Layout>
-      {!websites ? (
-        <Loading/>
-      ) : (
+      {!websites && <Loading/>}
+      {websites && jobs && (
         <>
           {/*}<Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>*/}
         {/*}<WebsitesSelect onChange={handleChangeWebsite} websites={websites}/>*/}
@@ -58,9 +59,9 @@ const Home: React.FC = () => {
         {/*}sort={sort}*/}
         {/*}/>*/}
 {/*}*/}
-        {/*}<JobsTable*/}
-        {/*}items={tableItems}*/}
-        {/*}/>*/}
+          <JobsTable
+            jobs={jobs}
+          />
         </>
       )}
     </Layout>
