@@ -1,7 +1,7 @@
 import React from 'react';
 import { useWebsites } from '../contexts';
 import { Layout } from '../layout';
-import { Loading, JobsTable } from '../components';
+import { Loading, JobsTable, JobsBarChart } from '../components';
 import { Job } from '../domain';
 
 const Home: React.FC = () => {
@@ -54,10 +54,9 @@ const Home: React.FC = () => {
         {/*}</small>*/}
         {/*}</Box>*/}
 {/*}*/}
-        {/*}<JobsBarChart*/}
-        {/*}items={barChartItems}*/}
-        {/*}sort={sort}*/}
-        {/*}/>*/}
+        <JobsBarChart
+          jobs={jobs}
+        />
 {/*}*/}
           <JobsTable
             jobs={jobs}
