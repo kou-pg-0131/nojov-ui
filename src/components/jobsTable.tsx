@@ -3,7 +3,7 @@ import { Box, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, 
 import { Launch as LaunchIcon } from '@material-ui/icons';
 import { makeStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
-import { Website, Job, Language, languageToString } from '../domain';
+import { Website, Job, Language } from '../domain';
 import { ExternalLink } from '.';
 
 const useStyles = makeStyles(() =>
@@ -77,7 +77,7 @@ export const JobsTable: React.FC<Props> = (props: Props) => {
                 {i + 1}
               </StyledTableCell>
               <StyledTableCell>
-                {languageToString(item.language)}
+                {item.language}
                  {props.website && (
                    <Box>
                      <Box display='inline-block'>

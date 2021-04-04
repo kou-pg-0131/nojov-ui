@@ -1,71 +1,45 @@
 export type Language =
-  'java' |
-  'c' |
-  'c++' |
-  'c#' |
-  'php' |
-  'ruby' |
-  'perl' |
-  'objective-c' |
-  'r' |
-  'javascript' |
-  'scala' |
-  'go' |
-  'swift' |
-  'cobol' |
-  'python' |
-  'kotlin' |
-  'rust' |
-  'haskell' |
-  'typescript';
-
-const languageStringsMap = new Map<Language, string>([
-  ['java', 'Java'],
-  ['c', 'C言語'],
-  ['c++', 'C++'],
-  ['c#', 'C#'],
-  ['php', 'PHP'],
-  ['ruby', 'Ruby'],
-  ['perl', 'Perl'],
-  ['objective-c', 'Objective-C'],
-  ['r', 'R言語'],
-  ['javascript', 'JavaScript'],
-  ['scala', 'Scala'],
-  ['go', 'Go'],
-  ['swift', 'Swift'],
-  ['cobol', 'COBOL'],
-  ['python', 'Python'],
-  ['kotlin', 'Kotlin'],
-  ['rust', 'Rust'],
-  ['haskell', 'Haskell'],
-  ['typescript', 'TypeScript'],
-]);
+  'Java' |
+  'C言語' |
+  'C++' |
+  'C#' |
+  'PHP' |
+  'Ruby' |
+  'Perl' |
+  'Objective-C' |
+  'R言語' |
+  'JavaScript' |
+  'Scala' |
+  'Go' |
+  'Swift' |
+  'COBOL' |
+  'Python' |
+  'Kotlin' |
+  'Rust' |
+  'Haskell' |
+  'TypeScript';
 
 const languageColorsMap = new Map<Language, string>([
-  ['java',        '#73A1FB'],
-  ['c',           '#194674'],
-  ['c++',         '#1A598E'],
-  ['c#',          '#7B3399'],
-  ['php',         '#777BB3'],
-  ['ruby',        '#D34231'],
-  ['perl',        '#4E5C84'],
-  ['objective-c', '#000000'],
-  ['r',           '#2166B7'],
-  ['javascript',  '#F0DB4F'],
-  ['scala',       '#EA0000'],
-  ['go',          '#74CDDD'],
-  ['swift',       '#F67D3A'],
-  ['cobol',       '#005CA5'],
-  ['python',      '#386EA0'],
-  ['kotlin',      '#EA8708'],
-  ['rust',        '#000000'],
-  ['haskell',     '#999999'],
-  ['typescript',  '#007ACC'],
+  ['Java',        '#73A1FB'],
+  ['C言語',       '#194674'],
+  ['C++',         '#1A598E'],
+  ['C#',          '#7B3399'],
+  ['PHP',         '#777BB3'],
+  ['Ruby',        '#D34231'],
+  ['Perl',        '#4E5C84'],
+  ['Objective-C', '#000000'],
+  ['R言語',       '#2166B7'],
+  ['JavaScript',  '#F0DB4F'],
+  ['Scala',       '#EA0000'],
+  ['Go',          '#74CDDD'],
+  ['Swift',       '#F67D3A'],
+  ['COBOL',       '#005CA5'],
+  ['Python',      '#386EA0'],
+  ['Kotlin',      '#EA8708'],
+  ['Rust',        '#000000'],
+  ['Haskell',     '#999999'],
+  ['TypeScript',  '#007ACC'],
 ]);
-
-export const languageToString = (language: Language): string => {
-  return languageStringsMap.get(language) || language;
-};
 
 export const languageToColor = (language: Language): string => {
   return languageColorsMap.get(language) || '#3366CB';

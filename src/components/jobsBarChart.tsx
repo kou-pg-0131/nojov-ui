@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
-import { Job, languageToString, languageToColor } from '../domain';
+import { Job, languageToColor } from '../domain';
 
 type Props = {
   jobs: Job[];
@@ -9,9 +9,9 @@ type Props = {
 
 export const JobsBarChart: React.FC<Props> = (props: Props) => {
   const data: { name: string; '求人数': number; color: string; }[] = props.jobs.reduce((result, current) => {
-    const idx = result.findIndex(record => record.name === languageToString(current.language));
+    const idx = result.findIndex(record => record.name === current.language);
     if (idx === -1) {
-      result.push({ name: languageToString(current.language), '求人数': current.count, color: languageToColor(current.language) });
+      result.push({ name: current.language, '求人数': current.count, color: languageToColor(current.language) });
     } else {
       result[idx]['求人数'] += current.count;
     }
