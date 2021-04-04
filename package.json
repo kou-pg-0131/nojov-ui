@@ -37,6 +37,8 @@
     "@types/url-join": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^3.5.0",
     "@typescript-eslint/parser": "^3.5.0",
-    "eslint-plugin-react": "^7.20.3"
+    "eslint": "^7.23.0",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.2.0"
   }
 }
