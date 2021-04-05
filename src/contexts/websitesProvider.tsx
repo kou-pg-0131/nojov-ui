@@ -5,7 +5,7 @@ import { NojovAPIClient } from '../infrastructures';
 type Context = {
   websites?: Website[];
   updatedAt?: Date;
-  websitesLastMonth?: { updated_at: Date; websites: Website[] }[];
+  websitesPerYear?: { updated_at: Date; websites: Website[] }[];
 };
 
 const WebsitesContext = createContext<Context>({});
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const WebsitesProvider: React.FC<Props> = (props: Props) => {
-  const [websitesLastMonth, setWebsitesLastMonth] = useState<{ websites: Website[]; updated_at: Date; }[]>();
+  const [websitesPerYear, setWebsitesPerYear] = useState<{ websites: Website[]; updated_at: Date; }[]>();
   const [websites, setWebsites] = useState<Website[]>();
   const [updatedAt, setUpdatedAt] = useState<Date>();
 
@@ -27,13 +27,13 @@ export const WebsitesProvider: React.FC<Props> = (props: Props) => {
       setUpdatedAt(resp.updated_at);
     });
 
-    apiClient.getWebsitesLastMonth().then(resp => {
-      setWebsitesLastMonth(resp);
+    apiClient.getWebsitesPerYear().then(resp => {
+      setWebsitesPerYear(resp);
     });
   }, []);
 
   return (
-    <WebsitesContext.Provider value={{ websites, updatedAt, websitesLastMonth }}>
+    <WebsitesContext.Provider value={{ websites, updatedAt, websitesPerYear }}>
       {props.children}
     </WebsitesContext.Provider>
   );
