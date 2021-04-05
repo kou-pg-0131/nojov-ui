@@ -14,4 +14,12 @@ export class NojovAPIClient {
       websites: resp.websites,
     };
   }
+
+  public async getWebsitesLastMonth(): Promise<{ updated_at: Date; websites: Website[] }[]> {
+    const resp = await this.httpClient.get<{ websites: Website[]; updated_at: string; }[]>('https://dev.api.nojov.kou-pg.com/v1/websites/lastMonth');
+    return resp.map(item => ({
+      updated_at: new Date(item.updated_at),
+      websites: item.websites,
+    }));
+  }
 }
