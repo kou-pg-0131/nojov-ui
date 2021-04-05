@@ -36,7 +36,12 @@ const Home: React.FC = () => {
         <>
           <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
           <WebsitesSelect selected={selectedWebsite} onChange={handleChangeWebsite} websites={websites}/>
-          <Checkbox label='求人数の多い順に並び替え' onChange={handleChangeSort}/>
+          <Checkbox
+            label='求人数の多い順に並び替え'
+            labelPlacement='start'
+            checked={sort}
+            onChange={handleChangeSort}
+          />
           <small>
             最終更新日時: {updatedAt && <time dateTime={updatedAt.toISOString()}>{format(updatedAt, 'yyyy/MM/dd HH:mm')}</time>}
           </small>
