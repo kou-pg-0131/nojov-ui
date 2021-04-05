@@ -58,7 +58,7 @@ const Home: React.FC = () => {
           onChange={handleChangeTab}
         >
           <Tab label='今日' value='daily'/>
-          <Tab label='月間' value='monthly'/>
+          <Tab label='推移' value='monthly'/>
         </Tabs>
       </Paper>
 
