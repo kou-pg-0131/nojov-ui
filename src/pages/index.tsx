@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { Box, Tabs, Tab, Paper } from '@material-ui/core';
+import { makeStyles, createStyles, Theme } from '@material-ui/core';
 import { format } from 'date-fns';
 import { useWebsites } from '../contexts';
 import { Layout } from '../layout';
 import { Loading, JobsTable, JobsBarChart, Checkbox, WebsitesSelect } from '../components';
 import { Job, Website } from '../domain';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    tabs: {
+      marginBottom: theme.spacing(3),
+    },
+  }),
+);
+
 const Home: React.FC = () => {
+  const classes = useStyles();
+
   const [currentTab, setCurrentTab] = useState<string>('daily');
   const [sort, setSort] = useState<boolean>(false);
   const [selectedWebsite, setSelectedWebsite] = useState<Website>();
@@ -54,6 +65,7 @@ const Home: React.FC = () => {
 
           <Paper>
             <Tabs
+              className={classes.tabs}
               value={currentTab}
               variant='fullWidth'
               indicatorColor='primary'
