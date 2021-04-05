@@ -18,8 +18,8 @@ export class NojovAPIClient {
   }
 
   public async getWebsitesPerYear(): Promise<{ updated_at: Date; websites: Website[] }[]> {
-    const from = qs.stringify({ from: addDays(subYears(new Date(), 1), 1).toISOString() });
-    const resp = await this.httpClient.get<{ websites: Website[]; updated_at: string; }[]>(`https://api.nojov.kou-pg.com/v1/websites?${from}`);
+    const query = qs.stringify({ from: addDays(subYears(new Date(), 1), 1).toISOString() });
+    const resp = await this.httpClient.get<{ websites: Website[]; updated_at: string; }[]>(`https://api.nojov.kou-pg.com/v1/websites?${query}`);
     return resp.map(item => ({
       updated_at: new Date(item.updated_at),
       websites: item.websites,
