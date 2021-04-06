@@ -20,8 +20,6 @@ export default class Document extends NextDocument {
             }}
           >
           </script>
-          {/* Google AdSense */}
-          <script data-ad-client="ca-pub-7234657692649543" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
           <meta name='description' content='プログラミング言語ごとの求人数を一覧で見ることができるサービスです。'/>
 
