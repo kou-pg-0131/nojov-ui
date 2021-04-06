@@ -28,6 +28,7 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
 
   const series: Highcharts.SeriesLineOptions[] = [];
   const xAxis: Highcharts.XAxisOptions = {
+    tickInterval: 8,
     categories: [],
   };
   const yAxis: Highcharts.YAxisOptions = {
@@ -35,8 +36,8 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
   };
 
   const blanks: null[] = [];
-  props.websitesWithUpdatedAt.sort((a, b) => a.updated_at > b.updated_at ? 1 : -1).forEach((item, i) => {
-    xAxis.categories.push(i % 2 === 0 ? '' : format(item.updated_at, 'yyyy-MM-dd'));
+  props.websitesWithUpdatedAt.sort((a, b) => a.updated_at > b.updated_at ? 1 : -1).forEach(item => {
+    xAxis.categories.push(format(item.updated_at, 'yyyy-MM-dd'));
     const records: { language: Language; count: number; }[] = [];
     item.websites.forEach(website => {
       if (props.website?.name && props.website.name !== website.name) return;
@@ -52,7 +53,7 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
     records.forEach(record => {
       const idx = series.findIndex(elm => elm.name === record.language);
       if (idx === -1) {
-        series.push({ color: languageToColor(record.language), name: record.language, data: [...blanks, record.count], type: 'line' });
+        series.push({ lineWidth: 2, color: languageToColor(record.language), name: record.language, data: [...blanks, record.count], type: 'line' });
       } else {
         series[idx].data.push(record.count);
       }
@@ -63,7 +64,7 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
   const options: Highcharts.Options = {
     chart: {
       backgroundColor: 'transparent',
-      height: 550,
+      height: 600,
     },
     title: { text: '' },
     series,
