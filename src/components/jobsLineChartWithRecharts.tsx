@@ -9,7 +9,7 @@ type Props = {
   websitesWithUpdatedAt: { updated_at: Date; websites: Website[] }[];
 };
 
-export const JobsLineChart: React.FC<Props> = (props: Props) => {
+export const JobsLineChartWithRecharts: React.FC<Props> = (props: Props) => {
   const [inactiveLanguages, setInactiveLanguages] = useState<Language[]>([]);
 
   const languages: Language[] = [];

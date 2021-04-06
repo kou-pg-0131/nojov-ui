@@ -6,7 +6,7 @@ export * from './privacyPolicyItem';
 export * from './externalLink';
 export * from './barChart';
 export * from './loading';
-export * from './jobsLineChart';
+export * from './jobsLineChartWithRecharts';
 export * from './dailyPanel';
 export * from './transitionPanel';
 export * from './lastUpdatedAt';

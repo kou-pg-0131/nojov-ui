@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import { useWebsites } from '../contexts';
 import { Website } from '../domain';
-import { Loading, JobsLineChart, LastUpdatedAt, WebsitesSelect } from '../components';
+import { Loading, JobsLineChartWithRecharts as JobsLineChart, LastUpdatedAt, WebsitesSelect } from '../components';
 
 export const TransitionPanel: React.FC = () => {
   const [selectedWebsite, setSelectedWebsite] = useState<Website>();
