@@ -8,3 +8,4 @@ export * from './barChart';
 export * from './loading';
 export * from './jobsLineChart';
 export * from './dailyPanel';
+export * from './transitionPanel';

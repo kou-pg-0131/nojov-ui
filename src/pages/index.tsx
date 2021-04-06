@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core';
-import { useWebsites } from '../contexts';
 import { Layout } from '../layout';
-import { DailyPanel, Loading, JobsLineChart } from '../components';
+import { DailyPanel, TransitionPanel } from '../components';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,7 +17,6 @@ const Home: React.FC = () => {
   const classes = useStyles();
 
   const [currentTab, setCurrentTab] = useState<string>('daily');
-  const { websitesPerYear } = useWebsites();
 
   const handleChangeTab = (_: React.ChangeEvent<unknown>, value: string) => {
     setCurrentTab(value);
@@ -45,12 +43,7 @@ const Home: React.FC = () => {
       </Box>
 
       <Box hidden={currentTab !== 'monthly'}>
-        {!websitesPerYear && <Loading/>}
-        {websitesPerYear && (
-          <>
-            <JobsLineChart websitesWithUpdatedAt={websitesPerYear}/>
-          </>
-        )}
+        <TransitionPanel/>
       </Box>
     </Layout>
   );
