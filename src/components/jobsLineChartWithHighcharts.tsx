@@ -2,7 +2,20 @@ import React from 'react';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { format } from 'date-fns';
+import { Typography } from '@material-ui/core';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Website, Language, languageToColor } from '../domain';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    caution: {
+      fontSize: 12,
+      marginTop: theme.spacing(2),
+      opacity: 0.8,
+      textAlign: 'center',
+    },
+  }),
+);
 
 type Props = {
   website?: Website;
@@ -11,6 +24,8 @@ type Props = {
 
 // FIXME: 全体的に汚い
 export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
+  const classes = useStyles();
+
   const series: Highcharts.SeriesLineOptions[] = [];
   const xAxis: Highcharts.XAxisOptions = {
     categories: [],
@@ -57,9 +72,14 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
   };
 
   return (
-    <HighchartsReact
-      highcharts={Highcharts}
-      options={options}
-    />
+    <>
+      {!props.website && (
+        <Typography className={classes.caution}>※集計対象のサイトまたは言語を追加した時期には急激な変化が見られることがあります</Typography>
+      )}
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+      />
+    </>
   );
 };
