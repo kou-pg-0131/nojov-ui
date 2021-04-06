@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core';
-import { format } from 'date-fns';
 import { useWebsites } from '../contexts';
 import { Layout } from '../layout';
-import { Loading, JobsTable, JobsBarChart, Checkbox, WebsitesSelect, JobsLineChart } from '../components';
-import { Job, Website } from '../domain';
+import { DailyPanel, Loading, JobsLineChart } from '../components';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,27 +18,7 @@ const Home: React.FC = () => {
   const classes = useStyles();
 
   const [currentTab, setCurrentTab] = useState<string>('daily');
-  const [sort, setSort] = useState<boolean>(false);
-  const [selectedWebsite, setSelectedWebsite] = useState<Website>();
-  const { websites, updatedAt, websitesPerYear } = useWebsites();
-
-  const jobs: Job[] = (() => {
-    if (selectedWebsite) {
-      return selectedWebsite.jobs;
-    }
-
-    return websites?.reduce((result, current) => {
-      return [...result, ...current.jobs];
-    }, []);
-  })();
-
-  const handleChangeWebsite = (website?: Website): void => {
-    setSelectedWebsite(website);
-  };
-
-  const handleChangeSort = (checked: boolean) => {
-    setSort(checked);
-  };
+  const { websitesPerYear } = useWebsites();
 
   const handleChangeTab = (_: React.ChangeEvent<unknown>, value: string) => {
     setCurrentTab(value);
@@ -63,33 +41,7 @@ const Home: React.FC = () => {
       </Paper>
 
       <Box hidden={currentTab !== 'daily'}>
-        {!websites && <Loading/>}
-        {websites && jobs && (
-          <>
-            <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-              <WebsitesSelect selected={selectedWebsite} onChange={handleChangeWebsite} websites={websites}/>
-              <Checkbox
-                label='求人数の多い順に並び替え'
-                labelPlacement='start'
-                checked={sort}
-                onChange={handleChangeSort}
-              />
-              <small>
-                最終更新日時: {updatedAt && <time dateTime={updatedAt.toISOString()}>{format(updatedAt, 'yyyy/MM/dd HH:mm')}</time>}
-              </small>
-            </Box>
-
-            <JobsBarChart
-              jobs={jobs}
-              sort={sort}
-            />
-
-            <JobsTable
-              website={selectedWebsite}
-              jobs={jobs}
-            />
-          </>
-        )}
+        <DailyPanel/>
       </Box>
 
       <Box hidden={currentTab !== 'monthly'}>
