@@ -12,7 +12,7 @@ type Props = {
 export const JobsLineChart: React.FC<Props> = (props: Props) => {
   const [inactiveLanguages, setInactiveLanguages] = useState<Language[]>([]);
 
-  const keys: Language[] = [];
+  const languages: Language[] = [];
 
   const data = props.websitesWithUpdatedAt.map(({ updated_at, websites }) => {
     const jobs: Job[] = websites.filter(website => !props.website || website.name === props.website?.name).reduce((result, current) => {
@@ -21,7 +21,7 @@ export const JobsLineChart: React.FC<Props> = (props: Props) => {
 
     const record = { date: format(updated_at, 'yyyy-MM-dd') };
     jobs.forEach(job => {
-      if (!keys.includes(job.language)) keys.push(job.language);
+      if (!languages.includes(job.language)) languages.push(job.language);
       if (inactiveLanguages.includes(job.language)) return;
       record[job.language] = (record[job.language] || 0) + job.count;
     });
@@ -55,7 +55,7 @@ export const JobsLineChart: React.FC<Props> = (props: Props) => {
             itemSorter={item => (item.value as number) * -1}
             offset={100}
           />
-          {keys.map(language => (
+          {languages.map(language => (
             <Line
               key={language}
               type="monotone"
@@ -67,7 +67,7 @@ export const JobsLineChart: React.FC<Props> = (props: Props) => {
           ))}
         </LineChart>
       </ResponsiveContainer>
-      {keys.map(language => (
+      {languages.map(language => (
         <Checkbox
           key={language}
           color={languageToColor(language)}
