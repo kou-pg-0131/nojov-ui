@@ -7,6 +7,7 @@ export * from './externalLink';
 export * from './barChart';
 export * from './loading';
 export * from './jobsLineChartWithRecharts';
+export * from './jobsLineChartWithHighcharts';
 export * from './dailyPanel';
 export * from './transitionPanel';
 export * from './lastUpdatedAt';

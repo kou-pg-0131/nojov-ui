@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import { useWebsites } from '../contexts';
 import { Website } from '../domain';
-import { Loading, JobsLineChartWithRecharts as JobsLineChart, LastUpdatedAt, WebsitesSelect } from '../components';
+import { Loading, JobsLineChartWithHighcharts, LastUpdatedAt, WebsitesSelect } from '../components';
 
 export const TransitionPanel: React.FC = () => {
   const [selectedWebsite, setSelectedWebsite] = useState<Website>();
@@ -26,7 +26,8 @@ export const TransitionPanel: React.FC = () => {
         <WebsitesSelect selected={selectedWebsite} onChange={handleChangeWebsite} websites={websites}/>
         <LastUpdatedAt updatedAt={updatedAt}/>
       </Box>
-      <JobsLineChart website={selectedWebsite} websitesWithUpdatedAt={websitesPerYear}/>
+      {/* <JobsLineChartWithRecharts website={selectedWebsite} websitesWithUpdatedAt={websitesPerYear}/> */}
+      <JobsLineChartWithHighcharts website={selectedWebsite} websitesWithUpdatedAt={websitesPerYear}/>
     </>
   );
 };
