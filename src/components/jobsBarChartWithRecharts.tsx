@@ -7,7 +7,7 @@ type Props = {
   sort: boolean;
 };
 
-export const JobsBarChart: React.FC<Props> = (props: Props) => {
+export const JobsBarChartWithRecharts: React.FC<Props> = (props: Props) => {
   const data: { name: string; '求人数': number; color: string; }[] = props.jobs.reduce((result, current) => {
     const idx = result.findIndex(record => record.name === current.language);
     if (idx === -1) {
