@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
-import { format } from 'date-fns';
 import { useWebsites } from '../contexts';
-import { Loading, JobsTable, JobsBarChart, Checkbox, WebsitesSelect } from '../components';
+import { LastUpdatedAt, Loading, JobsTable, JobsBarChart, Checkbox, WebsitesSelect } from '../components';
 import { Job, Website } from '../domain';
 
 export const DailyPanel: React.FC = () => {
@@ -41,9 +40,7 @@ export const DailyPanel: React.FC = () => {
               checked={sort}
               onChange={handleChangeSort}
             />
-            <small>
-              最終更新日時: {updatedAt && <time dateTime={updatedAt.toISOString()}>{format(updatedAt, 'yyyy/MM/dd HH:mm')}</time>}
-            </small>
+            <LastUpdatedAt updatedAt={updatedAt}/>
           </Box>
 
           <JobsBarChart
