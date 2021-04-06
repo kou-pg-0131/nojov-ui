@@ -61,7 +61,7 @@ export const JobsLineChart: React.FC<Props> = (props: Props) => {
               type="monotone"
               dataKey={language}
               stroke={languageToColor(language)}
-              strokeWidth={1.5}
+              strokeWidth={2}
               dot={false}
             />
           ))}
