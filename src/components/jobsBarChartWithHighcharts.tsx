@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { Job, languageToColor } from '../domain';
+import { Job, Language, languageToColor } from '../domain';
 
 type Props = {
   jobs: Job[];
@@ -16,15 +16,24 @@ export const JobsBarChartWithHighcharts: React.FC<Props> = (props: Props) => {
     title: { text: '' },
   };
 
-  const series: Highcharts.SeriesBarOptions[] = props.jobs.reduce((result, current) => {
-    const idx = result.findIndex(record => record.name === current.language);
+  const records: { language: Language; count: number; }[] = [];
+  props.jobs.forEach(job => {
+    const idx = records.findIndex(record => record.language === job.language);
     if (idx === -1) {
-      result.push({ stacking: 'normal', color: languageToColor(current.language), name: current.language, data: [[current.language, current.count]], type: 'bar' });
+      records.push({ language: job.language, count: job.count });
     } else {
-      result[idx].data[0][1] = result[idx].data[0][1] + current.count;
+      records[idx].count += job.count;
     }
-    return result;
-  }, [] as Highcharts.SeriesBarOptions[]);
+  });
+
+  const series: Highcharts.SeriesBarOptions[] = records.sort((a, b) => !props.sort ? 0 : b.count - a.count).map(record => ({
+    type: 'bar',
+    name: record.language,
+    color: languageToColor(record.language),
+    data: [[record.language, record.count]],
+    stacking: 'normal',
+    pointWidth: 24,
+  } as Highcharts.SeriesBarOptions));
 
   const options: Highcharts.Options = {
     chart: {
@@ -33,9 +42,16 @@ export const JobsBarChartWithHighcharts: React.FC<Props> = (props: Props) => {
       height: 600,
     },
     title: { text: '' },
+    tooltip: {
+      enabled: false,
+    },
     series,
     xAxis,
     yAxis,
+    plotOptions: { bar: { dataLabels: {
+      enabled: true,
+      formatter: function(): string { return this.y.toLocaleString(); },
+    } } },
     legend: { enabled: false },
   };
 
