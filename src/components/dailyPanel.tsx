@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import { useWebsites } from '../contexts';
-import { LastUpdatedAt, Loading, JobsTable, JobsBarChartWithRecharts, Checkbox, WebsitesSelect } from '../components';
+import { LastUpdatedAt, Loading, JobsTable, JobsBarChartWithHighcharts, Checkbox, WebsitesSelect } from '../components';
 import { Job, Website } from '../domain';
 
 export const DailyPanel: React.FC = () => {
@@ -42,7 +42,7 @@ export const DailyPanel: React.FC = () => {
         <LastUpdatedAt updatedAt={updatedAt}/>
       </Box>
 
-      <JobsBarChartWithRecharts
+      <JobsBarChartWithHighcharts
         jobs={jobs}
         sort={sort}
       />

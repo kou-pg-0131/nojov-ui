@@ -2,6 +2,7 @@ export * from './jobsTable';
 export * from './websitesSelect';
 export * from './checkbox';
 export * from './jobsBarChartWithRecharts';
+export * from './jobsBarChartWithHighcharts';
 export * from './privacyPolicyItem';
 export * from './externalLink';
 export * from './barChart';
