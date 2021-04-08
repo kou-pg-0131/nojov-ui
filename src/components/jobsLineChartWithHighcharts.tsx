@@ -33,6 +33,9 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
   };
   const yAxis: Highcharts.YAxisOptions = {
     title: { text: '' },
+    labels: {
+      formatter: function() { return this.value.toLocaleString(); },
+    },
   };
 
   const blanks: null[] = [];
