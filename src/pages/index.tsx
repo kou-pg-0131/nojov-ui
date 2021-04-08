@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core';
 import { Layout } from '../layout';
+import { Website } from '../domain';
 import { DailyPanel, TransitionPanel } from '../components';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -16,10 +17,15 @@ const useStyles = makeStyles((theme: Theme) =>
 const Home: React.FC = () => {
   const classes = useStyles();
 
+  const [selectedWebsite, setSelectedWebsite] = useState<Website>();
   const [currentTab, setCurrentTab] = useState<string>('daily');
 
   const handleChangeTab = (_: React.ChangeEvent<unknown>, value: string) => {
     setCurrentTab(value);
+  };
+
+  const handleChangeWebsite = (website?: Website) => {
+    setSelectedWebsite(website);
   };
 
   return (
@@ -39,11 +45,11 @@ const Home: React.FC = () => {
       </Paper>
 
       <Box hidden={currentTab !== 'daily'}>
-        <DailyPanel/>
+        <DailyPanel website={selectedWebsite} onChangeWebsite={handleChangeWebsite}/>
       </Box>
 
       <Box hidden={currentTab !== 'monthly'}>
-        <TransitionPanel/>
+        <TransitionPanel website={selectedWebsite} onChangeWebsite={handleChangeWebsite}/>
       </Box>
     </Layout>
   );

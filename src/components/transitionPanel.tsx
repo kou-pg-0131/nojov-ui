@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box } from '@material-ui/core';
 import { useWebsites } from '../contexts';
 import { Website } from '../domain';
 import { Loading, JobsLineChartWithHighcharts as JobsLineChart, LastUpdatedAt, WebsitesSelect } from '../components';
 
-export const TransitionPanel: React.FC = () => {
-  const [selectedWebsite, setSelectedWebsite] = useState<Website>();
+type Props = {
+  website?: Website;
+  onChangeWebsite: (website?: Website) => void;
+};
+
+export const TransitionPanel: React.FC<Props> = (props: Props) => {
   const { websitesPerYear } = useWebsites();
 
   if (!websitesPerYear) return <Loading/>;
@@ -17,16 +21,16 @@ export const TransitionPanel: React.FC = () => {
   );
 
   const handleChangeWebsite = (website?: Website) => {
-    setSelectedWebsite(website);
+    props.onChangeWebsite(website);
   };
 
   return (
     <>
       <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-        <WebsitesSelect selected={selectedWebsite} onChange={handleChangeWebsite} websites={websites}/>
+        <WebsitesSelect selected={props.website} onChange={handleChangeWebsite} websites={websites}/>
         <LastUpdatedAt updatedAt={updatedAt}/>
       </Box>
-      <JobsLineChart website={selectedWebsite} websitesWithUpdatedAt={websitesPerYear}/>
+      <JobsLineChart website={props.website} websitesWithUpdatedAt={websitesPerYear}/>
     </>
   );
 };

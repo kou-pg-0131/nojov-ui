@@ -4,16 +4,20 @@ import { useWebsites } from '../contexts';
 import { LastUpdatedAt, Loading, JobsTable, JobsBarChartWithRecharts as JobsBarChart, Checkbox, WebsitesSelect } from '../components';
 import { Job, Website } from '../domain';
 
-export const DailyPanel: React.FC = () => {
+type Props = {
+  website?: Website;
+  onChangeWebsite: (website?: Website) => void;
+};
+
+export const DailyPanel: React.FC<Props> = (props: Props) => {
   const [sort, setSort] = useState<boolean>(false);
-  const [selectedWebsite, setSelectedWebsite] = useState<Website>();
   const { websites, updatedAt } = useWebsites();
 
   if (!websites || !updatedAt) return <Loading/>;
 
   const jobs: Job[] = (() => {
-    if (selectedWebsite) {
-      return selectedWebsite.jobs;
+    if (props.website) {
+      return props.website.jobs;
     }
 
     return websites?.reduce((result, current) => {
@@ -22,7 +26,7 @@ export const DailyPanel: React.FC = () => {
   })();
 
   const handleChangeWebsite = (website?: Website): void => {
-    setSelectedWebsite(website);
+    props.onChangeWebsite(website);
   };
 
   const handleChangeSort = (checked: boolean) => {
@@ -32,7 +36,7 @@ export const DailyPanel: React.FC = () => {
   return (
     <>
       <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-        <WebsitesSelect selected={selectedWebsite} onChange={handleChangeWebsite} websites={websites}/>
+        <WebsitesSelect selected={props.website} onChange={handleChangeWebsite} websites={websites}/>
         <Checkbox
           label='求人数の多い順に並び替え'
           labelPlacement='start'
@@ -48,7 +52,7 @@ export const DailyPanel: React.FC = () => {
       />
 
       <JobsTable
-        website={selectedWebsite}
+        website={props.website}
         jobs={jobs}
       />
     </>
