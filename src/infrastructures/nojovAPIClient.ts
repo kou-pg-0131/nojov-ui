@@ -1,4 +1,3 @@
-import { subYears, addDays } from 'date-fns';
 import { format } from 'date-fns';
 import * as qs from 'query-string';
 import { Website } from '../domain';
@@ -18,8 +17,8 @@ export class NojovAPIClient {
     };
   }
 
-  public async getWebsitesPerYear(): Promise<{ updated_at: Date; websites: Website[] }[]> {
-    const query = qs.stringify({ from: format(addDays(subYears(new Date(), 1), 1), 'yyyy-MM-dd') });
+  public async getWebsites(from: Date): Promise<{ updated_at: Date; websites: Website[] }[]> {
+    const query = qs.stringify({ from: format(from, 'yyyy-MM-dd') });
     const resp = await this.httpClient.get<{ websites: Website[]; updated_at: string; }[]>(`https://api.nojov.kou-pg.com/v1/websites?${query}`);
     return resp.map(item => ({
       updated_at: new Date(item.updated_at),
