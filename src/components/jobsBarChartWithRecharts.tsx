@@ -1,10 +1,30 @@
 import React from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, TooltipProps, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { Job, languageToColor } from '../domain';
 
 type Props = {
   jobs: Job[];
   sort: boolean;
+};
+
+const CustomTooltip: React.FC<TooltipProps> = (props: TooltipProps) => {
+  const { payload } = props;
+  if (!payload[0]) return null;
+  const { name: language, '求人数': count, color } = payload[0].payload;
+
+  return (
+    <div style={{
+      fontSize: 12,
+      boxShadow: '2px 2px 2px 0 rgba(180, 180, 180, 0.8)',
+      color: '#333333',
+      backgroundColor: 'rgba(254, 254, 254, 0.8)',
+      border: `1px solid ${languageToColor(language)}`,
+      borderRadius: '2px',
+      padding: '4px 8px',
+    }}>
+      <tspan style={{ color: languageToColor(language) }}>●</tspan><tspan style={{ fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif' }}> {language}</tspan>: <tspan style={{ fontWeight: 'bold' }}>{count.toLocaleString()}</tspan>
+    </div>
+  );
 };
 
 export const JobsBarChartWithRecharts: React.FC<Props> = (props: Props) => {
@@ -30,9 +50,9 @@ export const JobsBarChartWithRecharts: React.FC<Props> = (props: Props) => {
         data={data}
       >
         <CartesianGrid strokeDasharray='3 3'/>
-        <XAxis type='number'/>
-        <YAxis type='category' dataKey='name' width={90}/>
-        <Tooltip/>
+        <XAxis type='number' tick={{ fontSize: 11 }} tickFormatter={(v) => v.toLocaleString()}/>
+        <YAxis type='category' tick={{ fontSize: 11 }} dataKey='name' width={90}/>
+        <Tooltip content={<CustomTooltip/>}/>
         <Bar dataKey={'求人数'}>
           {data.map((record, index) =>
             <Cell key={index} fill={record.color}/>
