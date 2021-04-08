@@ -17,8 +17,8 @@ const CustomTooltip: React.FC<TooltipProps> = (props: TooltipProps) => {
       fontSize: 12,
       boxShadow: '2px 2px 2px 0 rgba(180, 180, 180, 0.8)',
       color: '#333333',
-      backgroundColor: 'rgba(254, 254, 254, 0.8)',
-      border: `1px solid ${languageToColor(language)}`,
+      backgroundColor: 'rgba(254, 254, 254, 0.9)',
+      border: `1px solid ${color}`,
       borderRadius: '2px',
       padding: '4px 8px',
     }}>
