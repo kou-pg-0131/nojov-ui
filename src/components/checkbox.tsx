@@ -4,6 +4,9 @@ import { Checkbox as MuiCheckbox, Typography, FormControl, FormControlLabel } fr
 type Props = {
   label: string;
   onChange: (checked: boolean) => void;
+  checked: boolean;
+  color?: string;
+  labelPlacement: 'start' | 'end';
 };
 
 export const Checkbox: React.FC<Props> = (props: Props) => {
@@ -12,9 +15,18 @@ export const Checkbox: React.FC<Props> = (props: Props) => {
   return (
     <FormControl>
       <FormControlLabel
-        labelPlacement='start'
-        label={<Typography>{props.label}</Typography>}
-        control={<MuiCheckbox onChange={handleChange}/>}
+        labelPlacement={props.labelPlacement}
+        label={(
+          <Typography>{props.label}</Typography>
+        )}
+        control={(
+          <MuiCheckbox
+            color='primary'
+            checked={props.checked}
+            style={{ color: props.color }}
+            onChange={handleChange}
+          />
+        )}
       />
     </FormControl>
   );

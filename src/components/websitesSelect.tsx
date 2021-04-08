@@ -6,7 +6,8 @@ import { Website } from '../domain';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      minWidth: 160,
+      minWidth: 180,
+      marginBottom: theme.spacing(1),
     },
     list: {
       textAlign: 'center',

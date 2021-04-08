@@ -2,6 +2,6 @@ import { Job } from '.';
 
 export type Website = {
   name: string;
-  uri: string;
+  url: string;
   jobs: Job[];
 };

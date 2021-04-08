@@ -1,58 +1,56 @@
 import React, { useState } from 'react';
-import { Box } from '@material-ui/core';
-import { format } from 'date-fns';
-import { useWebsites } from '../contexts';
+import { Box, Tabs, Tab, Paper } from '@material-ui/core';
+import { makeStyles, createStyles, Theme } from '@material-ui/core';
 import { Layout } from '../layout';
-import { Loading, JobsTable, JobsBarChart, Checkbox, WebsitesSelect } from '../components';
-import { Job, Website } from '../domain';
+import { Website } from '../domain';
+import { DailyPanel, TransitionPanel } from '../components';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    tabs: {
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(3),
+    },
+  }),
+);
 
 const Home: React.FC = () => {
-  const [sort, setSort] = useState<boolean>(false);
+  const classes = useStyles();
+
   const [selectedWebsite, setSelectedWebsite] = useState<Website>();
-  const { websites, updatedAt } = useWebsites();
+  const [currentTab, setCurrentTab] = useState<string>('daily');
 
-  const jobs: Job[] = (() => {
-    if (selectedWebsite) {
-      return selectedWebsite.jobs;
-    }
-
-    return websites?.reduce((result, current) => {
-      return [...result, ...current.jobs];
-    }, []);
-  })();
-
-  const handleChangeWebsite = (website?: Website): void => {
-    setSelectedWebsite(website);
+  const handleChangeTab = (_: React.ChangeEvent<unknown>, value: string) => {
+    setCurrentTab(value);
   };
 
-  const handleChangeSort = (checked: boolean) => {
-    setSort(checked);
+  const handleChangeWebsite = (website?: Website) => {
+    setSelectedWebsite(website);
   };
 
   return (
     <Layout>
-      {!websites && <Loading/>}
-      {websites && jobs && (
-        <>
-          <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-          <WebsitesSelect selected={selectedWebsite} onChange={handleChangeWebsite} websites={websites}/>
-          <Checkbox label='求人数の多い順に並び替え' onChange={handleChangeSort}/>
-          <small>
-            最終更新日時: {updatedAt && <time dateTime={updatedAt.toISOString()}>{format(updatedAt, 'yyyy/MM/dd HH:mm')}</time>}
-          </small>
-          </Box>
+      <Paper>
+        <Tabs
+          className={classes.tabs}
+          value={currentTab}
+          variant='fullWidth'
+          indicatorColor='primary'
+          textColor='primary'
+          onChange={handleChangeTab}
+        >
+          <Tab label='今日' value='daily'/>
+          <Tab label='推移' value='monthly'/>
+        </Tabs>
+      </Paper>
 
-          <JobsBarChart
-            jobs={jobs}
-            sort={sort}
-          />
+      <Box hidden={currentTab !== 'daily'}>
+        <DailyPanel website={selectedWebsite} onChangeWebsite={handleChangeWebsite}/>
+      </Box>
 
-          <JobsTable
-            website={selectedWebsite}
-            jobs={jobs}
-          />
-        </>
-      )}
+      <Box hidden={currentTab !== 'monthly'}>
+        <TransitionPanel website={selectedWebsite} onChangeWebsite={handleChangeWebsite}/>
+      </Box>
     </Layout>
   );
 };
