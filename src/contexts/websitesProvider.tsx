@@ -1,7 +1,8 @@
-import React, { useContext, createContext, useState, useEffect } from 'react';
+import React, { useContext, createContext } from 'react';
 import { Website } from '../domain';
 import { NojovAPIClient } from '../infrastructures';
 import { subMonths } from 'date-fns';
+import useSWR from 'swr';
 
 type Context = {
   websitesSinceHalfYearAgo?: { updated_at: Date; websites: Website[] }[];
@@ -14,15 +15,9 @@ type Props = {
 };
 
 export const WebsitesProvider: React.FC<Props> = (props: Props) => {
-  const [websitesSinceHalfYearAgo, setWebsitesSinceHalfYearAgo] = useState<{ websites: Website[]; updated_at: Date; }[]>();
-
   const apiClient = new NojovAPIClient();
 
-  useEffect(() => {
-    apiClient.getWebsites(subMonths(new Date(), 6)).then(resp => {
-      setWebsitesSinceHalfYearAgo(resp);
-    });
-  }, []);
+  const { data: websitesSinceHalfYearAgo } = useSWR<{ websites: Website[]; updated_at: Date; }[]>('/api/websites', () => apiClient.getWebsites(subMonths(new Date(), 6)));
 
   return (
     <WebsitesContext.Provider value={{ websitesSinceHalfYearAgo }}>
