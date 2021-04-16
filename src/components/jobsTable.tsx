@@ -115,25 +115,28 @@ export const JobsTable: React.FC<Props> = (props: Props) => {
               </StyledTableCell>
               <StyledTableCell>
                 {item.count.toLocaleString()}
-                &nbsp;
-                <Typography className={classes.diff} component='span'>
-                  (
-                    {(() => {
-                      const diff = item.count - beforeRecords.find(record => record.language === item.language).count;
+                {(() => {
+                  const beforeItem = beforeRecords.find(record => record.language === item.language);
+                  if (!beforeItem) return null;
 
-                      return (
+                  const diff = item.count - beforeItem.count;
+
+                  return (
+                    <>
+                      &nbsp;
                         <Typography
                           className={classNames(classes.diff, { [classes.plus]: diff > 0, [classes.minus]: diff < 0 })}
                           component='span'
                         >
+                      (
                           {diff === 0 && (<>&plusmn;</>)}
                           {diff > 0 && (<>+</>)}
                           {diff.toLocaleString()}
+                      )
                         </Typography>
-                      );
-                    })()}
-                  )
-                </Typography>
+                    </>
+                  );
+                })()}
               </StyledTableCell>
             </TableRow>
           ))}
