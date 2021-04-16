@@ -11,9 +11,11 @@ type Props = {
 
 export const DailyPanel: React.FC<Props> = (props: Props) => {
   const [sort, setSort] = useState<boolean>(false);
-  const { websites, updatedAt } = useWebsites();
+  const { websitesSinceHalfYearAgo } = useWebsites();
 
-  if (!websites || !updatedAt) return <Loading/>;
+  if (!websitesSinceHalfYearAgo) return <Loading/>;
+  const [before, after] = websitesSinceHalfYearAgo.sort((a, b) => a.updated_at < b.updated_at ? -1 : 1).slice(-2);
+  const { websites, updated_at: updatedAt } = after;
 
   const jobs: Job[] = (() => {
     if (props.website) {
@@ -23,6 +25,18 @@ export const DailyPanel: React.FC<Props> = (props: Props) => {
     return websites?.reduce((result, current) => {
       return [...result, ...current.jobs];
     }, []);
+  })();
+
+  const beforeJobs: Job[] = (() => {
+    if (props.website) {
+      return before.websites.filter(website => website.name === props.website.name).reduce((result, current) => {
+        return [...result, ...current.jobs];
+      }, [] as Job[]);
+    }
+
+    return before.websites.reduce((result, current) => {
+      return [...result, ...current.jobs];
+    }, [] as Job[]);
   })();
 
   const handleChangeWebsite = (website?: Website): void => {
@@ -54,6 +68,7 @@ export const DailyPanel: React.FC<Props> = (props: Props) => {
       <JobsTable
         website={props.website}
         jobs={jobs}
+        beforeJobs={beforeJobs}
       />
     </>
   );

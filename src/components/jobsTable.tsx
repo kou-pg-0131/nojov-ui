@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@material-ui/core';
+import { Typography, Box, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@material-ui/core';
 import { Launch as LaunchIcon } from '@material-ui/icons';
 import { makeStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
+import classNames from 'classnames';
 import { Website, Job, Language } from '../domain';
 import { ExternalLink } from '.';
 
@@ -24,6 +25,15 @@ const useStyles = makeStyles(() =>
       textAlign: 'center',
       textDecoration: 'none',
     },
+    diff: {
+      fontSize: 12,
+    },
+    plus: {
+      color: 'green',
+    },
+    minus: {
+      color: 'red',
+    },
   })
 );
 
@@ -44,6 +54,7 @@ const StyledTableCell = withStyles(()=>
 type Props = {
   website?: Website;
   jobs: Job[];
+  beforeJobs: Job[];
 };
 
 export const JobsTable: React.FC<Props> = (props: Props) => {
@@ -59,6 +70,19 @@ export const JobsTable: React.FC<Props> = (props: Props) => {
 
     return result;
   }, []);
+
+  const beforeRecords: { language: Language; count: number; }[] = props.beforeJobs.reduce((result, current) => {
+    const idx = result.findIndex(record => record.language === current.language);
+    if (idx === -1) {
+      result.push({ language: current.language, count: current.count });
+    } else {
+      result[idx].count += current.count;
+    }
+
+    return result;
+  }, []);
+
+  console.log(beforeRecords);
 
   return (
     <TableContainer component={Paper} className={classes.root}>
@@ -91,6 +115,25 @@ export const JobsTable: React.FC<Props> = (props: Props) => {
               </StyledTableCell>
               <StyledTableCell>
                 {item.count.toLocaleString()}
+                &nbsp;
+                <Typography className={classes.diff} component='span'>
+                  (
+                    {(() => {
+                      const diff = item.count - beforeRecords.find(record => record.language === item.language).count;
+
+                      return (
+                        <Typography
+                          className={classNames(classes.diff, { [classes.plus]: diff > 0, [classes.minus]: diff < 0 })}
+                          component='span'
+                        >
+                          {diff === 0 && (<>&plusmn;</>)}
+                          {diff > 0 && (<>+</>)}
+                          {diff.toLocaleString()}
+                        </Typography>
+                      );
+                    })()}
+                  )
+                </Typography>
               </StyledTableCell>
             </TableRow>
           ))}
