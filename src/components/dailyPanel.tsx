@@ -11,10 +11,10 @@ type Props = {
 
 export const DailyPanel: React.FC<Props> = (props: Props) => {
   const [sort, setSort] = useState<boolean>(false);
-  const { websitesSinceHalfYearAgo } = useWebsites();
+  const { websitesPerUpdatedAt } = useWebsites();
 
-  if (!websitesSinceHalfYearAgo) return <Loading/>;
-  const [before, after] = websitesSinceHalfYearAgo.sort((a, b) => a.updated_at < b.updated_at ? -1 : 1).slice(-2);
+  if (!websitesPerUpdatedAt) return <Loading/>;
+  const [before, after] = websitesPerUpdatedAt.sort((a, b) => a.updated_at < b.updated_at ? -1 : 1).slice(-2);
   const { websites, updated_at: updatedAt } = after;
 
   const jobs: Job[] = (() => {

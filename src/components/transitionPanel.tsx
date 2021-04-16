@@ -10,13 +10,13 @@ type Props = {
 };
 
 export const TransitionPanel: React.FC<Props> = (props: Props) => {
-  const { websitesSinceHalfYearAgo } = useWebsites();
+  const { websitesPerUpdatedAt } = useWebsites();
 
-  if (!websitesSinceHalfYearAgo) return <Loading/>;
+  if (!websitesPerUpdatedAt) return <Loading/>;
 
-  const updatedAt = websitesSinceHalfYearAgo.sort((a, b) => a.updated_at < b.updated_at ? 1 : -1)[0].updated_at;
+  const updatedAt = websitesPerUpdatedAt.sort((a, b) => a.updated_at < b.updated_at ? 1 : -1)[0].updated_at;
 
-  const websites: Website[] = websitesSinceHalfYearAgo.map(item => item.websites).flat().filter((elm, idx, self) =>
+  const websites: Website[] = websitesPerUpdatedAt.map(item => item.websites).flat().filter((elm, idx, self) =>
     self.findIndex(website => website.name === elm.name) === idx
   );
 
@@ -30,7 +30,7 @@ export const TransitionPanel: React.FC<Props> = (props: Props) => {
         <WebsitesSelect selected={props.website} onChange={handleChangeWebsite} websites={websites}/>
         <LastUpdatedAt updatedAt={updatedAt}/>
       </Box>
-      <JobsLineChart website={props.website} websitesWithUpdatedAt={websitesSinceHalfYearAgo}/>
+      <JobsLineChart website={props.website} websitesWithUpdatedAt={websitesPerUpdatedAt}/>
     </>
   );
 };

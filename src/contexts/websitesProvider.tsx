@@ -5,7 +5,7 @@ import { subMonths } from 'date-fns';
 import useSWR from 'swr';
 
 type Context = {
-  websitesSinceHalfYearAgo?: { updated_at: Date; websites: Website[] }[];
+  websitesPerUpdatedAt?: { updated_at: Date; websites: Website[] }[];
 };
 
 const WebsitesContext = createContext<Context>({});
@@ -17,10 +17,10 @@ type Props = {
 export const WebsitesProvider: React.FC<Props> = (props: Props) => {
   const apiClient = new NojovAPIClient();
 
-  const { data: websitesSinceHalfYearAgo } = useSWR<{ websites: Website[]; updated_at: Date; }[]>('/api/websites', () => apiClient.getWebsites(subMonths(new Date(), 6)));
+  const { data: websitesPerUpdatedAt } = useSWR<{ websites: Website[]; updated_at: Date; }[]>('/api/websites', () => apiClient.getWebsites(subMonths(new Date(), 6)));
 
   return (
-    <WebsitesContext.Provider value={{ websitesSinceHalfYearAgo }}>
+    <WebsitesContext.Provider value={{ websitesPerUpdatedAt }}>
       {props.children}
     </WebsitesContext.Provider>
   );
