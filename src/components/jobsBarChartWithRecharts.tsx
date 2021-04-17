@@ -1,6 +1,15 @@
 import React from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, TooltipProps, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Job, languageToColor } from '../domain';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    chartContainer: {
+      marginBottom: theme.spacing(2),
+    },
+  }),
+);
 
 type Props = {
   jobs: Job[];
@@ -36,6 +45,8 @@ const CustomTooltip: React.VFC<TooltipProps> = (props: TooltipProps) => {
 };
 
 export const JobsBarChartWithRecharts: React.VFC<Props> = (props: Props) => {
+  const classes = useStyles();
+
   const data: { name: string; count: number; color: string; }[] = props.jobs.reduce((result, current) => {
     const idx = result.findIndex(record => record.name === current.language);
     if (idx === -1) {
@@ -52,7 +63,7 @@ export const JobsBarChartWithRecharts: React.VFC<Props> = (props: Props) => {
   ));
 
   return (
-    <ResponsiveContainer height={550}>
+    <ResponsiveContainer className={classes.chartContainer} height={550}>
       <BarChart
         layout='vertical'
         data={data}
