@@ -6,7 +6,6 @@ type Props = {
   onChange: (checked: boolean) => void;
   checked: boolean;
   color?: string;
-  labelPlacement: 'start' | 'end';
 };
 
 export const Checkbox: React.VFC<Props> = (props: Props) => {
@@ -15,7 +14,7 @@ export const Checkbox: React.VFC<Props> = (props: Props) => {
   return (
     <FormControl>
       <FormControlLabel
-        labelPlacement={props.labelPlacement}
+        labelPlacement='start'
         label={(
           <Typography>{props.label}</Typography>
         )}

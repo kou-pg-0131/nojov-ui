@@ -53,7 +53,6 @@ export const DailyPanel: React.VFC<Props> = (props: Props) => {
         <WebsitesSelect selected={props.website} onChange={handleChangeWebsite} websites={websites}/>
         <Checkbox
           label='求人数の多い順に並び替え'
-          labelPlacement='start'
           checked={sort}
           onChange={handleChangeSort}
         />
