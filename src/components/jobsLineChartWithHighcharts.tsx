@@ -63,6 +63,10 @@ export const JobsLineChartWithHighcharts: React.VFC<Props> = (props: Props) => {
     blanks.push(null);
   });
 
+  series.sort((a, b) => a.data.slice(-1)[0] < b.data.slice(-1)[0] ? 1 : -1).forEach((item, i) => {
+    item.legendIndex = i;
+  });
+
   const options: Highcharts.Options = {
     chart: {
       backgroundColor: 'transparent',
