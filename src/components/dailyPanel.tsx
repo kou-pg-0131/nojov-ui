@@ -18,7 +18,7 @@ export const DailyPanel: React.VFC<Props> = (props: Props) => {
 
   const jobs: Job[] = (() => {
     if (props.website) {
-      return props.website.jobs;
+      return after.websites.find(website => website.name === props.website.name).jobs;
     }
 
     return after.websites.reduce((result, current) => {
@@ -28,9 +28,7 @@ export const DailyPanel: React.VFC<Props> = (props: Props) => {
 
   const beforeJobs: Job[] = (() => {
     if (props.website) {
-      return before.websites.filter(website => website.name === props.website.name).reduce((result, current) => {
-        return [...result, ...current.jobs];
-      }, [] as Job[]);
+      return before.websites.find(website => website.name === props.website.name).jobs;
     }
 
     return before.websites.reduce((result, current) => {
