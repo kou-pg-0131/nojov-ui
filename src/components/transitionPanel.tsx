@@ -14,7 +14,7 @@ export const TransitionPanel: React.FC<Props> = (props: Props) => {
 
   if (!websitesPerUpdatedAt) return <Loading/>;
 
-  const updatedAt = websitesPerUpdatedAt.sort((a, b) => a.updated_at < b.updated_at ? 1 : -1)[0].updated_at;
+  const updatedAt = websitesPerUpdatedAt.slice(-1)[0].updated_at;
 
   const websites: Website[] = websitesPerUpdatedAt.map(item => item.websites).flat().filter((elm, idx, self) =>
     self.findIndex(website => website.name === elm.name) === idx

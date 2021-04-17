@@ -38,7 +38,7 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
   };
 
   const blanks: null[] = [];
-  props.websitesWithUpdatedAt.sort((a, b) => a.updated_at > b.updated_at ? 1 : -1).forEach(item => {
+  props.websitesWithUpdatedAt.forEach(item => {
     xAxis.categories.push(`${item.updated_at.getUTCFullYear()}-${(item.updated_at.getUTCMonth() + 1).toString().padStart(2, '0')}-${item.updated_at.getUTCDate().toString().padStart(2, '0')}`);
     const records: { language: Language; count: number; }[] = [];
     item.websites.forEach(website => {

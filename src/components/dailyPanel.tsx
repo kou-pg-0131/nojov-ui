@@ -14,7 +14,7 @@ export const DailyPanel: React.FC<Props> = (props: Props) => {
   const { websitesPerUpdatedAt } = useWebsites();
 
   if (!websitesPerUpdatedAt) return <Loading/>;
-  const [before, after] = websitesPerUpdatedAt.sort((a, b) => a.updated_at < b.updated_at ? -1 : 1).slice(-2);
+  const [before, after] = websitesPerUpdatedAt.slice(-2);
   const { websites, updated_at: updatedAt } = after;
 
   const jobs: Job[] = (() => {

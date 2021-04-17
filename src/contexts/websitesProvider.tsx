@@ -19,7 +19,7 @@ export const WebsitesProvider: React.FC<Props> = (props: Props) => {
   const { data: websitesPerUpdatedAt } = useSWR<{ websites: Website[]; updated_at: Date; }[]>('/api/websites', () => apiClient.getWebsites());
 
   return (
-    <WebsitesContext.Provider value={{ websitesPerUpdatedAt }}>
+    <WebsitesContext.Provider value={{ websitesPerUpdatedAt: websitesPerUpdatedAt?.sort((a, b) => a.updated_at < b.updated_at ? -1 : 1) }}>
       {props.children}
     </WebsitesContext.Provider>
   );
