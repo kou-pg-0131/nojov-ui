@@ -17,7 +17,7 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles(() =>
   createStyles({
-    root: {
+    wrapper: {
       minHeight: '100vh',
       paddingBottom: 120,
       position: 'relative',
@@ -43,7 +43,7 @@ export const Layout: React.VFC<Props> = (props: Props) => {
         <title>{title}</title>
       </Head>
 
-      <Box className={classes.root}>
+      <Box className={classes.wrapper}>
         <Header/>
         <Main>
           {props.children}
