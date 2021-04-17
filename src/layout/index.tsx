@@ -7,10 +7,26 @@ import { Footer } from './footer';
 import { Main } from './main';
 
 const theme = createMuiTheme({
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        a: {
+          textDecoration: 'none',
+        },
+        ul: {
+          padding: 0,
+          listStyle: 'none',
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: '#15A2B8',
       dark: '#022F40',
+    },
+    secondary: {
+      main: '#333333',
     },
   },
 });
