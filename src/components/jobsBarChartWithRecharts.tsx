@@ -10,7 +10,7 @@ type Props = {
 const CustomTooltip: React.VFC<TooltipProps> = (props: TooltipProps) => {
   const { payload } = props;
   if (!payload[0]) return null;
-  const { name: language, '求人数': count, color } = payload[0].payload;
+  const { name: language, count, color } = payload[0].payload;
 
   return (
     <div style={{
@@ -22,25 +22,33 @@ const CustomTooltip: React.VFC<TooltipProps> = (props: TooltipProps) => {
       borderRadius: '2px',
       padding: '4px 8px',
     }}>
-      <span style={{ color: languageToColor(language) }}>●</span><span style={{ fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif' }}> {language}</span>: <span style={{ fontWeight: 'bold' }}>{count.toLocaleString()}</span>
+      <span style={{ color: languageToColor(language) }}>
+        ●
+      </span>
+      <span style={{ fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif' }}>
+        &nbsp;{language}:&nbsp;
+      </span>
+      <span style={{ fontWeight: 'bold' }}>
+        {count.toLocaleString()}
+      </span>
     </div>
   );
 };
 
 export const JobsBarChartWithRecharts: React.VFC<Props> = (props: Props) => {
-  const data: { name: string; '求人数': number; color: string; }[] = props.jobs.reduce((result, current) => {
+  const data: { name: string; count: number; color: string; }[] = props.jobs.reduce((result, current) => {
     const idx = result.findIndex(record => record.name === current.language);
     if (idx === -1) {
-      result.push({ name: current.language, '求人数': current.count, color: languageToColor(current.language) });
+      result.push({ name: current.language, count: current.count, color: languageToColor(current.language) });
     } else {
-      result[idx]['求人数'] += current.count;
+      result[idx].count += current.count;
     }
 
     return result;
   }, []).sort((a, b) => (
     a.name > b.name ? 1 : -1
   )).sort((a, b) => (
-    !props.sort ? 0 : a['求人数'] < b['求人数'] ? 1 : -1
+    !props.sort ? 0 : a.count < b.count ? 1 : -1
   ));
 
   return (
@@ -50,10 +58,10 @@ export const JobsBarChartWithRecharts: React.VFC<Props> = (props: Props) => {
         data={data}
       >
         <CartesianGrid strokeDasharray='3 3'/>
-        <XAxis type='number' tick={{ fontSize: 11 }} tickFormatter={(v) => v.toLocaleString()}/>
-        <YAxis type='category' tick={{ fontSize: 11 }} dataKey='name' width={90}/>
+        <XAxis type='number' tick={{ fontSize: 12 }} tickFormatter={(v) => v.toLocaleString()}/>
+        <YAxis type='category' tick={{ fontSize: 12 }} dataKey='name' width={90}/>
         <Tooltip content={<CustomTooltip/>}/>
-        <Bar dataKey={'求人数'}>
+        <Bar dataKey='count'>
           {data.map((record, index) => (
             <Cell key={index} fill={record.color}/>
           ))}
