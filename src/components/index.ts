@@ -4,7 +4,6 @@ export * from './checkbox';
 export * from './jobsBarChartWithRecharts';
 export * from './privacyPolicyItem';
 export * from './externalLink';
-export * from './barChart';
 export * from './loading';
 export * from './jobsLineChartWithHighcharts';
 export * from './dailyPanel';
