@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from 'react';
 import { Website } from '../domain';
-import { NojovAPIClient } from '../infrastructures';
+import { NojovAPIClient } from '../lib';
 import useSWR from 'swr';
 
 type Context = {
