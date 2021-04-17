@@ -1,28 +1,24 @@
 import React from 'react';
-import { Checkbox as MuiCheckbox, Typography, FormControl, FormControlLabel } from '@material-ui/core';
+import { Checkbox as MuiCheckbox, FormControl, FormControlLabel } from '@material-ui/core';
 
 type Props = {
   label: string;
   onChange: (checked: boolean) => void;
   checked: boolean;
-  color?: string;
 };
 
 export const Checkbox: React.VFC<Props> = (props: Props) => {
-  const handleChange = (e: { target: { checked: boolean } }) => props.onChange(e.target.checked);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => props.onChange(e.currentTarget.checked);
 
   return (
     <FormControl>
       <FormControlLabel
         labelPlacement='start'
-        label={(
-          <Typography>{props.label}</Typography>
-        )}
+        label={props.label}
         control={(
           <MuiCheckbox
             color='primary'
             checked={props.checked}
-            style={{ color: props.color }}
             onChange={handleChange}
           />
         )}
