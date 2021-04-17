@@ -22,7 +22,7 @@ const CustomTooltip: React.FC<TooltipProps> = (props: TooltipProps) => {
       borderRadius: '2px',
       padding: '4px 8px',
     }}>
-      <tspan style={{ color: languageToColor(language) }}>●</tspan><tspan style={{ fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif' }}> {language}</tspan>: <tspan style={{ fontWeight: 'bold' }}>{count.toLocaleString()}</tspan>
+      <span style={{ color: languageToColor(language) }}>●</span><span style={{ fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif' }}> {language}</span>: <span style={{ fontWeight: 'bold' }}>{count.toLocaleString()}</span>
     </div>
   );
 };
