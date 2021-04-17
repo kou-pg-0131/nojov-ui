@@ -9,29 +9,26 @@ type Props = {
   onChangeWebsite: (website?: Website) => void;
 };
 
-export const DailyPanel: React.FC<Props> = (props: Props) => {
+export const DailyPanel: React.VFC<Props> = (props: Props) => {
   const [sort, setSort] = useState<boolean>(false);
   const { websitesPerUpdatedAt } = useWebsites();
 
   if (!websitesPerUpdatedAt) return <Loading/>;
-  const [before, after] = websitesPerUpdatedAt.sort((a, b) => a.updated_at < b.updated_at ? -1 : 1).slice(-2);
-  const { websites, updated_at: updatedAt } = after;
+  const [before, after] = websitesPerUpdatedAt.slice(-2);
 
   const jobs: Job[] = (() => {
     if (props.website) {
-      return props.website.jobs;
+      return after.websites.find(website => website.name === props.website.name).jobs;
     }
 
-    return websites?.reduce((result, current) => {
+    return after.websites.reduce((result, current) => {
       return [...result, ...current.jobs];
     }, []);
   })();
 
   const beforeJobs: Job[] = (() => {
     if (props.website) {
-      return before.websites.filter(website => website.name === props.website.name).reduce((result, current) => {
-        return [...result, ...current.jobs];
-      }, [] as Job[]);
+      return before.websites.find(website => website.name === props.website.name).jobs;
     }
 
     return before.websites.reduce((result, current) => {
@@ -50,14 +47,13 @@ export const DailyPanel: React.FC<Props> = (props: Props) => {
   return (
     <>
       <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-        <WebsitesSelect selected={props.website} onChange={handleChangeWebsite} websites={websites}/>
+        <WebsitesSelect selected={props.website} onChange={handleChangeWebsite} websites={after.websites}/>
         <Checkbox
           label='求人数の多い順に並び替え'
-          labelPlacement='start'
           checked={sort}
           onChange={handleChangeSort}
         />
-        <LastUpdatedAt updatedAt={updatedAt}/>
+        <LastUpdatedAt updatedAt={after.updated_at}/>
       </Box>
 
       <JobsBarChart

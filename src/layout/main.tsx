@@ -7,14 +7,14 @@ const useStyles = makeStyles(() =>
     root: {
       padding: 12,
     },
-  })
+  }),
 );
 
 type Props = {
   children: React.ReactNode;
 };
 
-export const Main: React.FC<Props> = (props: Props) => {
+export const Main: React.VFC<Props> = (props: Props) => {
   const classes = useStyles();
 
   return (

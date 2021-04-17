@@ -6,8 +6,15 @@ type Props = {
   href: string;
 };
 
-export const ExternalLink: React.FC<Props> = (props: Props) => {
+export const ExternalLink: React.VFC<Props> = (props: Props) => {
   return (
-    <a className={props.className} href={props.href} target='_blank' rel='noopener noreferrer'>{props.children}</a>
+    <a
+      className={props.className}
+      href={props.href}
+      target='_blank'
+      rel='noopener noreferrer'
+    >
+      {props.children}
+    </a>
   );
 };

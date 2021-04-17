@@ -1,33 +1,32 @@
 import React from 'react';
 import { AppBar, Typography, Toolbar } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Link from 'next/link';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      height: 68,
-    },
-    logoLink: {
-      textDecoration: 'none',
+      display: 'flex',
+      justifyContent: 'center',
+      padding: theme.spacing(0.5),
     },
     logoText: {
-      color: '#fff',
+      color: theme.palette.primary.contrastText,
       fontFamily: 'Cherry Swash',
-      fontSize: '36px',
+      fontSize: 36,
     },
-  })
+  }),
 );
 
-export const Header: React.FC = () => {
+export const Header: React.VFC = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position='static' className={classes.root}>
+    <AppBar className={classes.root} position='static'>
       <Toolbar>
         <Link href='/'>
-          <a className={classes.logoLink}>
-            <Typography variant='h1' className={classes.logoText}>Nojov</Typography>
+          <a>
+            <Typography className={classes.logoText} variant='h1'>Nojov</Typography>
           </a>
         </Link>
       </Toolbar>

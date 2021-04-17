@@ -34,7 +34,7 @@ const useStyles = makeStyles(() =>
     minus: {
       color: 'red',
     },
-  })
+  }),
 );
 
 const StyledTableCell = withStyles(()=>
@@ -48,7 +48,7 @@ const StyledTableCell = withStyles(()=>
       fontSize: 16,
       fontWeight: 'bold',
     },
-  })
+  }),
 )(TableCell);
 
 type Props = {
@@ -57,7 +57,7 @@ type Props = {
   beforeJobs: Job[];
 };
 
-export const JobsTable: React.FC<Props> = (props: Props) => {
+export const JobsTable: React.VFC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const records: { language: Language; count: number; searchUrl?: string; }[] = props.jobs.reduce((result, current) => {
@@ -81,8 +81,6 @@ export const JobsTable: React.FC<Props> = (props: Props) => {
 
     return result;
   }, []);
-
-  console.log(beforeRecords);
 
   return (
     <TableContainer component={Paper} className={classes.root}>

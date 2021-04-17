@@ -1,29 +1,31 @@
 module.exports = {
   'env': {
     'browser': true,
-    'es2020': true
+    'es2020': true,
   },
   'extends': [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended'
+    'plugin:@typescript-eslint/recommended',
   ],
   'parser': '@typescript-eslint/parser',
   'parserOptions': {
     'ecmaFeatures': {
-      'jsx': true
+      'jsx': true,
     },
     'ecmaVersion': 11,
-    'sourceType': 'module'
+    'sourceType': 'module',
   },
   'plugins': [
     'react',
     'react-hooks',
-    '@typescript-eslint'
+    '@typescript-eslint',
   ],
   'rules': {
     'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
     '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
     'semi': ['error', 'always'],
-  }
+    'quotes': ['error', 'single'],
+    'comma-dangle': ['error', 'always-multiline'],
+  },
 };

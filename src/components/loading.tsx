@@ -5,13 +5,15 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      textAlign: 'center',
-      margin: theme.spacing(4),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: theme.spacing(10),
     },
   }),
 );
 
-export const Loading: React.FC = () => {
+export const Loading: React.VFC = () => {
   const classes = useStyles();
 
   return (

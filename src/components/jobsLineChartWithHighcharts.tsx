@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { format } from 'date-fns';
 import { Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Website, Language, languageToColor } from '../domain';
@@ -23,7 +22,7 @@ type Props = {
 };
 
 // FIXME: 全体的に汚い
-export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
+export const JobsLineChartWithHighcharts: React.VFC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const series: Highcharts.SeriesLineOptions[] = [];
@@ -39,8 +38,8 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
   };
 
   const blanks: null[] = [];
-  props.websitesWithUpdatedAt.sort((a, b) => a.updated_at > b.updated_at ? 1 : -1).forEach(item => {
-    xAxis.categories.push(format(item.updated_at, 'yyyy-MM-dd'));
+  props.websitesWithUpdatedAt.forEach(item => {
+    xAxis.categories.push(`${item.updated_at.getUTCFullYear()}-${(item.updated_at.getUTCMonth() + 1).toString().padStart(2, '0')}-${item.updated_at.getUTCDate().toString().padStart(2, '0')}`);
     const records: { language: Language; count: number; }[] = [];
     item.websites.forEach(website => {
       if (props.website?.name && props.website.name !== website.name) return;
@@ -64,6 +63,10 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
     blanks.push(null);
   });
 
+  series.sort((a, b) => a.data.slice(-1)[0] < b.data.slice(-1)[0] ? 1 : -1).forEach((item, i) => {
+    item.legendIndex = i;
+  });
+
   const options: Highcharts.Options = {
     chart: {
       backgroundColor: 'transparent',
@@ -73,6 +76,10 @@ export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
     series,
     xAxis,
     yAxis,
+    legend: {
+      itemStyle: { fontSize: '13px' },
+      itemMarginBottom: 6,
+    },
   };
 
   return (
