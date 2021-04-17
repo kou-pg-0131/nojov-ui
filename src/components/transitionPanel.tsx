@@ -16,9 +16,9 @@ export const TransitionPanel: React.VFC<Props> = (props: Props) => {
 
   const updatedAt = websitesPerUpdatedAt.slice(-1)[0].updated_at;
 
-  const websites: Website[] = websitesPerUpdatedAt.map(item => item.websites).flat().filter((elm, idx, self) =>
+  const websites: Website[] = websitesPerUpdatedAt.map(item => item.websites).flat().filter((elm, idx, self) => (
     self.findIndex(website => website.name === elm.name) === idx
-  );
+  ));
 
   const handleChangeWebsite = (website?: Website) => {
     props.onChangeWebsite(website);

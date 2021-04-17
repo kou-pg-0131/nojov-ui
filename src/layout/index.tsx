@@ -22,7 +22,7 @@ const useStyles = makeStyles(() =>
       paddingBottom: 120,
       position: 'relative',
     },
-  })
+  }),
 );
 
 type Props = {

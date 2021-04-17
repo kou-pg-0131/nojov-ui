@@ -37,11 +37,11 @@ export const JobsBarChartWithRecharts: React.VFC<Props> = (props: Props) => {
     }
 
     return result;
-  }, []).sort((a, b) =>
+  }, []).sort((a, b) => (
     a.name > b.name ? 1 : -1
-  ).sort((a, b) =>
+  )).sort((a, b) => (
     !props.sort ? 0 : a['求人数'] < b['求人数'] ? 1 : -1
-  );
+  ));
 
   return (
     <ResponsiveContainer height={550}>
@@ -54,9 +54,9 @@ export const JobsBarChartWithRecharts: React.VFC<Props> = (props: Props) => {
         <YAxis type='category' tick={{ fontSize: 11 }} dataKey='name' width={90}/>
         <Tooltip content={<CustomTooltip/>}/>
         <Bar dataKey={'求人数'}>
-          {data.map((record, index) =>
+          {data.map((record, index) => (
             <Cell key={index} fill={record.color}/>
-          )}
+          ))}
         </Bar>
       </BarChart>
     </ResponsiveContainer>

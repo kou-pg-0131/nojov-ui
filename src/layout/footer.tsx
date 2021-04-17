@@ -29,7 +29,7 @@ const useStyles = makeStyles(() =>
       color: '#fff',
       fontSize: 14,
     },
-  })
+  }),
 );
 
 export const Footer: React.VFC = () => {

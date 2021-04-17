@@ -16,7 +16,7 @@ const useStyles = makeStyles(() =>
       fontFamily: 'Cherry Swash',
       fontSize: '36px',
     },
-  })
+  }),
 );
 
 export const Header: React.VFC = () => {

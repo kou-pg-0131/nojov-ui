@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 36,
       marginBottom: theme.spacing(4),
     },
-  })
+  }),
 );
 
 const PrivacyPolicyPage: React.VFC = () => {
@@ -23,7 +23,7 @@ const PrivacyPolicyPage: React.VFC = () => {
         <>
           当サイトのコンテンツ・情報につきまして、可能な限り正確な情報を掲載するよう努めておりますが、誤情報が入り込んだり、情報が古くなっていることもございます。当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねますのでご了承ください。
         </>
-      )
+      ),
     },
     {
       title: 'アクセス解析ツールについて',

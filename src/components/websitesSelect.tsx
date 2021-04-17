@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: 18,
       },
     },
-  })
+  }),
 );
 
 type Props = {
@@ -38,9 +38,9 @@ export const WebsitesSelect: React.VFC<Props> = (props: Props) => {
 
       <Select value={props.selected?.name || 'all'} onChange={handleChange} className={classes.list}>
         <MenuItem value='all'>全て</MenuItem>
-        {props.websites.map((website, i) =>
+        {props.websites.map((website, i) => (
           <MenuItem key={i} value={website.name}>{website.name}</MenuItem>
-        )}
+        ))}
       </Select>
     </FormControl>
   );

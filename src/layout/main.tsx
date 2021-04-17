@@ -7,7 +7,7 @@ const useStyles = makeStyles(() =>
     root: {
       padding: 12,
     },
-  })
+  }),
 );
 
 type Props = {

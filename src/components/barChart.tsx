@@ -34,9 +34,9 @@ export const BarChart: React.VFC<Props> = (props: Props) => {
         <YAxis type='category' dataKey='name' width={90}/>
         <Tooltip/>
         <Bar dataKey={props.valueName}>
-          {data.map((record, index) =>
+          {data.map((record, index) => (
             <Cell key={index} fill={record.color}/>
-          )}
+          ))}
         </Bar>
       </Chart>
     </ResponsiveContainer>

@@ -34,7 +34,7 @@ const useStyles = makeStyles(() =>
     minus: {
       color: 'red',
     },
-  })
+  }),
 );
 
 const StyledTableCell = withStyles(()=>
@@ -48,7 +48,7 @@ const StyledTableCell = withStyles(()=>
       fontSize: 16,
       fontWeight: 'bold',
     },
-  })
+  }),
 )(TableCell);
 
 type Props = {

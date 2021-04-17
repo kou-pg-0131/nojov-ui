@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     text: {
       wordBreak: 'break-all',
     },
-  })
+  }),
 );
 
 type Props = {
