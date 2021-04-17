@@ -3,7 +3,6 @@ import { IHttpClient, HttpClient } from '.';
 
 export class NojovAPIClient {
   constructor(
-    private apiOrigin: string = process.env.NEXT_PUBLIC_API_ORIGIN,
     private httpClient: IHttpClient = new HttpClient(),
   ) {}
 
