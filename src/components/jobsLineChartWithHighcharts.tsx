@@ -22,7 +22,7 @@ type Props = {
 };
 
 // FIXME: 全体的に汚い
-export const JobsLineChartWithHighcharts: React.FC<Props> = (props: Props) => {
+export const JobsLineChartWithHighcharts: React.VFC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const series: Highcharts.SeriesLineOptions[] = [];

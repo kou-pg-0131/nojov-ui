@@ -15,7 +15,7 @@ type Props = {
   updatedAt: Date;
 };
 
-export const LastUpdatedAt: React.FC<Props> = (props: Props) => {
+export const LastUpdatedAt: React.VFC<Props> = (props: Props) => {
   const classes = useStyles();
 
   return (

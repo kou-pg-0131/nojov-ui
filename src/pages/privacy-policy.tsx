@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const PrivacyPolicyPage: React.FC = () => {
+const PrivacyPolicyPage: React.VFC = () => {
   const classes = useStyles();
 
   const items: { title: string; content: React.ReactNode; }[] = [

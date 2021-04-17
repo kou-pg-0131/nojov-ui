@@ -9,7 +9,7 @@ type Props = {
   onChangeWebsite: (website?: Website) => void;
 };
 
-export const DailyPanel: React.FC<Props> = (props: Props) => {
+export const DailyPanel: React.VFC<Props> = (props: Props) => {
   const [sort, setSort] = useState<boolean>(false);
   const { websitesPerUpdatedAt } = useWebsites();
 

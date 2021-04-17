@@ -32,7 +32,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const Footer: React.FC = () => {
+export const Footer: React.VFC = () => {
   const classes = useStyles();
 
   return (

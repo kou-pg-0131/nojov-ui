@@ -57,7 +57,7 @@ type Props = {
   beforeJobs: Job[];
 };
 
-export const JobsTable: React.FC<Props> = (props: Props) => {
+export const JobsTable: React.VFC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const records: { language: Language; count: number; searchUrl?: string; }[] = props.jobs.reduce((result, current) => {

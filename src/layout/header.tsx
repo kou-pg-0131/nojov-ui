@@ -19,7 +19,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const Header: React.FC = () => {
+export const Header: React.VFC = () => {
   const classes = useStyles();
 
   return (

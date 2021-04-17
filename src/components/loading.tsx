@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const Loading: React.FC = () => {
+export const Loading: React.VFC = () => {
   const classes = useStyles();
 
   return (

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Home: React.FC = () => {
+const Home: React.VFC = () => {
   const classes = useStyles();
 
   const [selectedWebsite, setSelectedWebsite] = useState<Website>();

@@ -13,7 +13,7 @@ type Props = {
   valueName: string;
 };
 
-export const BarChart: React.FC<Props> = (props: Props) => {
+export const BarChart: React.VFC<Props> = (props: Props) => {
   const data = (() => {
     const records = props.data.map(record => {
       return { name: record.name, color: record.color, [props.valueName]: record.value };

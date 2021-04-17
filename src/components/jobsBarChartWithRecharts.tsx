@@ -7,7 +7,7 @@ type Props = {
   sort: boolean;
 };
 
-const CustomTooltip: React.FC<TooltipProps> = (props: TooltipProps) => {
+const CustomTooltip: React.VFC<TooltipProps> = (props: TooltipProps) => {
   const { payload } = props;
   if (!payload[0]) return null;
   const { name: language, '求人数': count, color } = payload[0].payload;
@@ -27,7 +27,7 @@ const CustomTooltip: React.FC<TooltipProps> = (props: TooltipProps) => {
   );
 };
 
-export const JobsBarChartWithRecharts: React.FC<Props> = (props: Props) => {
+export const JobsBarChartWithRecharts: React.VFC<Props> = (props: Props) => {
   const data: { name: string; '求人数': number; color: string; }[] = props.jobs.reduce((result, current) => {
     const idx = result.findIndex(record => record.name === current.language);
     if (idx === -1) {

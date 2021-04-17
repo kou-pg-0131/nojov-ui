@@ -4,7 +4,7 @@ import { AppProps } from 'next/app';
 import { WebsitesProvider } from '../contexts';
 import '../styles/global.scss';
 
-const App: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
+const App: React.VFC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   useEffect(() => {

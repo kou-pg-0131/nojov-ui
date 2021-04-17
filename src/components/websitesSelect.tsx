@@ -25,7 +25,7 @@ type Props = {
   onChange: (website?: Website) => void;
 };
 
-export const WebsitesSelect: React.FC<Props> = (props: Props) => {
+export const WebsitesSelect: React.VFC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {

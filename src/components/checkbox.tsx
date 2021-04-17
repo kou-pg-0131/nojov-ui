@@ -9,7 +9,7 @@ type Props = {
   labelPlacement: 'start' | 'end';
 };
 
-export const Checkbox: React.FC<Props> = (props: Props) => {
+export const Checkbox: React.VFC<Props> = (props: Props) => {
   const handleChange = (e: { target: { checked: boolean } }) => props.onChange(e.target.checked);
 
   return (

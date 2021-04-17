@@ -30,7 +30,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const Layout: React.FC<Props> = (props: Props) => {
+export const Layout: React.VFC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const baseTitle = 'Nojov - プログラミング言語別求人数ビューア';
