@@ -72,6 +72,10 @@ export const JobsLineChartWithHighcharts: React.VFC<Props> = (props: Props) => {
     series,
     xAxis,
     yAxis,
+    legend: {
+      itemStyle: { fontSize: '13px' },
+      itemMarginBottom: 6,
+    },
   };
 
   return (
