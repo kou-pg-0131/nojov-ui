@@ -15,14 +15,13 @@ export const DailyPanel: React.VFC<Props> = (props: Props) => {
 
   if (!websitesPerUpdatedAt) return <Loading/>;
   const [before, after] = websitesPerUpdatedAt.slice(-2);
-  const { websites, updated_at: updatedAt } = after;
 
   const jobs: Job[] = (() => {
     if (props.website) {
       return props.website.jobs;
     }
 
-    return websites?.reduce((result, current) => {
+    return after.websites.reduce((result, current) => {
       return [...result, ...current.jobs];
     }, []);
   })();
@@ -50,13 +49,13 @@ export const DailyPanel: React.VFC<Props> = (props: Props) => {
   return (
     <>
       <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-        <WebsitesSelect selected={props.website} onChange={handleChangeWebsite} websites={websites}/>
+        <WebsitesSelect selected={props.website} onChange={handleChangeWebsite} websites={after.websites}/>
         <Checkbox
           label='求人数の多い順に並び替え'
           checked={sort}
           onChange={handleChangeSort}
         />
-        <LastUpdatedAt updatedAt={updatedAt}/>
+        <LastUpdatedAt updatedAt={after.updated_at}/>
       </Box>
 
       <JobsBarChart
