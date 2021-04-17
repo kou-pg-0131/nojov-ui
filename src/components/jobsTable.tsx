@@ -82,8 +82,6 @@ export const JobsTable: React.FC<Props> = (props: Props) => {
     return result;
   }, []);
 
-  console.log(beforeRecords);
-
   return (
     <TableContainer component={Paper} className={classes.root}>
       <Table stickyHeader>
