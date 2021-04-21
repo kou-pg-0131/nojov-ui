@@ -38,7 +38,7 @@ export const WebsitesSelect: React.VFC<Props> = (props: Props) => {
 
       <Select value={props.selected?.name || 'all'} onChange={handleChange} className={classes.list}>
         <MenuItem value='all'>全て</MenuItem>
-        {props.websites.map((website, i) => (
+        {props.websites.sort((a, b) => a.name > b.name ? 1 : -1).map((website, i) => (
           <MenuItem key={i} value={website.name}>{website.name}</MenuItem>
         ))}
       </Select>
