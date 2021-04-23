@@ -56,8 +56,10 @@ commands:
 jobs:
   build:
     executor: node
+    working_directory: ~/project/ui
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - yarn_install
       - run:
           name: eslint
