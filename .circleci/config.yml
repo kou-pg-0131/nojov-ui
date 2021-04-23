@@ -63,7 +63,7 @@ jobs:
       - yarn_install
       - run:
           name: eslint
-          command: yarn run eslint './src/**/*.ts' './src/**/*.tsx'
+          command: yarn run lint
       - run:
           name: build
           command: yarn run build
