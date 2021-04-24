@@ -9,7 +9,7 @@ import {
   ForkwellJobsCrawler,
 } from '../gateways';
 import { IJobsController, JobsController } from '.';
-import { Crawler, URLBuilder, FileStorageOnS3 } from '../../infrastructure';
+import { Crawler, UrlBuilder, FileStorageOnS3 } from '../../infrastructure';
 
 export class JobsControllerFactory {
   public create(): IJobsController {
@@ -21,7 +21,7 @@ export class JobsControllerFactory {
 
   private createJobsCrawlers(): IJobsCrawler[] {
     const crawler = new Crawler();
-    const urlBuilder = new URLBuilder();
+    const urlBuilder = new UrlBuilder();
 
     return [
       new CodealJobsCrawler(crawler, urlBuilder),
