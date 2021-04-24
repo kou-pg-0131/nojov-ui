@@ -1,4 +1,4 @@
-import { ErrorContext } from '../../domain';
+import { ErrorContext } from '../../entities';
 import { INotifier } from '../gateways';
 
 export interface INotificationsController {

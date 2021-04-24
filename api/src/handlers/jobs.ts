@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandlerV2, Context } from 'aws-lambda';
 import { subMonths, addHours } from 'date-fns';
-import { JobsControllerFactory } from '../interfaces/controllers';
+import { JobsControllerFactory } from '../adapters/controllers';
 import 'source-map-support/register';
 
 export const crawl = async (_: unknown, context: Context): Promise<void> => {

@@ -1,5 +1,5 @@
-import { IJobsCrawler, ICrawler, IURLBuilder } from '..';
-import { Website, Language, Job, FetchDocumentFailedError, ScrapeFailedError } from '../../../domain';
+import { IJobsCrawler, ICrawler, IUrlBuilder } from '..';
+import { Website, Language, Job, FetchDocumentFailedError, ScrapeFailedError } from '../../../entities';
 import { sleep } from '../../../utils';
 
 const languageCodeMap = new Map<Language, string>([
@@ -29,7 +29,7 @@ export class CodealJobsCrawler implements IJobsCrawler {
 
   constructor(
     private crawler: ICrawler,
-    private urlBuilder: IURLBuilder,
+    private urlBuilder: IUrlBuilder,
   ) {}
 
   public async crawlWebsite(languages: Language[]): Promise<Website> {

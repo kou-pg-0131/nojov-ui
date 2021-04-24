@@ -1,4 +1,4 @@
-import { Language, Website } from '../../domain';
+import { Language, Website } from '../../entities';
 
 export interface IJobsCrawler {
   crawlWebsite(languages: Language[]): Promise<Website>;

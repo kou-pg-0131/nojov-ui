@@ -1,7 +1,7 @@
 import * as aws from 'aws-sdk';
 import { Logger } from '../utils';
-import { IFileStorage } from '../interfaces/gateways/fileStorage';
-import { FileNotFoundError } from '../domain';
+import { IFileStorage } from '../adapters/gateways/fileStorage';
+import { FileNotFoundError } from '../entities';
 
 export class FileStorageOnS3 implements IFileStorage {
   private logger = new Logger('FileStorageOnS3');

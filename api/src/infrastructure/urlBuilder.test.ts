@@ -1,6 +1,6 @@
-import { URLBuilder } from '.';
+import { UrlBuilder } from '.';
 
-describe('URLBuilder', () => {
+describe('UrlBuilder', () => {
   describe('build()', () => {
     it('should return url', () => {
       const testCases = [
@@ -12,7 +12,7 @@ describe('URLBuilder', () => {
       ];
 
       testCases.forEach(testCase => {
-        const urlBuilder = new URLBuilder();
+        const urlBuilder = new UrlBuilder();
         const url = urlBuilder.build(testCase.url, testCase.params);
 
         expect(url).toEqual(testCase.expected);
@@ -30,7 +30,7 @@ describe('URLBuilder', () => {
       ];
 
       testCases.forEach(testCase => {
-        const urlBuilder = new URLBuilder();
+        const urlBuilder = new UrlBuilder();
         const url = urlBuilder.join(...testCase.paths);
 
         expect(url).toEqual(testCase.expected);

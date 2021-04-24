@@ -1,6 +1,3 @@
-setup_aws_credentials:
-	docker-compose run --rm infra ./bin/setup_aws_credentials
-
 tfinit:
 	docker-compose run --rm --workdir /app/terraform/envs/dev infra terraform init
 tfplan:

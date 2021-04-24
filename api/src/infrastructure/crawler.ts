@@ -1,4 +1,4 @@
-import { ICrawler } from '../interfaces/gateways';
+import { ICrawler } from '../adapters/gateways';
 import { HttpClient, IHttpClient, HTMLParser, IHTMLParser } from '.';
 import { Logger } from '../utils';
 

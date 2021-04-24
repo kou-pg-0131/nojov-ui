@@ -1,5 +1,5 @@
-import { Job, Language, Website, ScrapeFailedError, FetchDocumentFailedError } from '../../../domain';
-import { IJobsCrawler, ICrawler, IURLBuilder } from '..';
+import { Job, Language, Website, ScrapeFailedError, FetchDocumentFailedError } from '../../../entities';
+import { IJobsCrawler, ICrawler, IUrlBuilder } from '..';
 import { sleep } from '../../../utils';
 
 const languageTagsMap = new Map<Language, string>([
@@ -29,7 +29,7 @@ export class ForkwellJobsCrawler implements IJobsCrawler {
 
   constructor(
     private crawler: ICrawler,
-    private urlBuilder: IURLBuilder,
+    private urlBuilder: IUrlBuilder,
   ) {}
 
   public async crawlWebsite(languages: Language[]): Promise<Website> {
@@ -45,7 +45,7 @@ export class ForkwellJobsCrawler implements IJobsCrawler {
   }
 
   private async crawlLanguage(language: Language): Promise<Job> {
-    const url = this.buildURL(language);
+    const url = this.buildUrl(language);
     const count: number = await this.crawler.fetchDocument(url).then(resp => {
       if (resp.status === 404) return 0;
       if (resp.status !== 200) throw new FetchDocumentFailedError(url, resp.status);
@@ -75,7 +75,7 @@ export class ForkwellJobsCrawler implements IJobsCrawler {
     return Number(matches[1]);
   }
 
-  private buildURL(language: Language): string {
+  private buildUrl(language: Language): string {
     return this.urlBuilder.join(this.website.url, 't', languageTagsMap.get(language));
   }
 }
