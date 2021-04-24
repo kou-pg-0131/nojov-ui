@@ -219,13 +219,19 @@ workflows:
           requires: [api_test, api_tf_plan_prod]
           filters:
             branches:
-              ignore: [main]
+              only: [main]
       - approval_deploy_dev:
           type: approval
           requires: [api_test, api_tf_plan_dev]
+          filters:
+            branches:
+              ignore: [main]
       - approval_deploy_prod:
           type: approval
           requires: [api_test, api_tf_plan_prod]
+          filters:
+            branches:
+              only: [main]
       - api_deploy:
           context: [docker-auth]
           name: api_deploy_dev
