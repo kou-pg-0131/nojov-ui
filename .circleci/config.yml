@@ -69,7 +69,8 @@ jobs:
       - run:
           name: send coverage report to codecov
           command: bash <(curl -s https://codecov.io/bash)
-      - slack/status
+      - slack/status:
+          fail_only: true
 
   api_deploy:
     machine: true
@@ -93,7 +94,8 @@ jobs:
       - run:
           name: serverless deploy to << parameters.stage >>
           command: docker-compose run --rm app yarn run deploy --stage << parameters.stage >>
-      - slack/status
+      - slack/status:
+          fail_only: true
 
   api_tf_plan:
     executor: terraform
@@ -114,7 +116,8 @@ jobs:
           command: |
             terraform init
             terraform plan
-      - slack/status
+      - slack/status:
+          fail_only: true
 
   api_tf_apply:
     executor: terraform
@@ -139,7 +142,8 @@ jobs:
           path: terraform/envs/dev/terraform.log
       - store_artifacts:
           path: terraform/envs/prod/terraform.log
-      - slack/status
+      - slack/status:
+          fail_only: true
 
   ui_build:
     executor: node
@@ -154,7 +158,8 @@ jobs:
       - run:
           name: build
           command: yarn run build
-      - slack/status
+      - slack/status:
+          fail_only: true
 
   ui_tf_plan:
     executor: terraform
@@ -173,7 +178,8 @@ jobs:
             terraform plan
       - store_artifacts:
           path: terraform/terraform.log
-      - slack/status
+      - slack/status:
+          fail_only: true
 
   ui_tf_apply:
     executor: terraform
@@ -192,7 +198,8 @@ jobs:
             terraform apply -auto-approve
       - store_artifacts:
           path: terraform/terraform.log
-      - slack/status
+      - slack/status:
+          fail_only: true
 
 workflows:
   build:
