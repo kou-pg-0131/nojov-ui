@@ -53,7 +53,6 @@ provider:
         Condition: ${self:custom.resourcePolicyCondition.${self:provider.stage}}
     minimumCompressionSize: 1024
   environment:
-    TZ: Asia/Tokyo
     STAGE: ${self:provider.stage}
     S3_BUCKET_FILES: ${self:custom.prefix}-files
     SLACK_ACCESS_TOKEN: ${file(./secrets.yml):slackAccessToken}
@@ -70,8 +69,8 @@ functions:
     timeout: 900
     layers:
       - Ref: LibuuidLambdaLayer
-  notifyJobs:
-    handler: ./src/handlers/notifications.notifyJobs
+  notifySuccess:
+    handler: ./src/handlers/notifications.notifySuccess
     timeout: 60
     layers:
       - Ref: LibuuidLambdaLayer
@@ -109,14 +108,14 @@ stepFunctions:
             Catch:
               - ErrorEquals: ['States.ALL']
                 Next: notifyError
-            Next: notifyJobs
+            Next: notifySuccess
           notifyError:
             Type: Task
             Resource:
               Fn::GetAtt: [notifyError, Arn]
             End: true
-          notifyJobs:
+          notifySuccess:
             Type: Task
             Resource:
-              Fn::GetAtt: [notifyJobs, Arn]
+              Fn::GetAtt: [notifySuccess, Arn]
             End: true
