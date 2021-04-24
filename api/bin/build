@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+if [ ! -f /.dockerenv ]; then
+  echo 'Please run this script using `docker-compose` like:'
+  echo '  `docker-compose run --rm app ./bin/build`'
+  exit 1
+fi
+
+cp -r /opt/lib/ ./layers/libuuid/

@@ -1,0 +1,38 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# Webpack directories
+.webpack
+
+# yarn
+yarn-error.log
+
+# jest
+coverage
+
+# dotenv
+.env
+
+# terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+terraform.log
+terraform.tfvars
+
+# eslint
+.eslintcache
+
+# circleci-env
+/.circleci-env/circle-token
+
+# layers
+layers/libuuid/lib/*
+!layers/libuuid/lib/.keep
+
+# secrets
+/secrets.yml
