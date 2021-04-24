@@ -8,7 +8,6 @@
 # Overview
 
 Nojov allows you to see the number of job offers for each programming language today.  
-API: [github.com/kou-pg-0131/nojov-api](https://github.com/kou-pg-0131/nojov-api)
 
 # Application
 
