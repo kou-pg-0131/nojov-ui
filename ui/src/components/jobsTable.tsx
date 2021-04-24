@@ -63,7 +63,7 @@ export const JobsTable: React.VFC<Props> = (props: Props) => {
   const records: { language: Language; count: number; searchUrl?: string; }[] = props.jobs.reduce((result, current) => {
     const idx = result.findIndex(record => record.language === current.language);
     if (idx === -1) {
-      result.push({ language: current.language, count: current.count, searchUrl: props.website?.search_urls.find(url => url.language === current.language)?.url });
+      result.push({ language: current.language, count: current.count, searchUrl: props.website?.search_urls.find(url => url.language === current.language).url });
     } else {
       result[idx].count += current.count;
     }
