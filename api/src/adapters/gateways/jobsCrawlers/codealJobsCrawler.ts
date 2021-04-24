@@ -33,7 +33,12 @@ export class CodealJobsCrawler implements IJobsCrawler {
   ) {}
 
   public async crawlWebsite(languages: Language[]): Promise<Website> {
-    const website: Website = { name: this.website.name, url: this.website.url, jobs: [] };
+    const website: Website = {
+      name: this.website.name,
+      url: this.website.url,
+      search_urls: languages.map(language => ({ language, url: this.buildUrl(language) })),
+      jobs: [],
+    };
 
     for (const language of languages) {
       const job = await this.crawlLanguage(language);
