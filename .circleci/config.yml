@@ -93,6 +93,27 @@ jobs:
           command: |
             terraform init
             terraform plan
+      - slack/status
+
+  api_tf_apply:
+    executor: terraform
+    parameters:
+      stage:
+        type: string
+    working_directory: ~/project/api
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: install required command
+          command: apk --update add bash curl
+      - setup_aws_credentials
+      - run:
+          name: terraform plan for << parameters.stage >>
+          working_directory: ~/project/api/terraform/envs/<< parameters.stage >>
+          command: |
+            terraform init
+            terraform apply -auto-approve
       - store_artifacts:
           path: terraform/envs/dev/terraform.log
       - store_artifacts:
@@ -157,6 +178,12 @@ workflows:
     jobs:
       - api_test
       - api_tf_plan
+      - api_tf_apply:
+          stage: dev
+          requires: [api_tf_plan]
+          filters:
+            branches:
+              ignore: [main]
 
       - ui_build
       - ui_tf_plan
