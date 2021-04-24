@@ -1,5 +1,5 @@
 import * as qs from 'querystring';
-import { IURLBuilder } from '../interfaces/gateways';
+import { IURLBuilder } from '../adapters/gateways';
 import * as urlJoin from 'url-join';
 
 export class URLBuilder implements IURLBuilder {

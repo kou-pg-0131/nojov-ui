@@ -1,6 +1,6 @@
 import { ErrorContext } from '../entities';
 import { Context } from 'aws-lambda';
-import { NotificationsControllerFactory } from '../interfaces/controllers';
+import { NotificationsControllerFactory } from '../adapters/controllers';
 import 'source-map-support/register';
 
 export const notifyJobs = async (_: unknown, context: Context): Promise<void> => {

@@ -1,5 +1,5 @@
 import { WebClient } from '@slack/web-api';
-import { INotifier } from '../interfaces/gateways';
+import { INotifier } from '../adapters/gateways';
 
 export class NotifierOnSlack implements INotifier {
   constructor (
