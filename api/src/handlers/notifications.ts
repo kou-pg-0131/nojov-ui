@@ -3,9 +3,9 @@ import { Context } from 'aws-lambda';
 import { NotificationsControllerFactory } from '../adapters/controllers';
 import 'source-map-support/register';
 
-export const notifyJobs = async (_: unknown, context: Context): Promise<void> => {
+export const notifySuccess = async (_: unknown, context: Context): Promise<void> => {
   const controller = await new NotificationsControllerFactory().create();
-  await controller.notifyJobs();
+  await controller.notifySuccess();
   context.done();
 };
 
