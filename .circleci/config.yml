@@ -211,11 +211,27 @@ workflows:
       - api_tf_plan:
           name: api_tf_plan_prod
           stage: prod
+      - slack/approval-notification:
+          requires: [api_test, api_tf_plan_dev]
+          filters:
+            branches:
+              ignore: [main]
+      - slack/approval-notification:
+          requires: [api_test, api_tf_plan_prod]
+          filters:
+            branches:
+              ignore: [main]
+      - approval_deploy_dev:
+          type: approval
+          requires: [api_test, api_tf_plan_dev]
+      - approval_deploy_prod:
+          type: approval
+          requires: [api_test, api_tf_plan_prod]
       - api_deploy:
           context: [docker-auth]
           name: api_deploy_dev
           stage: dev
-          requires: [api_test, api_tf_plan_dev]
+          requires: [approval_deploy_dev]
           filters:
             branches:
               ignore: [main]
@@ -223,7 +239,7 @@ workflows:
           context: [docker-auth]
           name: api_deploy_prod
           stage: prod
-          requires: [api_test, api_tf_plan_prod]
+          requires: [approval_deploy_prod]
           filters:
             branches:
               only: [main]
