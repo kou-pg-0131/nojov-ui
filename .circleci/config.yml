@@ -71,6 +71,34 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash)
       - slack/status
 
+  api_tf_plan:
+    executor: terraform
+    working_directory: ~/project/api
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: install required command
+          command: apk --update add bash curl
+      - setup_aws_credentials
+      - run:
+          name: terraform plan for dev
+          working_directory: ~/project/api/terraform/envs/dev
+          command: |
+            terraform init
+            terraform plan
+      - run:
+          name: terraform plan for prod
+          working_directory: ~/project/api/terraform/envs/prod
+          command: |
+            terraform init
+            terraform plan
+      - store_artifacts:
+          path: terraform/envs/dev/terraform.log
+      - store_artifacts:
+          path: terraform/envs/prod/terraform.log
+      - slack/status
+
   ui_build:
     executor: node
     working_directory: ~/project/ui
@@ -127,10 +155,9 @@ jobs:
 workflows:
   build:
     jobs:
-      # api
       - api_test
+      - api_tf_plan
 
-      # ui
       - ui_build
       - ui_tf_plan
       - ui_tf_apply:
