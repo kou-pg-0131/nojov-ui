@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  api:
-    image: nojov-api
+  app:
+    image: nojov-api-app
     build:
       context: .
       dockerfile: ./containers/app/Dockerfile
@@ -16,6 +16,7 @@ services:
       - jest_cache:/tmp/jest_cache
 
   infra:
+    image: nojov-api-infra
     build:
       context: .
       dockerfile: ./containers/infra/Dockerfile
