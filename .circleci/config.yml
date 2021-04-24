@@ -15,6 +15,12 @@ executors:
           TF_LOG: trace
           TF_LOG_PATH: terraform.log
 
+  lambda:
+    docker:
+      - image: lambci/lambda:build-nodejs12.x
+        environment:
+          HOME: /root
+
 commands:
   setup_aws_credentials:
     steps:
@@ -40,7 +46,31 @@ commands:
           paths:
             - node_modules
 
+  install_yarn:
+    steps:
+      - run:
+          name: install yarn
+          command: |
+            curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.10
+            echo 'export PATH=$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH' >> $BASH_ENV
+
 jobs:
+  api_test:
+    executor: lambda
+    working_directory: ~/project/api
+    steps:
+      - checkout:
+          path: ~/project
+      - install_yarn
+      - yarn_install
+      - run:
+          name: jest
+          command: yarn run test:cv
+      - run:
+          name: send coverage report to codecov
+          command: bash <(curl -s https://codecov.io/bash)
+      - slack/status
+
   ui_build:
     executor: node
     working_directory: ~/project/ui
@@ -97,6 +127,10 @@ jobs:
 workflows:
   build:
     jobs:
+      # api
+      - api_test
+
+      # ui
       - ui_build
       - ui_tf_plan
       - ui_tf_apply:
