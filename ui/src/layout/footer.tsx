@@ -44,7 +44,7 @@ export const Footer: React.VFC = () => {
             </Link>
           </li>
           <li>
-            <ExternalLink className={classes.link} href='https://github.com/kou-pg-0131/nojov-ui'>View on GitHub</ExternalLink>
+            <ExternalLink className={classes.link} href='https://github.com/kou-pg-0131/nojov'>View on GitHub</ExternalLink>
           </li>
         </ul>
       </Box>
