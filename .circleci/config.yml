@@ -74,6 +74,9 @@ jobs:
   api_tf_plan:
     executor: terraform
     working_directory: ~/project/api
+    parameters:
+      stage:
+        type: string
     steps:
       - checkout:
           path: ~/project
@@ -82,14 +85,8 @@ jobs:
           command: apk --update add bash curl
       - setup_aws_credentials
       - run:
-          name: terraform plan for dev
-          working_directory: ~/project/api/terraform/envs/dev
-          command: |
-            terraform init
-            terraform plan
-      - run:
-          name: terraform plan for prod
-          working_directory: ~/project/api/terraform/envs/prod
+          name: terraform plan for << parameters.stage >>
+          working_directory: ~/project/api/terraform/envs/<< parameters.stage >>
           command: |
             terraform init
             terraform plan
@@ -97,10 +94,10 @@ jobs:
 
   api_tf_apply:
     executor: terraform
+    working_directory: ~/project/api
     parameters:
       stage:
         type: string
-    working_directory: ~/project/api
     steps:
       - checkout:
           path: ~/project
@@ -177,7 +174,12 @@ workflows:
   build:
     jobs:
       - api_test
-      - api_tf_plan
+      - api_tf_plan:
+          name: api_tf_plan_dev
+          stage: dev
+      - api_tf_plan:
+          name: api_tf_plan_prod
+          stage: prod
       - api_tf_apply:
           stage: dev
           requires: [api_tf_plan]
