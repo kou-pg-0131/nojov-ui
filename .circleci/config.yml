@@ -10,7 +10,7 @@ executors:
 
   terraform:
     docker:
-      - image: hashicorp/terraform:0.12.24
+      - image: hashicorp/terraform:0.14.10
         environment:
           TF_LOG: trace
           TF_LOG_PATH: terraform.log
