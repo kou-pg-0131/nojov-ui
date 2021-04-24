@@ -1,4 +1,4 @@
-import { Language, Website } from '../../domain';
+import { Language, Website } from '../../entities';
 import { IJobsRepository, IJobsCrawler } from '../gateways';
 
 export interface IJobsController {

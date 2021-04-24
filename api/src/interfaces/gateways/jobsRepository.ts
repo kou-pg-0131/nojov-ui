@@ -1,4 +1,4 @@
-import { Website, FileNotFoundError } from '../../domain';
+import { Website, FileNotFoundError } from '../../entities';
 import { IFileStorage } from '.';
 
 export interface IJobsRepository {

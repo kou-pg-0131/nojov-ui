@@ -1,4 +1,4 @@
-import { Job, Website, Language, ScrapeFailedError, FetchDocumentFailedError } from '../../../domain';
+import { Job, Website, Language, ScrapeFailedError, FetchDocumentFailedError } from '../../../entities';
 import { IJobsCrawler, ICrawler, IURLBuilder } from '..';
 import { sleep } from '../../../utils';
 

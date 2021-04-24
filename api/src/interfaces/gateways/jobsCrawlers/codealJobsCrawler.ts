@@ -1,5 +1,5 @@
 import { IJobsCrawler, ICrawler, IURLBuilder } from '..';
-import { Website, Language, Job, FetchDocumentFailedError, ScrapeFailedError } from '../../../domain';
+import { Website, Language, Job, FetchDocumentFailedError, ScrapeFailedError } from '../../../entities';
 import { sleep } from '../../../utils';
 
 const languageCodeMap = new Map<Language, string>([

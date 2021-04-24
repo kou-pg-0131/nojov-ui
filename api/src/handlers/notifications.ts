@@ -1,4 +1,4 @@
-import { ErrorContext } from '../domain';
+import { ErrorContext } from '../entities';
 import { Context } from 'aws-lambda';
 import { NotificationsControllerFactory } from '../interfaces/controllers';
 import 'source-map-support/register';
