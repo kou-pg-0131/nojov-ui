@@ -34,8 +34,7 @@ export class LevtechFreelanceJobsCrawler implements IJobsCrawler {
 
   public async crawlWebsite(languages: Language[]): Promise<Website> {
     const website: Website = {
-      name: this.website.name,
-      url: this.website.url,
+      ...this.website,
       search_urls: languages.map(language => ({ language, url: this.buildUrl(language) })),
       jobs: [],
     };
