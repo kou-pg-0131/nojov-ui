@@ -59,11 +59,7 @@ export class CodealJobsCrawler implements IJobsCrawler {
       return this.scrape(resp.document);
     });
 
-    return {
-      language,
-      count,
-      search_url: url,
-    };
+    return { language, count };
   }
 
   private scrape(doc: Document): number {

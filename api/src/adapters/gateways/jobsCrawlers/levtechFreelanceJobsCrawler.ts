@@ -55,11 +55,7 @@ export class LevtechFreelanceJobsCrawler implements IJobsCrawler {
       return this.scrape(resp.document, language);
     });
 
-    return {
-      language,
-      count,
-      search_url: url,
-    };
+    return { language, count };
   }
 
   public isSupport(language: Language): boolean {
