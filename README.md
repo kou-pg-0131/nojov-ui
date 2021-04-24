@@ -1,8 +1,8 @@
 [![Logo](./demo/logo.png)](https://nojov.kou-pg.com)
 
-[![CircleCI](https://circleci.com/gh/kou-pg-0131/nojov-ui/tree/main.svg?style=shield)](https://circleci.com/gh/kou-pg-0131/nojov-ui/tree/main)
-[![Maintainability](https://api.codeclimate.com/v1/badges/eb080864e0f215dd1ae1/maintainability)](https://codeclimate.com/github/kou-pg-0131/nojov-ui/maintainability)
-[![LICENSE](https://img.shields.io/github/license/kou-pg-0131/nojov-ui?style=plastic)](./LICENSE)
+[![CircleCI](https://circleci.com/gh/kou-pg-0131/nojov/tree/main.svg?style=shield)](https://circleci.com/gh/kou-pg-0131/nojov/tree/main)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5b0e7b3a63950c31b14f/maintainability)](https://codeclimate.com/github/kou-pg-0131/nojov/maintainability)
+[![LICENSE](https://img.shields.io/github/license/kou-pg-0131/nojov?style=plastic)](./LICENSE)
 [![Twitter Follow](https://img.shields.io/twitter/follow/kou_pg_0131?style=social)](https://twitter.com/kou_pg_0131)
 
 # Overview
