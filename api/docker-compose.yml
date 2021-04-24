@@ -19,15 +19,13 @@ services:
     build:
       context: .
       dockerfile: ./containers/infra/Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+        AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
     volumes:
       - .:/app
-      - aws:/root/.aws
-    environment:
-      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
 
 volumes:
-  aws:
   node_modules:
   yarn_cache:
   jest_cache:
