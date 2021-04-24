@@ -41,7 +41,7 @@ commands:
             - ~/project/node_modules
 
 jobs:
-  build:
+  ui_build:
     executor: node
     working_directory: ~/project/ui
     steps:
@@ -56,7 +56,7 @@ jobs:
           command: yarn run build
       - slack/status
 
-  tf_plan:
+  ui_tf_plan:
     executor: terraform
     working_directory: ~/project/ui/terraform
     steps:
@@ -75,7 +75,7 @@ jobs:
           path: terraform/terraform.log
       - slack/status
 
-  tf_apply:
+  ui_tf_apply:
     executor: terraform
     working_directory: ~/project/ui/terraform
     steps:
@@ -97,10 +97,9 @@ jobs:
 workflows:
   build:
     jobs:
-      - build
-      - tf_plan
-
-      - tf_apply:
+      - ui_build
+      - ui_tf_plan
+      - ui_tf_apply:
           filters:
             branches:
               only: [main]
