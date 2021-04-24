@@ -182,7 +182,7 @@ workflows:
           stage: prod
       - api_tf_apply:
           stage: dev
-          requires: [api_tf_plan]
+          requires: [api_tf_plan_dev]
           filters:
             branches:
               ignore: [main]
