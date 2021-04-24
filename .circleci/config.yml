@@ -89,7 +89,6 @@ jobs:
             echo "ipWhiteList: ${IP_WHITE_LIST}"    >> secrets.yml
       - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
       - run: docker-compose build app infra
-      - run: make setup_aws_credentials
       - run: make yarn
       - run:
           name: serverless deploy to << parameters.stage >>
