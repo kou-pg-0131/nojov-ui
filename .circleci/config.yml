@@ -6,11 +6,11 @@ orbs:
 executors:
   node:
     docker:
-      - image: node:12.18.2
+      - image: node:14.16.1
 
   terraform:
     docker:
-      - image: hashicorp/terraform:0.12.24
+      - image: hashicorp/terraform:0.14.10
         environment:
           TF_LOG: trace
           TF_LOG_PATH: terraform.log
@@ -38,70 +38,68 @@ commands:
       - save_cache:
           key: v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
-            - ~/project/node_modules
-
-  terraform:
-    parameters:
-      command:
-        type: string
-    steps:
-      - run:
-          name: terraform << parameters.command >>
-          command: |
-            cd ~/project/terraform
-            terraform << parameters.command >>
-      - store_artifacts:
-          path: terraform/terraform.log
+            - node_modules
 
 jobs:
-  build:
+  ui_build:
     executor: node
+    working_directory: ~/project/ui
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - yarn_install
       - run:
           name: eslint
-          command: yarn run eslint './src/**/*.ts' './src/**/*.tsx'
+          command: yarn run lint
       - run:
           name: build
           command: yarn run build
       - slack/status
 
-  tf_plan:
+  ui_tf_plan:
     executor: terraform
+    working_directory: ~/project/ui/terraform
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run:
           name: install required commands
           command: apk --update add bash curl
       - setup_aws_credentials
-      - terraform:
-          command: init
-      - terraform:
-          command: plan
+      - run:
+          name: terraform plan
+          command: |
+            terraform init
+            terraform plan
+      - store_artifacts:
+          path: terraform/terraform.log
       - slack/status
 
-  tf_apply:
+  ui_tf_apply:
     executor: terraform
+    working_directory: ~/project/ui/terraform
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run:
           name: install required command
           command: apk --update add bash curl
       - setup_aws_credentials
-      - terraform:
-          command: init
-      - terraform:
-          command: apply -auto-approve
+      - run:
+          name: terraform apply
+          command: |
+            terraform init
+            terraform apply -auto-approve
+      - store_artifacts:
+          path: terraform/terraform.log
       - slack/status
 
 workflows:
   build:
     jobs:
-      - build
-      - tf_plan
-
-      - tf_apply:
+      - ui_build
+      - ui_tf_plan
+      - ui_tf_apply:
           filters:
             branches:
               only: [main]
