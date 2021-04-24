@@ -40,19 +40,6 @@ commands:
           paths:
             - ~/project/node_modules
 
-  terraform:
-    parameters:
-      command:
-        type: string
-    steps:
-      - run:
-          name: terraform << parameters.command >>
-          command: |
-            cd ~/project/terraform
-            terraform << parameters.command >>
-      - store_artifacts:
-          path: terraform/terraform.log
-
 jobs:
   build:
     executor: node
@@ -71,30 +58,40 @@ jobs:
 
   tf_plan:
     executor: terraform
+    working_directory: ~/project/ui/terraform
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run:
           name: install required commands
           command: apk --update add bash curl
       - setup_aws_credentials
-      - terraform:
-          command: init
-      - terraform:
-          command: plan
+      - run:
+          name: terraform plan
+          command: |
+            terraform init
+            terraform plan
+      - store_artifacts:
+          path: terraform/terraform.log
       - slack/status
 
   tf_apply:
     executor: terraform
+    working_directory: ~/project/ui/terraform
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run:
           name: install required command
           command: apk --update add bash curl
       - setup_aws_credentials
-      - terraform:
-          command: init
-      - terraform:
-          command: apply -auto-approve
+      - run:
+          name: terraform apply
+          command: |
+            terraform init
+            terraform apply -auto-approve
+      - store_artifacts:
+          path: terraform/terraform.log
       - slack/status
 
 workflows:
