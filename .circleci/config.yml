@@ -181,11 +181,19 @@ workflows:
           name: api_tf_plan_prod
           stage: prod
       - api_tf_apply:
+          name: api_tf_apply_dev
           stage: dev
           requires: [api_tf_plan_dev]
           filters:
             branches:
               ignore: [main]
+      - api_tf_apply:
+          name: api_tf_apply_prod
+          stage: prod
+          requires: [api_tf_plan_prod]
+          filters:
+            branches:
+              only: [main]
 
       - ui_build
       - ui_tf_plan
