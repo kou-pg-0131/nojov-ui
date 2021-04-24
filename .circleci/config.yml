@@ -71,6 +71,30 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash)
       - slack/status
 
+  api_deploy:
+    machine: true
+    working_directory: ~/project/api
+    parameters:
+      stage:
+        type: string
+    steps:
+      - checkout:
+          path: ~/project
+      - setup_aws_credentials
+      - run:
+          name: create secrets.yml
+          command: |
+            echo "slackAccessToken: ${SLACK_TOKEN}"  > secrets.yml
+            echo "ipWhiteList: ${IP_WHITE_LIST}"    >> secrets.yml
+      - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      - run: docker-compose build app infra
+      - run: make setup_aws_credentials
+      - run: make yarn
+      - run:
+          name: serverless deploy to << parameters.stage >>
+          command: docker-compose run --rm app yarn run deploy --stage << parameters.stage >>
+      - slack/status
+
   api_tf_plan:
     executor: terraform
     working_directory: ~/project/api
@@ -180,17 +204,33 @@ workflows:
       - api_tf_plan:
           name: api_tf_plan_prod
           stage: prod
+      - api_deploy:
+          context: [docker-auth]
+          name: api_deploy_dev
+          stage: dev
+          requires: [api_test, api_tf_plan_dev]
+          filters:
+            branches:
+              ignore: [main]
+      - api_deploy:
+          context: [docker-auth]
+          name: api_deploy_prod
+          stage: prod
+          requires: [api_test, api_tf_plan_prod]
+          filters:
+            branches:
+              only: [main]
       - api_tf_apply:
           name: api_tf_apply_dev
           stage: dev
-          requires: [api_tf_plan_dev]
+          requires: [api_deploy_dev]
           filters:
             branches:
               ignore: [main]
       - api_tf_apply:
           name: api_tf_apply_prod
           stage: prod
-          requires: [api_tf_plan_prod]
+          requires: [api_deploy_prod]
           filters:
             branches:
               only: [main]
