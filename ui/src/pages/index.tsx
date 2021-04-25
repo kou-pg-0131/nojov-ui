@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import loadable from '@loadable/component';
 import { Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core';
 import { Layout } from '../layout';
 import { Website } from '../domain';
-import { DailyPanel, TransitionPanel } from '../components';
+import { Loading } from '../components';
+const TransitionPanel = loadable(() => import('../components/transitionPanel'));
+const DailyPanel = loadable(() => import('../components/dailyPanel'));
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,11 +48,11 @@ const Home: React.VFC = () => {
       </Paper>
 
       <Box hidden={currentTab !== 'daily'}>
-        <DailyPanel website={selectedWebsite} onChangeWebsite={handleChangeWebsite}/>
+        <DailyPanel fallback={<Loading/>} website={selectedWebsite} onChangeWebsite={handleChangeWebsite}/>
       </Box>
 
       <Box hidden={currentTab !== 'monthly'}>
-        <TransitionPanel website={selectedWebsite} onChangeWebsite={handleChangeWebsite}/>
+        <TransitionPanel fallback={<Loading/>} website={selectedWebsite} onChangeWebsite={handleChangeWebsite}/>
       </Box>
     </Layout>
   );
