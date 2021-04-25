@@ -4,7 +4,7 @@ plugins:
   duplication:
     enabled: true
     exclude_patterns:
-      - "api/src/interfaces/gateways/jobsCrawlers/*.ts"
+      - "api/src/adapters/gateways/jobsCrawlers/*.ts"
 
 exclude_patterns:
   - "api/**/*.test.ts"
