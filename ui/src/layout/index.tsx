@@ -46,7 +46,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const Layout: React.VFC<Props> = (props: Props) => {
+export const Layout: React.VFC<Props> = (props: Props) => {
   const classes = useStyles();
 
   const baseTitle = 'Nojov - プログラミング言語別求人数ビューア';
@@ -69,5 +69,3 @@ const Layout: React.VFC<Props> = (props: Props) => {
     </ThemeProvider>
   );
 };
-
-export default Layout;
