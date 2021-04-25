@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import loadable from '@loadable/component';
 import { Box, Tabs, Tab, Paper } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core';
-import { Layout } from '../layout';
 import { Website } from '../domain';
 import { DailyPanel, TransitionPanel } from '../components';
+const Layout = loadable(() => import('../layout'));
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

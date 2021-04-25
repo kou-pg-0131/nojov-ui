@@ -1,7 +1,8 @@
 import React from 'react';
+import loadable from '@loadable/component';
 import { Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Layout } from '../layout';
+const Layout = loadable(() => import('../layout'));
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
