@@ -9,7 +9,7 @@ type Props = {
   onChangeWebsite: (website?: Website) => void;
 };
 
-export const TransitionPanel: React.VFC<Props> = (props: Props) => {
+const TransitionPanel: React.VFC<Props> = (props: Props) => {
   const { websitesPerUpdatedAt } = useWebsites();
 
   if (!websitesPerUpdatedAt) return <Loading/>;
@@ -34,3 +34,5 @@ export const TransitionPanel: React.VFC<Props> = (props: Props) => {
     </>
   );
 };
+
+export default TransitionPanel;
