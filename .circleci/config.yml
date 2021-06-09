@@ -63,7 +63,6 @@ jobs:
           path: ~/project
       - install_yarn
       - yarn_install
-      - run: yarn audit
       - run:
           name: jest
           command: yarn run test:cv
@@ -152,7 +151,6 @@ jobs:
       - checkout:
           path: ~/project
       - yarn_install
-      - run: yarn audit
       - run:
           name: eslint
           command: yarn run lint
