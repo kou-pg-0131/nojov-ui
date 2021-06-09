@@ -65,7 +65,7 @@ export class CodealJobsCrawler implements IJobsCrawler {
   private scrape(doc: Document): number {
     if (doc.querySelectorAll('.container .not-found').length !== 0) return 0;
 
-    const selector = '.container .page-info span:nth-of-type(2)';
+    const selector = '.container .page-info span';
     const elm = doc.querySelector(selector);
     if (!elm) throw new ScrapeFailedError(selector);
 
